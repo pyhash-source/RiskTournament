@@ -23,8 +23,8 @@ public abstract class AbstractModel implements Observable {
     
     public abstract void faireSeDeplacerLesAnimaux();
     
-    public abstract TypeCase getTypeCase(int x, int y);
-    public abstract void setTypeCase(int x, int y,TypeCase tc);
+    public abstract TypeTerritoire getTypeCase(int x, int y);
+    public abstract void setTypeCase(int x, int y,TypeTerritoire tc);
     public abstract Animal getAnimalPlusFort(int x, int y);
     public abstract int getLargeur();
     public abstract int getHauteur();

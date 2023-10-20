@@ -9,13 +9,7 @@ package tp5.model;
  *
  * @author david
  */
-public enum TypeCase {
-    MUR,
-    IN,
-    OUT,
-    CHEMIN,
-    FLECHE_HAUT,
-    FLECHE_DROITE,
-    FLECHE_BAS,
-    FLECHE_GAUCHE
+public enum TypeTerritoire {
+    TERRE,
+    MER
 }
