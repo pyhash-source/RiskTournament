@@ -6,7 +6,8 @@
 package riskGame;
 
 /**
- * Classe qui lance une partie
+ * Classe qui lance une partie.
+ * Point d'entrée du jeu.
  */
 import riskGame.controler.AbstractControler;
 import riskGame.model.AbstractModel;
