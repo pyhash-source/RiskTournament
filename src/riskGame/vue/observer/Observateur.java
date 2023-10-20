@@ -3,19 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp5.model;
+package riskGame.vue.observer;
 
 /**
  *
  * @author david
  */
-public enum TypeCase {
-    MUR,
-    IN,
-    OUT,
-    CHEMIN,
-    FLECHE_HAUT,
-    FLECHE_DROITE,
-    FLECHE_BAS,
-    FLECHE_GAUCHE
+public interface Observateur {
+    public abstract void update();
 }

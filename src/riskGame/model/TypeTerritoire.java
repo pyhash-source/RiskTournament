@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp5.vue.observer;
-
+package riskGame.model;
 /**
+ * 
+ * @author elisa
  *
- * @author david
  */
-public interface Observateur {
-    public abstract void update();
+public enum TypeTerritoire {
+    TERRE,
+    MER
 }

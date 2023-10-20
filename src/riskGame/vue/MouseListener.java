@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp5.vue;
+package riskGame.vue;
 
 /**
  *
@@ -12,7 +12,8 @@ package tp5.vue;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import tp5.controler.AbstractControler;
+
+import riskGame.controler.AbstractControler;
 
 
 public class MouseListener extends MouseAdapter {

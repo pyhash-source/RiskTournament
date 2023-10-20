@@ -3,24 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp5;
-
-import tp5.controler.AbstractControler;
-import tp5.model.AbstractModel;
-import tp5.vue.Vue;
+package riskGame;
 
 /**
- *
- * @author david
+ * Classe qui lance une partie
  */
-public class TP5 {
+import riskGame.controler.AbstractControler;
+import riskGame.model.AbstractModel;
+import riskGame.vue.Vue;
+
+public class RiskGame {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        AbstractModel model; //à instancier
-        AbstractControler controler; //à instancier
+        AbstractModel model = null; //à instancier
+        AbstractControler controler = null; //à instancier
         Vue v = new Vue(model,controler);
         model.addObservateur(v);
         v.setVisible(true);

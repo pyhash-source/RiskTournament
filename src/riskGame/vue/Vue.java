@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp5.vue;
+package riskGame.vue;
 
-import tp5.controler.AbstractControler;
-import tp5.model.AbstractModel;
-import tp5.vue.observer.Observateur;
+import riskGame.controler.AbstractControler;
+import riskGame.model.AbstractModel;
+import riskGame.vue.observer.Observateur;
 
-/**
- *
- * @author david
- */
 public class Vue extends javax.swing.JFrame implements Observateur{
 
     private AbstractModel model;
@@ -32,9 +28,9 @@ public class Vue extends javax.swing.JFrame implements Observateur{
     }
     
     public void dessinerJeu(){
-        labelNbSourisIN.setText("nombre souris cachées : "+ model.getNbSourisIn());
-        labelNbSourisOut.setText("nombre souris sauvées : "+ model.getNbSourisOut());
-        labelNbFleches.setText("Flèches : "+ model.getNbFlecheUtilisee()+"/"+model.getNbFlecheMax());
+        labelNbSourisIN.setText("nombre souris cachées :");
+        labelNbSourisOut.setText("nombre souris sauvées : ");
+        labelNbFleches.setText("Flèches : ");
         int h = this.panelJeu.getWidth();
         int l = this.panelJeu.getHeight();
         int x, y, cote;
@@ -51,37 +47,18 @@ public class Vue extends javax.swing.JFrame implements Observateur{
         for(int xP=0; xP<model.getHauteur();xP++){
             for(int yP=0; yP<model.getLargeur();yP++){
                 switch(model.getTypeCase(xP, yP)){
-                    case IN : 
+                    case MER : 
                         panelJeu.drawCaseIn(x+xP*cote, y+yP*cote, cote);
                     break;
-                    case OUT : 
+                    case TERRE : 
                         panelJeu.drawCaseOut(x+xP*cote, y+yP*cote, cote);
                     break;
-                    case MUR : 
-                        panelJeu.drawCaseMur(x+xP*cote, y+yP*cote, cote);
-                    break;
-                case CHEMIN : 
-                        panelJeu.drawCaseChemin(x+xP*cote, y+yP*cote, cote);
-                    break;
-                case FLECHE_HAUT : 
-                        panelJeu.drawCaseFlecheHaut(x+xP*cote, y+yP*cote, cote);
-                    break;
-                case FLECHE_DROITE : 
-                        panelJeu.drawCaseFlecheDroite(x+xP*cote, y+yP*cote, cote);
-                    break;
-                case FLECHE_BAS : 
-                        panelJeu.drawCaseFlecheBas(x+xP*cote, y+yP*cote, cote);
-                    break;
-                case FLECHE_GAUCHE : 
-                        panelJeu.drawCaseFlecheGauche(x+xP*cote, y+yP*cote, cote);
-                    break;
+                
                 }
                 
-                if(model.getAnimalPlusFort(xP, yP) instanceof Souris){
+                
                     panelJeu.drawSouris(x+xP*cote, y+yP*cote, cote);
-                } else if(model.getAnimalPlusFort(xP, yP) instanceof Chat){
-                    panelJeu.drawChat(x+xP*cote, y+yP*cote, cote);
-                }
+              
             
             }
         }
@@ -94,7 +71,7 @@ public class Vue extends javax.swing.JFrame implements Observateur{
         labelNbSourisIN = new javax.swing.JLabel();
         labelNbFleches = new javax.swing.JLabel();
         labelNbSourisOut = new javax.swing.JLabel();
-        panelJeu = new tp5.vue.PanelJeu(this);
+        panelJeu = new riskGame.vue.PanelJeu(this);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -136,7 +113,7 @@ public class Vue extends javax.swing.JFrame implements Observateur{
     private javax.swing.JLabel labelNbFleches;
     private javax.swing.JLabel labelNbSourisIN;
     private javax.swing.JLabel labelNbSourisOut;
-    private tp5.vue.PanelJeu panelJeu;
+    private riskGame.vue.PanelJeu panelJeu;
     // End of variables declaration//GEN-END:variables
 
     @Override
