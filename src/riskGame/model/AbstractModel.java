@@ -3,16 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp5.model;
-
-import java.util.ArrayList;
-import tp5.vue.observer.Observable;
-import tp5.vue.observer.Observateur;
-
+package riskGame.model;
 /**
- *
- * @author david
+ * 
  */
+import java.util.ArrayList;
+
+import riskGame.vue.observer.Observable;
+import riskGame.vue.observer.Observateur;
+
 public abstract class AbstractModel implements Observable {
     private ArrayList<Observateur> observateurs;
 
@@ -24,14 +23,8 @@ public abstract class AbstractModel implements Observable {
     public abstract void faireSeDeplacerLesAnimaux();
     
     public abstract TypeTerritoire getTypeCase(int x, int y);
-    public abstract void setTypeCase(int x, int y,TypeTerritoire tc);
-    public abstract Animal getAnimalPlusFort(int x, int y);
-    public abstract int getLargeur();
-    public abstract int getHauteur();
-    public abstract int getNbSourisIn();
-    public abstract int getNbSourisOut();
-    public abstract int getNbFlecheUtilisee();
-    public abstract int getNbFlecheMax();
+    public abstract void setTypeTerritoire(int x, int y,TypeTerritoire tc);
+
     public abstract boolean partieTerminer();
 
     @Override
@@ -50,5 +43,17 @@ public abstract class AbstractModel implements Observable {
     public void addObservateur(Observateur o){
         observateurs.add(o);
     }
+
+
+	public int getHauteur() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	public int getLargeur() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
     
 }
