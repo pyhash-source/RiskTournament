@@ -47,10 +47,10 @@ public class RiskGame {
                 optionsToChoose[0]);
         if(choice == null)
         {
-        	choice ="noAction";//permet au bouton cancel de fonctionnner
+        	System.out.println("Quitting app...");
         } else if(choice == "Lancer une partie") {
         	choixCompetitionGUI(); 
-        }
+        } 
 	}
 
 	private static void choixCompetitionGUI() {
@@ -70,16 +70,19 @@ public class RiskGame {
 		        competitionToChoseFrom[0]);
 		//Dans competition, on a present le nom de la competition que l'on veut, donc on peut recuperer les
 		//infos qui lui sont associees
-		int resultatConfirmation = JOptionPane.showConfirmDialog(null, "Vous allez lancer une partie dans le cadre de la competition: "+ competition);
-		if(resultatConfirmation == 0) {
-			choixMancheGUI();
-
-			
-			
-		} else if(resultatConfirmation == 1) {
-			//en fait il y a eu erreur, retour au choix de la competition
-			choixCompetitionGUI();
+		
+		if(competition == null) {
+			System.out.println("Quitting app...");
+		} else {
+			int resultatConfirmation = JOptionPane.showConfirmDialog(null, "Vous allez lancer une partie dans le cadre de la competition: "+ competition);
+			if(resultatConfirmation == 0) {
+				choixMancheGUI();			
+			} else if(resultatConfirmation == 1) {
+				//en fait il y a eu erreur, retour au choix de la competition
+				choixCompetitionGUI();
+			} 
 		}
+		
 	}
 
 	private static void choixMancheGUI() {
@@ -100,16 +103,21 @@ public class RiskGame {
 		        manchesToChoseFrom,
 		        manchesToChoseFrom[0]);
 		
-		int confirmationManche = JOptionPane.showConfirmDialog(null, "Vous allez lancer une partie dans le cadre de la manche: "+ manche);
-		
-		if(confirmationManche == 0) {
-			//la manche est confirmee
-			System.out.println("Regalade");
-		} else if(confirmationManche == 1) {
-			//il y a eu erreur lors du choix de la manche, on reprend le choix de la manche
-			choixMancheGUI();
+		if(manche == null) {
+			System.out.println("Quitting app...");
+		} else {
+			int confirmationManche = JOptionPane.showConfirmDialog(null, "Vous allez lancer une partie dans le cadre de la manche: "+ manche);
 			
+			if(confirmationManche == 0) {
+				//la manche est confirmee
+				System.out.println("Regalade");
+			} else if(confirmationManche == 1) {
+				//il y a eu erreur lors du choix de la manche, on reprend le choix de la manche
+				choixMancheGUI();
+			}
 		}
+		
+		
 	}
     	
     }
