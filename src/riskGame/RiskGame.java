@@ -23,16 +23,7 @@ public class RiskGame {
      */
     public static void main(String[] args) {
     	mainMenuGUI();
-        /*
-        AbstractModel model = null; //à instancier
-        AbstractControler controler = null; //à instancier
-        Vue v = new Vue(model,controler);
-        model.addObservateur(v);
-        v.setVisible(true);
-        while(!model.partieTerminer()){
-            controler.calculerStepSuivant();
-        }
-         */
+        
     }
 
 	private static void mainMenuGUI() {
@@ -103,14 +94,25 @@ public class RiskGame {
 			
 			if(confirmationManche == 0) {
 				//Logique de la manche confirmee ici:
-				
-				System.out.println("Regalade");
+		        lancerManche();
+		         			
 			} else if(confirmationManche == 1) {
 				//ERREUR: retour au choix de la manche
 				choixMancheGUI();
 			}
 		}
 		
+	}
+
+	private static void lancerManche() {
+		AbstractModel model = null; //à instancier
+		AbstractControler controler = null; //à instancier
+		Vue v = new Vue(model,controler);
+		model.addObservateur(v);
+		v.setVisible(true);
+		while(!model.partieTerminer()){
+		    controler.calculerStepSuivant();
+		}
 	}
     	
     }
