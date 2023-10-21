@@ -20,5 +20,6 @@ public class RessourcesImages {
     public static Image MUR =new ImageIcon ("img/mur.jpg").getImage();
     public static Image IN =new ImageIcon ("img/in.png").getImage();
     public static Image OUT =new ImageIcon ("img/out.png").getImage();
-    public static Image CARTE =new ImageIcon ("img/carte.jpeg").getImage();
+    public static Image CARTE =new ImageIcon ("img/vraieCarte.jpeg").getImage();
+    public static Image CARTECOULEUR =new ImageIcon ("img/couleurCarte.jpeg").getImage();
 }

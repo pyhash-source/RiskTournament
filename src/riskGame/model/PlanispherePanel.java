@@ -14,12 +14,17 @@ import java.awt.image.BufferedImage;
 
 public class PlanispherePanel extends JPanel implements MouseListener {
 	private BufferedImage planisphereImage;
+	private BufferedImage planisphereColour;
 	private ArrayList<Territoire> territoires;
 
 	public PlanispherePanel() {
 		// chargement de l'image qui represente le plateau
-		Image toolkitImage = RessourcesImages.CARTE;
-		this.planisphereImage = toBufferedImage(toolkitImage);
+		Image carteImage = RessourcesImages.CARTE;
+		this.planisphereImage = toBufferedImage(carteImage);
+		
+		//carte identique mais coloree
+		Image carteColoreeImage = RessourcesImages.CARTECOULEUR;
+		this.planisphereColour = toBufferedImage(carteColoreeImage);
 
 		// ajout du listener pour capter les cliques de la souris
 		addMouseListener(this);
@@ -29,11 +34,9 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		
 		Territoire alaska = new Territoire("Alaska", "#CC7D3B");
 		territoires.add(alaska);
+		
 		Territoire argentine = new Territoire("Argentine", "#027C67");
 		territoires.add(argentine);
-		
-		Territoire congo = new Territoire("congo", "#C03D35");
-		territoires.add(congo);
 		
 		Territoire peru = new Territoire("Peru", "#3AA287");
 		territoires.add(peru);
@@ -44,8 +47,8 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		Territoire venezuela = new Territoire("Venezuela", "#82BAAD");
 		territoires.add(venezuela);
 		
-		Territoire mexico = new Territoire("Mexico", "#6D3E38");
-		territoires.add(mexico);
+		Territoire central = new Territoire("Central America", "#6D3E38");
+		territoires.add(central);
 		
 		Territoire westusa = new Territoire("Western USA", "#A04D3D");
 		territoires.add(westusa);
@@ -65,11 +68,35 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		Territoire northwestterritory = new Territoire("Northwest Territory", "#D2842F");
 		territoires.add(northwestterritory);
 		
-		Territoire groenland = new Territoire("Groenland", "#FFC90E");
+		Territoire groenland = new Territoire("Groenland", "#FFC90D");
 		territoires.add(groenland);
 		
-		Territoire thenorth = new Territoire("The North", "#FFF200");
-		territoires.add(thenorth);
+		Territoire iceland = new Territoire("Iceland", "#5BACC9");
+		territoires.add(iceland);
+		
+		Territoire scandinavia = new Territoire("Scandinavia ", "#018DB0");
+		territoires.add(scandinavia );
+		
+		Territoire ukraine = new Territoire("Ukraine", "#1081AB");
+		territoires.add(ukraine);
+		
+		Territoire greatbritain = new Territoire("Great Britain", "#206D9B");
+		territoires.add(greatbritain);
+		
+		Territoire westerneurope = new Territoire("Western Europe", "#1F709F");
+		territoires.add(westerneurope);
+		
+		Territoire southerneurope = new Territoire("Southern Europe", "#0187AA");
+		territoires.add(southerneurope);
+		
+		Territoire northerneurope = new Territoire("Northern Europe", "#1B6C99");
+		territoires.add(northerneurope);
+		
+		
+		
+		
+		Territoire northAfrica = new Territoire("North Africa", "#C03D35");
+		territoires.add(northAfrica);
 	
 		
 	}
@@ -123,7 +150,7 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 
 
 		//recupere la couleur de la ou on a clique
-		Color clickedColor = new Color(this.planisphereImage.getRGB(realX, realY));
+		Color clickedColor = new Color(this.planisphereColour.getRGB(realX, realY));
 
 		//transforme la couleur en hexcode
 		int red = clickedColor.getRed();
