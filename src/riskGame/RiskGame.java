@@ -54,9 +54,7 @@ public class RiskGame {
 	}
 
 	private static void choixCompetitionGUI() {
-		//On va a présent ouvrir une nouvelle fenetre pour demander de selectionner une competition
-		
-		//La logique de recuperation des choix de competitions doit etre ici:
+		//----------debut logique recuperation des competitions--------------
 		
 		//-----------fin de bloc de recuperation des competition-------------
 		String[] competitionToChoseFrom = {"Competition1", "Competition2..."};
@@ -68,8 +66,6 @@ public class RiskGame {
 		        null,
 		        competitionToChoseFrom,
 		        competitionToChoseFrom[0]);
-		//Dans competition, on a present le nom de la competition que l'on veut, donc on peut recuperer les
-		//infos qui lui sont associees
 		
 		if(competition == null) {
 			System.out.println("Quitting app...");
@@ -78,7 +74,7 @@ public class RiskGame {
 			if(resultatConfirmation == 0) {
 				choixMancheGUI();			
 			} else if(resultatConfirmation == 1) {
-				//en fait il y a eu erreur, retour au choix de la competition
+				//ERREUR: retour au choix de la competition
 				choixCompetitionGUI();
 			} 
 		}
@@ -86,9 +82,6 @@ public class RiskGame {
 	}
 
 	private static void choixMancheGUI() {
-		//Choix de la competition confirmee
-		//On doit a present devoir choisir la manche que l'on veut jouer
-		
 		//-----recuperation des infos des manches de la bd------
 		
 		//----fin de la recuperation des infos dans la bd--------
@@ -109,14 +102,14 @@ public class RiskGame {
 			int confirmationManche = JOptionPane.showConfirmDialog(null, "Vous allez lancer une partie dans le cadre de la manche: "+ manche);
 			
 			if(confirmationManche == 0) {
-				//la manche est confirmee
+				//Logique de la manche confirmee ici:
+				
 				System.out.println("Regalade");
 			} else if(confirmationManche == 1) {
-				//il y a eu erreur lors du choix de la manche, on reprend le choix de la manche
+				//ERREUR: retour au choix de la manche
 				choixMancheGUI();
 			}
 		}
-		
 		
 	}
     	
