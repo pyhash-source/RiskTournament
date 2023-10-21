@@ -6,7 +6,7 @@ package riskGame;
  */
 import riskGame.controler.AbstractControler;
 import riskGame.model.AbstractModel;
-import riskGame.model.PlanispherePanel;
+import riskGame.vue.PlanispherePanel;
 import riskGame.vue.Vue;
 import javax.swing.*;
 
