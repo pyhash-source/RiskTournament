@@ -8,7 +8,7 @@ import javax.swing.JPopupMenu;
  * Point d'entree du jeu.
  */
 import riskGame.controler.AbstractControler;
-import riskGame.model.AbstractModel;
+//import riskGame.model.AbstractModel;
 import riskGame.vue.PlanispherePanel;
 import riskGame.vue.Vue;
 import javax.swing.*;
