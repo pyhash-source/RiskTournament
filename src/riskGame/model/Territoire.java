@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Territoire {
 	
     private String nomTerritoire;
-    private String proprietaire;
+    private Joueur proprietaire;
     private String couleur;
     private int coordonneeX;
     private int coordonneeY;
@@ -15,11 +15,11 @@ public class Territoire {
     
     private int nbrRegiment;
     
-    public String getProprietaire() {
+    public Joueur getProprietaire() {
 		return proprietaire;
 	}
 
-	public void setProprietaire(String proprietaire) {
+	public void setProprietaire(Joueur proprietaire) {
 		this.proprietaire = proprietaire;
 	}
 
