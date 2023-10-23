@@ -1,28 +1,36 @@
 package riskGame.model;
+import java.util.ArrayList;
 
+/**
+ * @author elisa as SVRS
+ */
 public class Territoire {
-    private String nom;
+	
+    private String nomTerritoire;
+    private Joueur proprietaire;
     private String couleur;
-    private int x;
-    private int y;
-    private String proprietaire;
+    private int coordonneeX;
+    private int coordonneeY;
+    private ArrayList<Territoire> territoiresAccessibles;
+    
     private int nbrRegiment;
     
-    public String getProprietaire() {
+    public Joueur getProprietaire() {
 		return proprietaire;
 	}
 
-	public void setProprietaire(String proprietaire) {
+	public void setProprietaire(Joueur proprietaire) {
 		this.proprietaire = proprietaire;
 	}
 
-	public Territoire(String nom, String couleur, int x, int y) {
-        this.nom = nom;
+	public Territoire(String nomTerritoire, String couleur, int coordonneeX, int coordonneeY) {
+        this.nomTerritoire = nomTerritoire;
         this.couleur = couleur;
-        this.x = x;
-        this.y = y;
-        this.proprietaire = "sans";
+        this.coordonneeX = coordonneeX;
+        this.coordonneeY = coordonneeY;
+        this.proprietaire = null;
         this.nbrRegiment = 0;
+        this.territoiresAccessibles = new ArrayList<>();
     }
 
     public int getNbrRegiment() {
@@ -33,35 +41,45 @@ public class Territoire {
 		this.nbrRegiment = nbrRegiment;
 	}
 
-	public int getX() {
-		return x;
+	public String getNomTerritoire() {
+		return nomTerritoire;
 	}
 
-	public void setX(int x) {
-		this.x = x;
+	public void setNomTerritoire(String nomTerritoire) {
+		this.nomTerritoire = nomTerritoire;
 	}
 
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
+	public String getCouleur() {
+		return couleur;
 	}
 
 	public void setCouleur(String couleur) {
 		this.couleur = couleur;
 	}
 
-	public String getNom() {
-        return nom;
-    }
+	public int getCoordonneeX() {
+		return coordonneeX;
+	}
 
-    public String getCouleur() {
-        return couleur;
-    }
+	public void setCoordonneeX(int coordonneeX) {
+		this.coordonneeX = coordonneeX;
+	}
+
+	public int getCoordonneeY() {
+		return coordonneeY;
+	}
+
+	public void setCoordonneeY(int coordonneeY) {
+		this.coordonneeY = coordonneeY;
+	}
+
+	public ArrayList<Territoire> getTerritoiresAccessibles() {
+		return territoiresAccessibles;
+	}
+
+	public void setTerritoiresAccessibles(ArrayList<Territoire> territoiresAccessibles) {
+		this.territoiresAccessibles = territoiresAccessibles;
+	}
+
+	
 }
