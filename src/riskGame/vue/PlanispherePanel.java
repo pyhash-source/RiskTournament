@@ -1,5 +1,9 @@
 package riskGame.vue;
 
+/**
+ * @author elisa as SVRS
+ */
+
 import javax.swing.*;
 import riskGame.model.Territoire;
 import java.awt.*;

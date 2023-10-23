@@ -1,8 +1,8 @@
 package riskGame.model;
 import java.util.ArrayList;
 
-/*
- * La classe representant un territoire
+/**
+ * @author elisa as SVRS
  */
 public class Territoire {
 	
