@@ -1,6 +1,6 @@
 package riskGame.model;
 
-//import java.util.ArrayList;
+import java.util.ArrayList;
 
 /**
 *
@@ -20,7 +20,7 @@ public class Joueur {
 		private int nombreRegimentsElimines;
 		private int nombreAttaques;
 		private int nombreDeplacement;
-		//private ArrayList<Cartes> mesCartes;
+		private ArrayList<Carte> mesCartes;
 		
 		//Constructor
 		public Joueur(String nomJoueur, String prenomJoueur, String dateNaissance, EtatJoueur etatJoueur,int numeroJoueur) {
