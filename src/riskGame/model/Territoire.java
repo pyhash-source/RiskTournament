@@ -30,6 +30,7 @@ public class Territoire {
         this.coordonneeY = coordonneeY;
         this.proprietaire = null;
         this.nbrRegiment = 0;
+        this.territoiresAccessibles = new ArrayList<>();
     }
 
     public int getNbrRegiment() {
