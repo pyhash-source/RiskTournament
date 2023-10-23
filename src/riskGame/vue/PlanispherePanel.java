@@ -5,7 +5,12 @@ package riskGame.vue;
  */
 
 import javax.swing.*;
+
+import riskGame.model.EtatJoueur;
+import riskGame.model.Joueur;
 import riskGame.model.Territoire;
+import riskGame.model.TypeCouleur;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -24,6 +29,7 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		// chargement de l'image qui represente le plateau
 		Image carteImage = RessourcesImages.CARTE;
 		this.planisphereImage = toBufferedImage(carteImage);
+		Joueur joueur1 = new Joueur("Messi", "Leo", "24/06/1984", EtatJoueur.VALIDE, 1, TypeCouleur.BLANC);
 
 		// carte identique mais coloree
 		Image carteColoreeImage = RessourcesImages.CARTECOULEUR;
@@ -39,14 +45,13 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		territoires.add(alaska);
 
 		Territoire argentine = new Territoire("Argentine", "#027C67", 388, 1500);
-		argentine.setProprietaire("jaune");
+		argentine.setProprietaire(joueur1);
 		territoires.add(argentine);
 
 		Territoire peru = new Territoire("Peru", "#3AA287", 458, 1317);
 		territoires.add(peru);
 
 		Territoire brazil = new Territoire("Brazil", "#009778", 617, 1373);
-		brazil.setProprietaire("bleu");
 		territoires.add(brazil);
 
 		Territoire venezuela = new Territoire("Venezuela", "#82BAAD", 394, 1070);
@@ -74,7 +79,6 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		territoires.add(northwestterritory);
 
 		Territoire groenland = new Territoire("Groenland", "#FFC90D", 1020, 112);
-		groenland.setProprietaire("rouge");
 		territoires.add(groenland);
 
 		Territoire iceland = new Territoire("Iceland", "#5BACC9", 1160, 232);
@@ -207,21 +211,14 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 			// coordonnees de la fenetre
 			int realX = t.getCoordonneeX() * componentWidth / imageWidth;
 			int realY = t.getCoordonneeY() * componentHeight / imageHeight;
-			if(t.getProprietaire().equals("jaune")) {
-				g.drawImage(RessourcesImages.JAUNE, realX, realY, 40, 40, this);
+			if(t.getProprietaire()!=null) {
+				System.out.println(t.getProprietaire().getCouleurJoueur());
+				if(t.getProprietaire().getCouleurJoueur()==TypeCouleur.BLANC) {
+					g.drawImage(RessourcesImages.BLANC, realX, realY, 40, 40, this);
+				}
 			}
-			if(t.getProprietaire().equals("bleu")) {
-				g.drawImage(RessourcesImages.BLEU, realX, realY, 40, 40, this);
-			}
-			if(t.getProprietaire().equals("blanc")) {
-				g.drawImage(RessourcesImages.BLANC, realX, realY, 40, 40, this);
-			}
-			if(t.getProprietaire().equals("rouge")) {
-				g.drawImage(RessourcesImages.ROUGE, realX, realY, 40, 40, this);
-			}
-			if(t.getProprietaire().equals("vert")) {
-				g.drawImage(RessourcesImages.VERT, realX, realY, 40, 40, this);
-			}
+			
+			
 
 			
 		}

@@ -28,6 +28,7 @@ public class Joueur {
 	        this.prenomJoueur = prenomJoueur;
 	        this.dateNaissance = dateNaissance;
 	        this.etatJoueur = etatJoueur;
+	        this.couleurJoueur = typeCouleur;
 	        this.nombreCartesTirees = 0;
 	        this.nombreCartesEchangees = 0;
 	        this.nombreRegimentsRecuperes = 0;
@@ -37,7 +38,7 @@ public class Joueur {
 	    }
 		
 		public TypeCouleur getCouleurJoueur() {
-			return couleurJoueur;
+			return this.couleurJoueur;
 		}
 
 		public void setCouleurJoueur(TypeCouleur couleurJoueur) {
