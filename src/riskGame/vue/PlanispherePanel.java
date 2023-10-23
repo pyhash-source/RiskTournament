@@ -44,7 +44,7 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		Territoire alaska = new Territoire("Alaska", "#CC7D3B", 114, 147);
 		territoires.add(alaska);
 
-		Territoire argentine = new Territoire("Argentine", "#027C67", 388, 1500);
+		Territoire argentine = new Territoire("Argentine", "#027C67", 400, 1465);
 		argentine.setProprietaire(joueur1);
 		territoires.add(argentine);
 
@@ -211,13 +211,13 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 			// coordonnees de la fenetre
 			int realX = t.getCoordonneeX() * componentWidth / imageWidth;
 			int realY = t.getCoordonneeY() * componentHeight / imageHeight;
-			if(t.getProprietaire()!=null) {
-				
-				if(t.getProprietaire().getCouleurJoueur()==TypeCouleur.BLANC) {
-					System.out.println(TypeCouleur.BLANC);
-					g.drawImage(RessourcesImages.BLANC, realX, realY, 40, 40, this);
-				}
-			}
+//			if(t.getProprietaire()!=null) {
+//				
+//				if(t.getProprietaire().getCouleurJoueur()==TypeCouleur.BLANC) {
+//					System.out.println(TypeCouleur.BLANC);
+					g.drawImage(RessourcesImages.BLANC, realX, realY, 30, 30, this);
+//				}
+//			}
 			
 			
 

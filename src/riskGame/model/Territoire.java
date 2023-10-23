@@ -12,7 +12,6 @@ public class Territoire {
     private int coordonneeX;
     private int coordonneeY;
     private ArrayList<Territoire> territoiresAccessibles;
-    
     private int nbrRegiment;
     
     public Joueur getProprietaire() {
