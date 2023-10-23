@@ -3,6 +3,10 @@ package riskGame.model;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * @author Jean
+ **/
+
 public class Manche {
 	private int numeraManche;
 	private Date debutPartie;
