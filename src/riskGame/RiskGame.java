@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package riskGame;
 
 import javax.swing.JOptionPane;
@@ -14,7 +9,9 @@ import javax.swing.JPopupMenu;
  */
 import riskGame.controler.AbstractControler;
 import riskGame.model.AbstractModel;
+import riskGame.vue.PlanispherePanel;
 import riskGame.vue.Vue;
+import javax.swing.*;
 
 public class RiskGame {
 	static String tournoiChoisi = "";
@@ -25,6 +22,7 @@ public class RiskGame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
     	mainMenuGUI();
         
     }
@@ -146,16 +144,15 @@ public class RiskGame {
 	}
 
 	private static void lancerManche() {
-		AbstractModel model = null; //à instancier
-		AbstractControler controler = null; //à instancier
-		Vue v = new Vue(model,controler);
-		model.addObservateur(v);
-		v.setVisible(true);
-		while(!model.partieTerminer()){
-		    controler.calculerStepSuivant();
-		}
-	}
-    	
+		
+    SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Risk");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            PlanispherePanel planispherePanel = new PlanispherePanel();
+            frame.add(planispherePanel);
+            frame.setSize(800, 600);
+            frame.setVisible(true);
+        });
     }
-    
+ 
 
