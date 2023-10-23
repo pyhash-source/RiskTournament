@@ -23,7 +23,7 @@ public class Joueur {
 		private ArrayList<Carte> mesCartes;
 		
 		//Constructor
-		public Joueur(String nomJoueur, String prenomJoueur, String dateNaissance, EtatJoueur etatJoueur,int numeroJoueur) {
+		public Joueur(String nomJoueur, String prenomJoueur, String dateNaissance, EtatJoueur etatJoueur,int numeroJoueur, TypeCouleur typeCouleur) {
 	        this.nomJoueur = nomJoueur;
 	        this.prenomJoueur = prenomJoueur;
 	        this.dateNaissance = dateNaissance;
@@ -36,6 +36,22 @@ public class Joueur {
 	        this.nombreDeplacement = 0;
 	    }
 		
+		public TypeCouleur getCouleurJoueur() {
+			return couleurJoueur;
+		}
+
+		public void setCouleurJoueur(TypeCouleur couleurJoueur) {
+			this.couleurJoueur = couleurJoueur;
+		}
+
+		public ArrayList<Carte> getMesCartes() {
+			return mesCartes;
+		}
+
+		public void setMesCartes(ArrayList<Carte> mesCartes) {
+			this.mesCartes = mesCartes;
+		}
+
 		//Getters and setters
 		public int getNumeroJoueur() {
 			return numeroJoueur;
