@@ -25,6 +25,6 @@ public class RessourcesImages {
     public static Image JAUNE =new ImageIcon ("img/jaune.png").getImage();
     public static Image BLEU =new ImageIcon ("img/bleu.png").getImage();
     public static Image ROUGE =new ImageIcon ("img/rouge.png").getImage();
-    public static Image BLANC =new ImageIcon ("img/blanc.jpeg").getImage();
-    public static Image VERT =new ImageIcon ("img/vert.jpeg").getImage();
+    public static Image BLANC =new ImageIcon ("img/blanc.png").getImage();
+    public static Image VERT =new ImageIcon ("img/vert.png").getImage();
 }

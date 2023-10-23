@@ -212,8 +212,9 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 			int realX = t.getCoordonneeX() * componentWidth / imageWidth;
 			int realY = t.getCoordonneeY() * componentHeight / imageHeight;
 			if(t.getProprietaire()!=null) {
-				System.out.println(t.getProprietaire().getCouleurJoueur());
+				
 				if(t.getProprietaire().getCouleurJoueur()==TypeCouleur.BLANC) {
+					System.out.println(TypeCouleur.BLANC);
 					g.drawImage(RessourcesImages.BLANC, realX, realY, 40, 40, this);
 				}
 			}
