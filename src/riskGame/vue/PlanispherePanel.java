@@ -1,15 +1,11 @@
 package riskGame.vue;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-
 import riskGame.model.Territoire;
-
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.List;
 import java.awt.image.BufferedImage;
 
 public class PlanispherePanel extends JPanel implements MouseListener {
@@ -205,8 +201,8 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		for (Territoire t : territoires) {
 			// conversion des coordonnees de l image aux
 			// coordonnees de la fenetre
-			int realX = t.getX() * componentWidth / imageWidth;
-			int realY = t.getY() * componentHeight / imageHeight;
+			int realX = t.getCoordonneeX() * componentWidth / imageWidth;
+			int realY = t.getCoordonneeY() * componentHeight / imageHeight;
 			if(t.getProprietaire().equals("jaune")) {
 				g.drawImage(RessourcesImages.JAUNE, realX, realY, 40, 40, this);
 			}
@@ -265,7 +261,7 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		// print le nom du territoire ou il y a le clique
 		for (Territoire t : territoires) {
 			if (isTerritoireColor(rvbHexCode, t)) {
-				System.out.println(t.getNom());
+				System.out.println(t.getNomTerritoire());
 			}
 		}
 	}
