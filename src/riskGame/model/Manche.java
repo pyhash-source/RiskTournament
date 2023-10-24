@@ -1,10 +1,12 @@
 package riskGame.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Random;
 
 /**
- * @author Jean
+ * @author Jean;Zhuo
  **/
 
 public class Manche {
@@ -56,6 +58,50 @@ public class Manche {
 
 	public void ajouterJoueur(Joueur joueur) {
 		this.joueursManche.add(joueur);
+	}
+	
+	// confronter(JoueurAttaque, JoueurDefense, nbrDeA, nbrDeD): void dans manche
+	public static void confronterManche(Joueur joueurAttaque, Joueur joueurDefense) {
+		// get joueurInfo
+		int nomJoueurAttaque = joueurAttaque.getNumeroJoueur();
+	    int nomJoueurDefense = joueurDefense.getNumeroJoueur();
+		
+	    // resultat pour lance les dés 
+	    int[] resultAttaque = new int[3]; // maximum de trois fois
+	    int[] resultDefense = new int[2]; // maximum de deux fois
+	    
+	    //  lance les dés
+	    int nbDeAtt = 3;
+	    int nbDeDef = 2;
+	    for (int i = 0; i < nbDeAtt; i++) {
+	        resultAttaque[i] = lancerUnDe(); 
+	    }
+	    for (int i = 0; i < nbDeDef; i++) {
+	    	resultDefense[i] = lancerUnDe(); 
+	    }
+	    
+	    // Trier les résultats du plus grand au plus petit
+	    Arrays.sort(resultAttaque);
+	    Arrays.sort(resultDefense);
+	    
+	    // Comparer les résultats des dés un par un
+	    for (int i = 0; i < Math.min(nbDeAtt, nbDeDef); i++) {
+	        if (resultAttaque[i] > resultDefense[i]) {
+	            System.out.println("Pour valeur"+ (i+1)+ "Joueur Attaque gagne !");
+	        } else{
+	            System.out.println("Pour valeur"+ (i+1)+ "Joueur Defense gagne !");
+	        }
+	    }
+	    
+	}
+	
+	public static int lancerUnDe() {
+	    Random random = new Random();
+	    int min = 1; 
+	    int max = 6; 
+	    // obtenir entier [1,6]
+	    int deResult = random.nextInt(max - min + 1) + min;
+	    return deResult;
 	}
 	
 }
