@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * @author Jean
+ * @author Jean, elisa(ou svrs),
  **/
 
 public class Manche {
@@ -56,6 +56,18 @@ public class Manche {
 
 	public void ajouterJoueur(Joueur joueur) {
 		this.joueursManche.add(joueur);
+	}
+	
+	public boolean deplacerRegiments(Joueur joueur, Territoire territoireDepart, Territoire territoireArrive, int nbrADeplacer) {
+		if(territoireDepart.getProprietaire().equals(joueur)&&territoireArrive.getProprietaire().equals(joueur)) {
+			boolean supprime = territoireDepart.supprimerRegiments(nbrADeplacer);
+			if(supprime) {
+				territoireArrive.ajouterRegiments(nbrADeplacer);
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 }

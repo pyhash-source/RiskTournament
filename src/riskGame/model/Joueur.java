@@ -1,10 +1,12 @@
 package riskGame.model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
 *
-* @author fitia
+* @author fitia, elisa(or svrs)
+* 
 */
 
 public class Joueur {
@@ -110,6 +112,34 @@ public class Joueur {
 		public void setNombreDeplacement(int nombreDeplacement) {
 			this.nombreDeplacement = nombreDeplacement;
 		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(couleurJoueur, dateNaissance, etatJoueur, mesCartes, nomJoueur, nombreAttaques,
+					nombreCartesEchangees, nombreCartesTirees, nombreDeplacement, nombreRegimentsElimines,
+					nombreRegimentsRecuperes, numeroJoueur, prenomJoueur);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Joueur other = (Joueur) obj;
+			return couleurJoueur == other.couleurJoueur && Objects.equals(dateNaissance, other.dateNaissance)
+					&& etatJoueur == other.etatJoueur && Objects.equals(mesCartes, other.mesCartes)
+					&& Objects.equals(nomJoueur, other.nomJoueur) && nombreAttaques == other.nombreAttaques
+					&& nombreCartesEchangees == other.nombreCartesEchangees
+					&& nombreCartesTirees == other.nombreCartesTirees && nombreDeplacement == other.nombreDeplacement
+					&& nombreRegimentsElimines == other.nombreRegimentsElimines
+					&& nombreRegimentsRecuperes == other.nombreRegimentsRecuperes && numeroJoueur == other.numeroJoueur
+					&& Objects.equals(prenomJoueur, other.prenomJoueur);
+		}
+		
+		
 			
 		
 }
