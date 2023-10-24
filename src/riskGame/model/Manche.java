@@ -44,6 +44,30 @@ public class Manche {
 	}
 
 
+	public Date getFinPartie() {
+		return finPartie;
+	}
+
+	public void setNumeroManche(int numeroManche) {
+		this.numeroManche = numeroManche;
+	}
+
+	public void setDebutPartie(Date debutPartie) {
+		this.debutPartie = debutPartie;
+	}
+
+	public void setEtatManche(EtatManche etatManche) {
+		this.etatManche = etatManche;
+	}
+
+	public void setClassement(ArrayList<Joueur> classement) {
+		this.classement = classement;
+	}
+
+	public void setJoueursManche(ArrayList<Joueur> joueursManche) {
+		this.joueursManche = joueursManche;
+	}
+
 	public EtatManche getEtatManche() {
 		return etatManche;
 	}
