@@ -48,6 +48,9 @@ public class Manche {
 		return etatManche;
 	}
 
+	public int recupererClassementJoueur(Joueur joueur) {
+		return (this.classement.indexOf(joueur)+1);
+	}
 
 	public ArrayList<Joueur> getClassement() {
 		return classement;
@@ -73,6 +76,7 @@ public class Manche {
 			boolean supprime = territoireDepart.supprimerRegiments(nbrADeplacer);
 			if(supprime) {
 				territoireArrive.ajouterRegiments(nbrADeplacer);
+				joueur.setNombreDeplacement(joueur.getNombreDeplacement()+nbrADeplacer);
 				return true;
 			}
 		}
