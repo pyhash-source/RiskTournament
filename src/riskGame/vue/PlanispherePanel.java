@@ -7,7 +7,6 @@ package riskGame.vue;
 import javax.swing.*;
 
 import riskGame.model.Equipe;
-import riskGame.model.EtatJoueur;
 import riskGame.model.Joueur;
 import riskGame.model.Territoire;
 import riskGame.model.TypeCouleur;
@@ -25,30 +24,16 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 	private BufferedImage planisphereColour;
 	// liste de tous les territoires
 	private ArrayList<Territoire> territoires;
-	
-	//liste des joueurs
+	// liste des joueurs
 	private ArrayList<Joueur> joueurs;
-
-	public PlanispherePanel() {
+	
+	public PlanispherePanel(ArrayList<Joueur> joueurs) {
+		
+		this.joueurs = new ArrayList<>(joueurs);
 		// chargement de l'image qui represente le plateau
 		Image carteImage = RessourcesImages.CARTE;
 		this.planisphereImage = toBufferedImage(carteImage);
 		
-		// Initialisation des nouveaux joueurs
-		Joueur joueur1 = new Joueur("CUEILLE", "Elisa", "24/06/1984", EtatJoueur.VALIDE, 1, TypeCouleur.BLANC);
-		Joueur joueur2 = new Joueur("CHAKAR", "Yasmine", "24/06/1984", EtatJoueur.VALIDE, 2, TypeCouleur.ROUGE);
-		Joueur joueur3= new Joueur("CARDONA", "Jean", "24/06/1984", EtatJoueur.VALIDE, 3, TypeCouleur.VERT);
-		Joueur joueur4= new Joueur("MA", "Zhuo", "24/06/1984", EtatJoueur.VALIDE, 4, TypeCouleur.JAUNE);
-		Joueur joueur5= new Joueur("RKT", "Fitia", "24/06/1984", EtatJoueur.VALIDE, 5, TypeCouleur.BLEU);
-		
-		joueurs = new ArrayList<>();
-		joueurs.add(joueur1);
-		joueurs.add(joueur2);
-		joueurs.add(joueur3);
-		joueurs.add(joueur4);
-		joueurs.add(joueur5);
-		
-		// Affectation des joueurs à une équipe
 		Equipe equipe1 = new Equipe(1);
 		equipe1.setJoueurs(joueurs);
 
@@ -66,7 +51,7 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		territoires.add(alaska);
 
 		Territoire argentine = new Territoire("Argentine", "#027C67", 400, 1465);
-		argentine.setProprietaire(joueur1);
+		argentine.setProprietaire(joueurs.get(0));
 		territoires.add(argentine);
 
 		Territoire peru = new Territoire("Peru", "#3AA287", 456, 1299);
@@ -250,9 +235,6 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		}
 		
 		// Dessiner un cadre qui affiche les informations du joueur
-		//g.setColor(Color.BLACK); 
-		//g.fillRect(10, componentHeight - 110, 90, 180);
-		
 		for (Joueur joueur : joueurs) {
 		    if (joueur.getCouleurJoueur() == TypeCouleur.BLANC){
 		        g.setColor(Color.WHITE);

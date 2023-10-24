@@ -10,7 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import riskGame.model.EtatJoueur;
 import riskGame.model.Joueur;
+import riskGame.model.TypeCouleur;
 //import riskGame.model.AbstractModel;
 import riskGame.vue.PlanispherePanel;
 
@@ -18,6 +20,7 @@ public class RiskGame {
 	static String tournoiChoisi = "";
 	static String competitionChoisie = "";
 	static String mancheChoisie = "";
+	static ArrayList<Joueur> listeJoueurs = new ArrayList<>();
 
 	/**
 	 * @param args the command line arguments
@@ -194,16 +197,71 @@ public class RiskGame {
 
 	private static void lancerManche() {
 
+		// Récupération des joueurs
+		
+		// Connection avec la db 
+		try {
+			Statement stmt;
+			Class.forName("com.mysql.jdbc.Driver");
+			String url = "jdbc:mysql://localhost:3306/si_risk";
+			Connection con = DriverManager.getConnection(url, "root", "");
+			stmt = con.createStatement();
+			
+			ResultSet resultat = stmt.executeQuery("SELECT *"
+					+ "FROM joueur, tournoi, competition, manche, inscrire"
+					+ " WHERE manche.numeroTournoi = tournoi.numeroTournoi"
+					+ " AND tournoi.numeroCompetition = competition.numeroCompetition"
+					+ " AND joueur.numeroJoueur = inscrire.numeroJoueur"
+					+ " AND inscrire.numeroManche = manche.numeroManche"
+					+ " AND tournoi.numeroTournoi = " + tournoiChoisi 
+					+ " AND competition.nomCompetition = '" + competitionChoisie  +"'"
+					+ " AND manche.numeroManche = " + mancheChoisie);
+			
+			// processing the data:
+			ArrayList<TypeCouleur> couleurJoueur = new ArrayList<>();
+			couleurJoueur.add(TypeCouleur.BLANC);
+			couleurJoueur.add(TypeCouleur.BLEU);
+			couleurJoueur.add(TypeCouleur.VERT);
+			couleurJoueur.add(TypeCouleur.ROUGE);
+			couleurJoueur.add(TypeCouleur.JAUNE);
+			
+			while(resultat.next()) {
+				String nomJoueur = resultat.getString("nomJoueur");
+				String prenomJoueur = resultat.getString("prenomJoueur");
+				int  numeroJoueur = Integer.valueOf(resultat.getString("numeroJoueur"));
+				String dateNaissanceJoueur = resultat.getString("dateNaissanceJoueur");
+				String etatJoueurString = resultat.getString("etatJoueur");
+				EtatJoueur etatJoueurEnum = EtatJoueur.VALIDE;
+				
+				if(etatJoueurString.equals("Valide")) {
+					etatJoueurEnum = EtatJoueur.VALIDE;
+				} else {
+					etatJoueurEnum = EtatJoueur.ELIMINE;
+				}
+				
+				TypeCouleur typeCouleurJoueur = couleurJoueur.get(0);
+				couleurJoueur.remove(0);
+				
+				Joueur joueur = new Joueur(nomJoueur, prenomJoueur, dateNaissanceJoueur,  etatJoueurEnum, numeroJoueur,  typeCouleurJoueur);		
+				listeJoueurs.add(joueur);
+			}
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		// Fin récupération des joueurs
+		
 		// on a initialise la vue
 		SwingUtilities.invokeLater(() -> {
 			JFrame frame = new JFrame("Risk");
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			PlanispherePanel planispherePanel = new PlanispherePanel();
+			PlanispherePanel planispherePanel = new PlanispherePanel(listeJoueurs);
 			frame.add(planispherePanel);
 			frame.setSize(800, 600);
 			frame.setVisible(true);
 		});
 
+		
 		// Initialisation des objets
 	}
 
