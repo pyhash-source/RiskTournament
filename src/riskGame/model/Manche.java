@@ -112,7 +112,7 @@ public class Manche {
 	// Methods
 	
 	/*
-	 * Cette fonction permet de d�terminer le premier joueur d'un jeu en utilisant un lancer de d� pour chaque joueur
+	 * Cette fonction permet de determiner le premier joueur d'un jeu en utilisant un lancer de de pour chaque joueur
 	 */
 	
 	public Joueur determinerPremierJoueur() {
@@ -120,7 +120,7 @@ public class Manche {
 		Random random = new Random();
 		HashMap <Joueur, Integer> resultatLancementDe = new HashMap<>();
 		
-		// G�n�rer des nombres al�atoires pour chaque joueur 
+		// Gerer des nombres aletoires pour chaque joueur 
 		for (Joueur joueur : this.joueursManche) {
 		    int randomNumber = random.nextInt(6) + 1;
 		    resultatLancementDe.put(joueur, randomNumber);
@@ -132,7 +132,7 @@ public class Manche {
         
         Iterator it;
         it = resultatLancementDe.keySet().iterator();
-        StringBuilder message = new StringBuilder("R�sultats du lancement de d� : \n");
+        StringBuilder message = new StringBuilder("Resultats du lancement de d� : \n");
 		        
         while(it.hasNext()) {
         	Joueur joueurActuel = (Joueur) it.next(); 
@@ -142,27 +142,29 @@ public class Manche {
         	message.append(joueurActuel.getPrenomJoueur()).append(" : ").append(number).append("\n");
         	if (number>maxNumber) {
         		maxNumber=number;
-        		//D�terminer premier joueur
+        		//Determiner premier joueur
         		premierJoueur = joueurActuel;
         	}
         }
 		        
-        message.append("\nLe premier joueur � jouer est ").append(premierJoueur.getPrenomJoueur());
+        message.append("\nLe premier joueur a jouer est ").append(premierJoueur.getPrenomJoueur());
        
         // Affichage popup
         JOptionPane.showMessageDialog(null, message.toString());
 		return premierJoueur;
 
 	}
-		public boolean deplacerRegiments(Joueur joueur, Territoire territoireDepart, Territoire territoireArrive, int nbrADeplacer) {
-		if(territoireDepart.getProprietaire().equals(joueur)&&territoireArrive.getProprietaire().equals(joueur)) {
-			boolean supprime = territoireDepart.supprimerRegiments(nbrADeplacer);
-			if(supprime) {
-				territoireArrive.ajouterRegiments(nbrADeplacer);
-				joueur.setNombreDeplacement(joueur.getNombreDeplacement()+nbrADeplacer);
-				return true;
-			}
+	
+	public boolean deplacerRegiments(Joueur joueur, Territoire territoireDepart, Territoire territoireArrive, int nbrADeplacer) {
+	if(territoireDepart.getProprietaire().equals(joueur)&&territoireArrive.getProprietaire().equals(joueur)) {
+		boolean supprime = territoireDepart.supprimerRegiments(nbrADeplacer);
+		if(supprime) {
+			territoireArrive.ajouterRegiments(nbrADeplacer);
+			joueur.setNombreDeplacement(joueur.getNombreDeplacement()+nbrADeplacer);
+			return true;
 		}
-		
-		return false;
+	}
+	
+	return false;
 }
+		}
