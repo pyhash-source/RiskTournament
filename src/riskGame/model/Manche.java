@@ -9,7 +9,8 @@ import javax.swing.JOptionPane;
 
 
 /**
- * @author Jean, Fitia
+ * @author Jean, elisa(ou svrs), Fitia
+
  **/
 
 public class Manche {
@@ -28,6 +29,16 @@ public class Manche {
 		this.etatManche = etatManche;
 	}
 	
+	public boolean placerRegimentTerritoire(Joueur joueur, Territoire territoire, int nbrRegiment) {
+		if(territoire.getProprietaire() == joueur) {
+			territoire.ajouterRegiments(nbrRegiment);
+			System.out.println("Regiments places avec succes sur le territoire choisi.");
+			return true;
+		} else {
+			System.out.println("Vous ne pouvez pas ajouter des regiments dans un territoire que vous ne possedez pas...");
+			return false;
+		}
+	}
 	
 	public int getNumeroManche() {
 		return numeroManche;
@@ -43,6 +54,9 @@ public class Manche {
 		return etatManche;
 	}
 
+	public int recupererClassementJoueur(Joueur joueur) {
+		return (this.classement.indexOf(joueur)+1);
+	}
 
 	public ArrayList<Joueur> getClassement() {
 		return classement;
@@ -66,7 +80,7 @@ public class Manche {
 	// Methods
 	
 	/*
-	 * Cette fonction permet de déterminer le premier joueur d'un jeu en utilisant un lancer de dé pour chaque joueur
+	 * Cette fonction permet de dï¿½terminer le premier joueur d'un jeu en utilisant un lancer de dï¿½ pour chaque joueur
 	 */
 	
 	public Joueur determinerPremierJoueur() {
@@ -74,7 +88,7 @@ public class Manche {
 		Random random = new Random();
 		HashMap <Joueur, Integer> resultatLancementDe = new HashMap<>();
 		
-		// Générer des nombres aléatoires pour chaque joueur 
+		// Gï¿½nï¿½rer des nombres alï¿½atoires pour chaque joueur 
 		for (Joueur joueur : this.joueursManche) {
 		    int randomNumber = random.nextInt(6) + 1;
 		    resultatLancementDe.put(joueur, randomNumber);
@@ -86,7 +100,7 @@ public class Manche {
         
         Iterator it;
         it = resultatLancementDe.keySet().iterator();
-        StringBuilder message = new StringBuilder("Résultats du lancement de dé : \n");
+        StringBuilder message = new StringBuilder("Rï¿½sultats du lancement de dï¿½ : \n");
 		        
         while(it.hasNext()) {
         	Joueur joueurActuel = (Joueur) it.next(); 
@@ -96,16 +110,27 @@ public class Manche {
         	message.append(joueurActuel.getPrenomJoueur()).append(" : ").append(number).append("\n");
         	if (number>maxNumber) {
         		maxNumber=number;
-        		//Déterminer premier joueur
+        		//Dï¿½terminer premier joueur
         		premierJoueur = joueurActuel;
         	}
         }
 		        
-        message.append("\nLe premier joueur à jouer est ").append(premierJoueur.getPrenomJoueur());
+        message.append("\nLe premier joueur ï¿½ jouer est ").append(premierJoueur.getPrenomJoueur());
        
         // Affichage popup
         JOptionPane.showMessageDialog(null, message.toString());
 		return premierJoueur;
+
 	}
-	
+		public boolean deplacerRegiments(Joueur joueur, Territoire territoireDepart, Territoire territoireArrive, int nbrADeplacer) {
+		if(territoireDepart.getProprietaire().equals(joueur)&&territoireArrive.getProprietaire().equals(joueur)) {
+			boolean supprime = territoireDepart.supprimerRegiments(nbrADeplacer);
+			if(supprime) {
+				territoireArrive.ajouterRegiments(nbrADeplacer);
+				joueur.setNombreDeplacement(joueur.getNombreDeplacement()+nbrADeplacer);
+				return true;
+			}
+		}
+		
+		return false;
 }
