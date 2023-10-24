@@ -23,6 +23,16 @@ public class Manche {
 		this.etatManche = etatManche;
 	}
 	
+	public boolean placerRegimentTerritoire(Joueur joueur, Territoire territoire, int nbrRegiment) {
+		if(territoire.getProprietaire() == joueur) {
+			territoire.ajouterRegiments(nbrRegiment);
+			System.out.println("Regiments places avec succes sur le territoire choisi.");
+			return true;
+		} else {
+			System.out.println("Vous ne pouvez pas ajouter des regiments dans un territoire que vous ne possedez pas...");
+			return false;
+		}
+	}
 	
 	public int getNumeroManche() {
 		return numeroManche;
