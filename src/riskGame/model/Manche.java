@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
-import java.util.Scanner; 
+//import java.util.Scanner;
+
+import javax.swing.JOptionPane; 
 
 /**
  * @author Jean;Zhuo
@@ -61,29 +63,36 @@ public class Manche {
 		this.joueursManche.add(joueur);
 	}
 	
-	// confronter(JoueurAttaque, JoueurDefense, nbrDeA, nbrDeD): void dans manche
-	public void confronterManche(Joueur joueurAttaque, Joueur joueurDefense) {
-		// get joueurInfo
-		int nomJoueurAttaque = joueurAttaque.getNumeroJoueur();
-	    int nomJoueurDefense = joueurDefense.getNumeroJoueur();
+	// fonction pour confronter
+	//todo supprimer les rgts perdus de l'attaquant + check si c'est possible d'attaquer du territoire
+	public int confronterManche(Joueur joueurAttaque, Territoire territoire) {
 		
-	    int[] resultAttaque = new int[3]; // maximum de trois fois
-	    int[] resultDefense = new int[2]; // maximum de deux fois
-	   
-	    // resultat pour lance les dés 
-	    Scanner scan = new Scanner(System.in);
-	    System.out.println("Combien de fois voulez-vous lancer les dés ?");
-	    int nbDeAtt = scan.nextInt();
+		// get nombre régiments defence
+		Joueur joueurDefense = territoire.getProprietaire();
+		int nbrRegimentsDefense = territoire.getNbrRegiment();
 	    
-	    System.out.println("Combien de régiments avez-vous ?");
-	    int nbDeDef = scan.nextInt();
+		// get nombre attaque
+	    String nombreAttaque = (String) JOptionPane.showInputDialog("Combien de régiments voulez-vous attaquer ? ");
+	    int nbrAttaque =  Integer.parseInt(nombreAttaque);
 	    
+	    // stocker resultat pour lance les des
+	    int[] resultAttaque = new int[nbrAttaque];
+	      
 	    //  lance les dés
-	    for (int i = 0; i < nbDeAtt; i++) {
+	    for (int i = 0; i < nbrAttaque; i++) {
 	        resultAttaque[i] = lancerUnDe(); 
 	    }
-	    for (int i = 0; i < nbDeDef; i++) {
-	    	resultDefense[i] = lancerUnDe(); 
+	    
+	    int[] resultDefense;
+	    if(nbrRegimentsDefense>=2) {
+	    	resultDefense = new int[2];
+	    	for (int i = 0; i < 2; i++) {
+		    	resultDefense[i] = lancerUnDe(); 
+		    }
+	    }else {
+	    	resultDefense = new int[1];
+	    	resultDefense[0] = lancerUnDe(); 
+		    
 	    }
 	    
 	    // Trier les résultats du plus grand au plus petit
@@ -91,13 +100,22 @@ public class Manche {
 	    Arrays.sort(resultDefense);
 	    
 	    // Comparer les résultats des dés un par un
-	    for (int i = 0; i < Math.min(nbDeAtt, nbDeDef); i++) {
+	    // gagne: ajouter regiment
+	    // perdu: supprimer regiment
+	    int nbrRegimentASupprimerAtt = 0;
+	    int nbrRegimentASupprimerDef = 0;
+	    
+	    for (int i = 0; i < Math.min(nbrAttaque, nbrRegimentsDefense); i++) {
 	        if (resultAttaque[i] > resultDefense[i]) {
 	            System.out.println("Pour valeur"+ (i+1)+ "Joueur Attaque gagne !");
+	            nbrRegimentASupprimerDef +=1;
 	        } else{
 	            System.out.println("Pour valeur"+ (i+1)+ "Joueur Defense gagne !");
+	            nbrRegimentASupprimerAtt +=1;
 	        }
 	    }
+	    territoire.supprimerRegiments(nbrRegimentASupprimerDef);
+	    return nbrRegimentASupprimerAtt;
 	    
 	}
 	
@@ -105,8 +123,8 @@ public class Manche {
 	    Random random = new Random();
 	    int min = 1; 
 	    int max = 6; 
-	    // obtenir entier [1,6]
-	    int deResult = random.nextInt(max - min + 1) + min;
+	    // obtenir entier [1,6[
+	    int deResult = random.nextInt(6) + min;
 	    return deResult;
 	}
 	
