@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 
 public class PlanispherePanel extends JPanel implements MouseListener {
-	// image affichée
+	// image affichÃ©e
 	private BufferedImage planisphereImage;
 	// image coloree
 	private BufferedImage planisphereColour;
@@ -48,7 +48,7 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		joueurs.add(joueur4);
 		joueurs.add(joueur5);
 		
-		// Affectation des joueurs à une équipe
+		// Affectation des joueurs Ã  une Ã©quipe
 		Equipe equipe1 = new Equipe(1);
 		equipe1.setJoueurs(joueurs);
 
@@ -62,23 +62,23 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		// ajout des territoires
 		territoires = new ArrayList<>();
 
-		Territoire alaska = new Territoire("Alaska", "#CC7D3B", 114, 147);
+		Territoire alaska = new Territoire("Alaska", "#CC7D3B", 95, 160);
 		territoires.add(alaska);
 
 		Territoire argentine = new Territoire("Argentine", "#027C67", 400, 1465);
 		argentine.setProprietaire(joueur1);
 		territoires.add(argentine);
 
-		Territoire peru = new Territoire("Peru", "#3AA287", 458, 1317);
+		Territoire peru = new Territoire("Peru", "#3AA287", 456, 1299);
 		territoires.add(peru);
 
-		Territoire brazil = new Territoire("Brazil", "#009778", 617, 1373);
+		Territoire brazil = new Territoire("Brazil", "#009778", 618, 1271);
 		territoires.add(brazil);
 
-		Territoire venezuela = new Territoire("Venezuela", "#82BAAD", 394, 1070);
+		Territoire venezuela = new Territoire("Venezuela", "#82BAAD", 362, 1021);
 		territoires.add(venezuela);
 
-		Territoire central = new Territoire("Central America", "#6D3E38", 324, 813);
+		Territoire central = new Territoire("Central America", "#6D3E38", 265, 750);
 		territoires.add(central);
 
 		Territoire westusa = new Territoire("Western USA", "#A04D3D", 248, 630);
@@ -87,106 +87,108 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		Territoire eastusa = new Territoire("Eastern USA", "#7D4137", 518, 607);
 		territoires.add(eastusa);
 
-		Territoire quebec = new Territoire("Quebec", "#A0543D", 706, 501);
+		Territoire quebec = new Territoire("Quebec", "#A0543D", 704, 462);
 		territoires.add(quebec);
 
-		Territoire ontario = new Territoire("Ontario", "#7A3D38", 524, 347);
+		Territoire ontario = new Territoire("Ontario", "#7A3D38", 511, 329);
 		territoires.add(ontario);
 
-		Territoire alberta = new Territoire("Alberta", "#AF6A43", 308, 342);
+		Territoire alberta = new Territoire("Alberta", "#AF6A43", 288, 334);
 		territoires.add(alberta);
 
-		Territoire northwestterritory = new Territoire("Northwest Territory", "#D2842F", 286, 120);
+		Territoire northwestterritory = new Territoire("Northwest Territory", "#D2842F", 286, 102);
 		territoires.add(northwestterritory);
 
-		Territoire groenland = new Territoire("Groenland", "#FFC90D", 1020, 112);
+		Territoire groenland = new Territoire("Groenland", "#FFC90D", 1014, 81);
 		territoires.add(groenland);
 
-		Territoire iceland = new Territoire("Iceland", "#5BACC9", 1160, 232);
+		Territoire iceland = new Territoire("Iceland", "#5BACC9", 1159, 181);
 		territoires.add(iceland);
 
 		Territoire scandinavia = new Territoire("Scandinavia ", "#018DB0", 1272, 409);
 		territoires.add(scandinavia);
 
-		Territoire ukraine = new Territoire("Ukraine", "#1081AB", 1504, 486);
+		Territoire ukraine = new Territoire("Ukraine", "#1081AB", 1471, 464);
 		territoires.add(ukraine);
 
 		Territoire greatbritain = new Territoire("Great Britain", "#206D9B", 1151, 580);
 		territoires.add(greatbritain);
 
-		Territoire westerneurope = new Territoire("Western Europe", "#1F709F", 1180, 719);
+		Territoire westerneurope = new Territoire("Western Europe", "#1F709F", 1159, 722);
 		territoires.add(westerneurope);
 
 		Territoire southerneurope = new Territoire("Southern Europe", "#0187AA", 1345, 692);
 		territoires.add(southerneurope);
 
-		Territoire northerneurope = new Territoire("Northern Europe", "#1B6C99", 1246, 648);
+		Territoire northerneurope = new Territoire("Northern Europe", "#1B6C99", 1241, 607);
 		territoires.add(northerneurope);
 
-		Territoire northafrica = new Territoire("North Africa", "#BB382E", 1138, 1117);
+		
+		Territoire northafrica = new Territoire("North Africa", "#BB382E", 1128, 1024);
 		territoires.add(northafrica);
 
 		Territoire eastafrica = new Territoire("East Africa", "#C0766B", 1463, 1200);
 		territoires.add(eastafrica);
 
-		Territoire egypt = new Territoire("Egypt", "#BE2833", 1310, 981);
+		Territoire egypt = new Territoire("Egypt", "#BE2833", 1297, 962);
 		territoires.add(egypt);
 
-		Territoire madagascar = new Territoire("Madasgacar", "#9B4745", 1555, 1462);
+		
+		Territoire madagascar = new Territoire("Madasgacar", "#9B4745", 1535, 1417);
 		territoires.add(madagascar);
 
-		Territoire congo = new Territoire("Congo", "#A52A2F", 1358, 1270);
+		Territoire congo = new Territoire("Congo", "#A52A2F", 1327, 1213);
 		territoires.add(congo);
 
-		Territoire southafrica = new Territoire("South Africa", "#963C3C", 1361, 1488);
+		Territoire southafrica = new Territoire("South Africa", "#963C3C", 1344, 1448);
 		territoires.add(southafrica);
 
 		Territoire indonesia = new Territoire("Indonesia", "#39447A", 2239, 964);
 		territoires.add(indonesia);
 
-		Territoire newguinea = new Territoire("New Guinea", "#283E70", 2436, 1029);
+		Territoire newguinea = new Territoire("New Guinea", "#283E70", 2394, 993);
 		territoires.add(newguinea);
 
 		Territoire easternaustralia = new Territoire("Eastern Australia", "#2F3B6F", 2410, 1170);
 		territoires.add(easternaustralia);
 
-		Territoire westernaustralia = new Territoire("Western Australia", "#485285", 2220, 1323);
+		Territoire westernaustralia = new Territoire("Western Australia", "#485285", 2213, 1243);
 		territoires.add(westernaustralia);
 
-		Territoire ural = new Territoire("Ural", "#5F6F31", 1781, 356);
+		Territoire ural = new Territoire("Ural", "#5F6F31", 1764, 309);
 		territoires.add(ural);
 
 		Territoire siberia = new Territoire("Siberia", "#485623", 1949, 312);
 		territoires.add(siberia);
 
-		Territoire yakutsk = new Territoire("Yakutsk", "#1D6236", 2261, 114);
+		Territoire yakutsk = new Territoire("Yakutsk", "#1D6236", 2246, 74);
 		territoires.add(yakutsk);
 
 		Territoire kamchatka = new Territoire("Kamchatka", "#0B4A2B", 2251, 421);
 		territoires.add(kamchatka);
 
-		Territoire irkutsk = new Territoire("Irkutsk", "#327D3C", 2111, 318);
+		Territoire irkutsk = new Territoire("Irkutsk", "#327D3C", 2107, 234);
 		territoires.add(irkutsk);
 
 		Territoire japan = new Territoire("Japan", "#10482F", 2321, 530);
 		territoires.add(japan);
 
-		Territoire mongolia = new Territoire("Mongolia", "#277E3A", 2178, 536);
+		Territoire mongolia = new Territoire("Mongolia", "#277E3A", 2152, 510);
 		territoires.add(mongolia);
 
-		Territoire india = new Territoire("India", "#5C6D36", 1838, 887);
+		Territoire india = new Territoire("India", "#5C6D36", 1807, 845);
 		territoires.add(india);
 
 		Territoire middleeast = new Territoire("Middle East", "#799D39", 1555, 902);
 		territoires.add(middleeast);
 
-		Territoire afghanistan = new Territoire("Afghanistan", "#8D9D45", 1739, 722);
+		Territoire afghanistan = new Territoire("Afghanistan", "#8D9D45", 1654, 651);
 		territoires.add(afghanistan);
 
 		Territoire siam = new Territoire("Siam", "#266246", 2045, 843);
 		territoires.add(siam);
 
-		Territoire china = new Territoire("China", "#266B3C", 2086, 707);
+		Territoire china = new Territoire("China", "#266B3C", 2058, 638);
 		territoires.add(china);
 	}
 
@@ -236,10 +238,13 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 //				
 //				if(t.getProprietaire().getCouleurJoueur()==TypeCouleur.BLANC) {
 //					System.out.println(TypeCouleur.BLANC);
-					g.drawImage(RessourcesImages.BLANC, realX, realY, 30, 30, this);
+
 					// AfficherNombreRegiments
 				    g.setColor(Color.BLACK); 
 				    g.drawString(String.valueOf(t.getNbrRegiment()), realX+15, realY+15);
+
+					g.drawImage(RessourcesImages.BLANC, realX, realY, 25, 25, this);
+
 //				}
 //			}
 				
