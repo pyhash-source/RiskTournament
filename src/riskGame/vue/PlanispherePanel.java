@@ -241,9 +241,8 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 
 					// AfficherNombreRegiments
 				    g.setColor(Color.BLACK); 
-				    g.drawString(String.valueOf(t.getNbrRegiment()), realX+15, realY+15);
-
 					g.drawImage(RessourcesImages.BLANC, realX, realY, 25, 25, this);
+					g.drawString(String.valueOf(t.getNbrRegiment()), realX+13, realY+13);
 
 //				}
 //			}
