@@ -34,6 +34,10 @@ public class Manche {
 		}
 	}
 	
+	public void mettreAJourClassement(Joueur joueur) {
+		this.classement.add(0, joueur);
+	}
+	
 	public int getNumeroManche() {
 		return numeroManche;
 	}
