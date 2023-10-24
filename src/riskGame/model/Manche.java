@@ -21,12 +21,14 @@ public class Manche {
 	private EtatManche etatManche;
 	private ArrayList<Joueur> classement;
 	private ArrayList<Joueur> joueursManche;
+	private int nbEchanges;
 	
 	public Manche(int numeroManche, Date debutPartie, EtatManche etatManche) {
 		super();
 		this.numeroManche = numeroManche;
 		this.debutPartie = debutPartie;
 		this.etatManche = etatManche;
+		this.nbEchanges = 0 ; 
 	}
 	
 	public boolean placerRegimentTerritoire(Joueur joueur, Territoire territoire, int nbrRegiment) {
@@ -132,13 +134,55 @@ public class Manche {
 	public void ajouterJoueur(Joueur joueur) {
 		this.joueursManche.add(joueur);
 	}
+
+
+	public int getNbEchanges() {
+		return nbEchanges;
+	}
+
+
+	public void setNbEchanges(int nbEchanges) {
+		this.nbEchanges = nbEchanges;
+	}
+
+
+	public Date getFinPartie() {
+		return finPartie;
+	}
+
+
+	public void setNumeroManche(int numeroManche) {
+		this.numeroManche = numeroManche;
+	}
+
+
+	public void setDebutPartie(Date debutPartie) {
+		this.debutPartie = debutPartie;
+	}
+
+
+	public void setEtatManche(EtatManche etatManche) {
+		this.etatManche = etatManche;
+	}
+
+
+	public void setClassement(ArrayList<Joueur> classement) {
+		this.classement = classement;
+	}
+
+
+	public void setJoueursManche(ArrayList<Joueur> joueursManche) {
+		this.joueursManche = joueursManche;
+	}
 	
 	// Methods
 	
 	/*
 	 * Cette fonction permet de determiner le premier joueur d'un jeu en utilisant un lancer de de pour chaque joueur
 	 */
-	
+	public void augmenterCompteur() {
+		this.nbEchanges++;
+	}
 	public Joueur determinerPremierJoueur() {
 		
 		Random random = new Random();
