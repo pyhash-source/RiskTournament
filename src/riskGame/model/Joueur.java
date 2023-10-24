@@ -1,10 +1,12 @@
 package riskGame.model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
 *
-* @author fitia,yasmineV
+* @author fitia, elisa(or svrs),yasmineV
+* 
 */
 
 public class Joueur {
@@ -20,6 +22,7 @@ public class Joueur {
 		private int nombreRegimentsElimines;
 		private int nombreAttaques;
 		private int nombreDeplacement;
+		private int nombreLancerDeDes;
 		private ArrayList<Carte> mesCartes;
 		
 		//Constructor
@@ -35,8 +38,33 @@ public class Joueur {
 	        this.nombreRegimentsElimines = 0;
 	        this.nombreAttaques = 0;
 	        this.nombreDeplacement = 0;
+	        this.nombreLancerDeDes = 0;
 	    }
 		
+		public String getNomJoueur() {
+			return nomJoueur;
+		}
+
+		public void setNomJoueur(String nomJoueur) {
+			this.nomJoueur = nomJoueur;
+		}
+
+		public String getDateNaissance() {
+			return dateNaissance;
+		}
+
+		public void setDateNaissance(String dateNaissance) {
+			this.dateNaissance = dateNaissance;
+		}
+
+		public int getNombreLancerDeDes() {
+			return nombreLancerDeDes;
+		}
+
+		public void setNombreLancerDeDes(int nombreLancerDeDes) {
+			this.nombreLancerDeDes = nombreLancerDeDes;
+		}
+
 		public String getPrenomJoueur() {
 			return prenomJoueur;
 		}
@@ -110,12 +138,13 @@ public class Joueur {
 		public void setNombreDeplacement(int nombreDeplacement) {
 			this.nombreDeplacement = nombreDeplacement;
 		}
-//[TODO] à tester 
-//fonction pour l'échange de cartes
+
+//[TODO] ï¿½ tester 
+//fonction pour l'ï¿½change de cartes
 		public int echangerCarte(Manche manche) {
 			int compteur = manche.getNbEchanges();
 		    int nbrRegiments = 0;
-		    //un compteur pour calculer le nb d'échanges
+		    //un compteur pour calculer le nb d'ï¿½changes
 		    
 		    ArrayList<Carte> infanterie = new ArrayList();
 		    ArrayList<Carte> cavalerie =  new ArrayList() ;
@@ -134,7 +163,6 @@ public class Joueur {
 	            if(c.getTypeRegiment()==TypeRegiment.ARTILLERIE) {
 		            artillerie.add(c);
 	            }
-	
 }
             while (infanterie.size() >= 3 || cavalerie.size() >= 3 || artillerie.size() >= 3 ||
             	       (infanterie.size() >= 1 && cavalerie.size() >= 1 && artillerie.size() >= 1)) {
@@ -159,10 +187,10 @@ public class Joueur {
 		    		nbrRegiments += 15;
 		    	}
 		    	else {
-		    		nbrRegiments += 15 + (compteur - 5) * 5; // Gagnez 15 régiments au 6e échange, puis 5 de plus à chaque échange supplémentaire
+		    		nbrRegiments += 15 + (compteur - 5) * 5; // Gagnez 15 rï¿½giments au 6e ï¿½change, puis 5 de plus ï¿½ chaque ï¿½change supplï¿½mentaire
 		    		
 		        }
-		    	// Retirer les cartes échangées des listes
+		    	// Retirer les cartes ï¿½changï¿½es des listes
 		    	
 		    	if(infanterie.size() >= 3) {
 		    		for (int i = 0; i < 3; i++) {
@@ -193,6 +221,30 @@ public class Joueur {
 		    return nbrRegiments;
 		}
 
-		
+			@Override
+		public int hashCode() {
+			return Objects.hash(couleurJoueur, dateNaissance, etatJoueur, mesCartes, nomJoueur, nombreAttaques,
+					nombreCartesEchangees, nombreCartesTirees, nombreDeplacement, nombreRegimentsElimines,
+					nombreRegimentsRecuperes, numeroJoueur, prenomJoueur);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Joueur other = (Joueur) obj;
+			return couleurJoueur == other.couleurJoueur && Objects.equals(dateNaissance, other.dateNaissance)
+					&& etatJoueur == other.etatJoueur && Objects.equals(mesCartes, other.mesCartes)
+					&& Objects.equals(nomJoueur, other.nomJoueur) && nombreAttaques == other.nombreAttaques
+					&& nombreCartesEchangees == other.nombreCartesEchangees
+					&& nombreCartesTirees == other.nombreCartesTirees && nombreDeplacement == other.nombreDeplacement
+					&& nombreRegimentsElimines == other.nombreRegimentsElimines
+					&& nombreRegimentsRecuperes == other.nombreRegimentsRecuperes && numeroJoueur == other.numeroJoueur
+					&& Objects.equals(prenomJoueur, other.prenomJoueur);
+		}
 		
 }
