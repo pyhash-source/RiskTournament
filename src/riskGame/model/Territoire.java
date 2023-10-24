@@ -39,6 +39,10 @@ public class Territoire {
 	public void setNbrRegiment(int nbrRegiment) {
 		this.nbrRegiment = nbrRegiment;
 	}
+	
+	public void ajouterRegiments(int nbrRegimentAAjouter) {
+		this.nbrRegiment += nbrRegimentAAjouter;
+	}
 
 	public String getNomTerritoire() {
 		return nomTerritoire;
