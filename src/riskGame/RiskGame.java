@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import riskGame.model.Joueur;
 //import riskGame.model.AbstractModel;
 import riskGame.vue.PlanispherePanel;
 
@@ -162,6 +163,7 @@ public class RiskGame {
 		for(int i=0;i<bufferTableau.size();i++) {
 			manchesToChoseFrom[i] = bufferTableau.get(i);
 		}
+		
 
 		// ----fin de la recuperation des infos dans la bd--------
 

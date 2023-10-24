@@ -37,6 +37,14 @@ public class Joueur {
 	        this.nombreDeplacement = 0;
 	    }
 		
+		public String getPrenomJoueur() {
+			return prenomJoueur;
+		}
+
+		public void setPrenomJoueur(String prenomJoueur) {
+			this.prenomJoueur = prenomJoueur;
+		}
+
 		public TypeCouleur getCouleurJoueur() {
 			return this.couleurJoueur;
 		}
