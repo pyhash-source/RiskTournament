@@ -40,6 +40,38 @@ public class Manche {
 		}
 	}
 	
+	public void mettreAJourClassement(Joueur joueur) {
+		this.classement.add(0, joueur);
+	}
+	
+	public int calculerScore(Joueur joueur) {
+		int positionJoueur=0;
+		for(Joueur joueurListe : this.classement) {
+			if(joueurListe == joueur) {
+				break; 
+			}
+			positionJoueur++;
+			
+		}
+		//calcul en fonction de la position du joueur
+		switch(positionJoueur) {
+		case 0: 
+			return 10;
+		case 1: 
+			return 8;
+		case 2: 
+			return 6;
+		case 3:
+			return 4;
+		case 4:
+			return 1;
+		case 5: 
+			return 0;
+			
+		}
+		return 0;
+	}
+	
 	public int getNumeroManche() {
 		return numeroManche;
 	}
