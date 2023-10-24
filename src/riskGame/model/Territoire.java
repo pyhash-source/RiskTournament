@@ -43,6 +43,14 @@ public class Territoire {
 	public void ajouterRegiments(int nbrRegimentAAjouter) {
 		this.nbrRegiment += nbrRegimentAAjouter;
 	}
+	
+	public boolean supprimerRegiments(int nbrRegimentASupprimer) {
+		if(nbrRegimentASupprimer<=this.nbrRegiment) {
+			this.nbrRegiment -= nbrRegimentASupprimer;
+			return true;
+		}
+		return false;
+	}
 
 	public String getNomTerritoire() {
 		return nomTerritoire;
