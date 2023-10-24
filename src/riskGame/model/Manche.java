@@ -6,10 +6,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
-
+import java.util.Arrays;
 
 /**
- * @author Jean, elisa(ou svrs), Fitia
+ * @author Jean, elisa(ou svrs), Fitia, Zhuo, YasmineV
 
  **/
 
@@ -202,8 +202,71 @@ public class Manche {
 			joueur.setNombreDeplacement(joueur.getNombreDeplacement()+nbrADeplacer);
 			return true;
 		}
-	}
-	
+  }
 	return false;
 }
+  // fonction pour confronter
+	//todo supprimer les rgts perdus de l'attaquant + check si c'est possible d'attaquer du territoire
+	public int confronterManche(Joueur joueurAttaque, Territoire territoire) {
+		
+		// get nombre régiments defence
+		Joueur joueurDefense = territoire.getProprietaire();
+		int nbrRegimentsDefense = territoire.getNbrRegiment();
+	    
+		// get nombre attaque
+	    String nombreAttaque = (String) JOptionPane.showInputDialog("Combien de régiments voulez-vous attaquer ? ");
+	    int nbrAttaque =  Integer.parseInt(nombreAttaque);
+	    
+	    // stocker resultat pour lance les des
+	    int[] resultAttaque = new int[nbrAttaque];
+	      
+	    //  lance les dés
+	    for (int i = 0; i < nbrAttaque; i++) {
+	        resultAttaque[i] = lancerUnDe(); 
+	    }
+	    
+	    int[] resultDefense;
+	    if(nbrRegimentsDefense>=2) {
+	    	resultDefense = new int[2];
+	    	for (int i = 0; i < 2; i++) {
+		    	resultDefense[i] = lancerUnDe(); 
+		    }
+	    }else {
+	    	resultDefense = new int[1];
+	    	resultDefense[0] = lancerUnDe(); 
+		    
+	    }
+	    
+	    // Trier les résultats du plus grand au plus petit
+	    Arrays.sort(resultAttaque);
+	    Arrays.sort(resultDefense);
+	    
+	    // Comparer les résultats des dés un par un
+	    // gagne: ajouter regiment
+	    // perdu: supprimer regiment
+	    int nbrRegimentASupprimerAtt = 0;
+	    int nbrRegimentASupprimerDef = 0;
+	    
+	    for (int i = 0; i < Math.min(nbrAttaque, nbrRegimentsDefense); i++) {
+	        if (resultAttaque[i] > resultDefense[i]) {
+	            System.out.println("Pour valeur"+ (i+1)+ "Joueur Attaque gagne !");
+	            nbrRegimentASupprimerDef +=1;
+	        } else{
+	            System.out.println("Pour valeur"+ (i+1)+ "Joueur Defense gagne !");
+	            nbrRegimentASupprimerAtt +=1;
+	        }
+	    }
+	    territoire.supprimerRegiments(nbrRegimentASupprimerDef);
+	    return nbrRegimentASupprimerAtt;
+	    
+	}
+	
+	public int lancerUnDe() {
+	    Random random = new Random();
+	    int min = 1; 
+	    int max = 6; 
+	    // obtenir entier [1,6[
+	    int deResult = random.nextInt(6) + min;
+	    return deResult;
+	}
 		}
