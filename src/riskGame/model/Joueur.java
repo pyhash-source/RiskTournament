@@ -22,6 +22,7 @@ public class Joueur {
 		private int nombreRegimentsElimines;
 		private int nombreAttaques;
 		private int nombreDeplacement;
+		private int nombreLancerDeDes;
 		private ArrayList<Carte> mesCartes;
 		
 		//Constructor
@@ -37,8 +38,33 @@ public class Joueur {
 	        this.nombreRegimentsElimines = 0;
 	        this.nombreAttaques = 0;
 	        this.nombreDeplacement = 0;
+	        this.nombreLancerDeDes = 0;
 	    }
 		
+		public String getNomJoueur() {
+			return nomJoueur;
+		}
+
+		public void setNomJoueur(String nomJoueur) {
+			this.nomJoueur = nomJoueur;
+		}
+
+		public String getDateNaissance() {
+			return dateNaissance;
+		}
+
+		public void setDateNaissance(String dateNaissance) {
+			this.dateNaissance = dateNaissance;
+		}
+
+		public int getNombreLancerDeDes() {
+			return nombreLancerDeDes;
+		}
+
+		public void setNombreLancerDeDes(int nombreLancerDeDes) {
+			this.nombreLancerDeDes = nombreLancerDeDes;
+		}
+
 		public String getPrenomJoueur() {
 			return prenomJoueur;
 		}

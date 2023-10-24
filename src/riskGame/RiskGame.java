@@ -4,14 +4,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import riskGame.model.EtatJoueur;
+import riskGame.model.EtatManche;
 import riskGame.model.Joueur;
+import riskGame.model.Manche;
 import riskGame.model.TypeCouleur;
 //import riskGame.model.AbstractModel;
 import riskGame.vue.PlanispherePanel;
@@ -22,6 +26,7 @@ public class RiskGame {
 	static String competitionChoisie = "";
 	static String mancheChoisie = "";
 	static ArrayList<Joueur> listeJoueurs = new ArrayList<>();
+	static Manche manche;
 
 	/**
 	 * @param args the command line arguments
@@ -89,6 +94,44 @@ public class RiskGame {
 		}
 
 	}
+	private static void cloturerManche() {
+		insererStatistiques();
+		manche.setEtatManche(EtatManche.FINIE);
+	}
+	//TODO tester
+	private static void insererStatistiques() {
+
+			try {
+				Statement stmt;
+				Class.forName("com.mysql.jdbc.Driver");
+				String url = "jdbc:mysql://localhost:3306/si_risk";
+				Connection con = DriverManager.getConnection(url, "root", "");
+				stmt = con.createStatement();
+				for(Joueur joueur: listeJoueurs) {
+					int numeroJoueur = joueur.getNumeroJoueur(); 
+					int nombreCartesTirees = joueur.getNombreCartesTirees();
+					int nombreCartesEchangees= joueur.getNombreCartesEchangees();
+					int nombreRegimentsRecuperes = joueur.getNombreRegimentsRecuperes();
+					int nombreRegimentsElimines = joueur.getNombreRegimentsElimines();
+					int nombreAttaques = joueur.getNombreAttaques();
+					int nombreDeplacement = joueur.getNombreDeplacement();
+					int nombreLancerDeDes = joueur.getNombreLancerDeDes();
+					int classement = manche.recupererClassementJoueur(joueur);
+					
+					stmt.executeUpdate("INSERT INTO `participer`(`classement`, `score`, `nbrCartesTirees`, "
+							+ "`nbrLancerDeDes`, `nbrCartesEchangees`, `nbrAttaque`, `nbrDeplacement`, `nbrRegimentsElimines`, "
+							+ "`nbrRegimentsRecuperes`, `numeroJoueur`, `numeroManche`) "
+							+ "VALUES ('"+classement+"','[value-2]','"+nombreCartesTirees+"','"+nombreLancerDeDes+
+							"','"+nombreCartesEchangees+"','"+nombreAttaques+"',"
+							+ "'"+nombreDeplacement+"','"+nombreRegimentsElimines+"','"+nombreRegimentsRecuperes+
+							"','"+numeroJoueur+"','"+manche.getNumeroManche()+"')");
+
+				}
+
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 
 	private static void choixTournoiGUI() {
 		// ----------debut logique recuperation des Tournois--------------
@@ -153,9 +196,10 @@ public class RiskGame {
 			
 			//processing the data:
 			while(resultat.next()) {
-				bufferTableau.add(resultat.getString("numeroManche"));
-				System.out.println(resultat.getString("numeroManche"));
-				
+				if(resultat.getString("etatManche").equals("Créé")) {
+					bufferTableau.add(resultat.getString("numeroManche"));					
+				}
+								
 			}
 			con.close();
 		} catch (Exception e) {
@@ -184,8 +228,8 @@ public class RiskGame {
 
 			if (confirmationManche == 0) {
 				// Logique de la manche confirmee ici:
-				mancheChoisie = manche;
-				lancerManche();
+				mancheChoisie = manche; 
+				lancerManche(Integer.parseInt(mancheChoisie));
 
 			} else if (confirmationManche == 1) {
 				// ERREUR: retour au choix de la manche
@@ -195,8 +239,12 @@ public class RiskGame {
 
 	}
 
-	private static void lancerManche() {
+	private static void lancerManche(int numeroManche) {
 
+		//creer manche
+		long miliseconds = System.currentTimeMillis();
+	    Date date = new Date(miliseconds);
+		manche = new Manche(numeroManche,date, EtatManche.EN_COURS);
 		// Récupération des joueurs
 		
 		// Connection avec la db 
