@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
 *
-* @author fitia
+* @author fitia,yasmineV
 */
 
 public class Joueur {
@@ -110,6 +110,89 @@ public class Joueur {
 		public void setNombreDeplacement(int nombreDeplacement) {
 			this.nombreDeplacement = nombreDeplacement;
 		}
-			
+//[TODO] à tester 
+//fonction pour l'échange de cartes
+		public int echangerCarte(Manche manche) {
+			int compteur = manche.getNbEchanges();
+		    int nbrRegiments = 0;
+		    //un compteur pour calculer le nb d'échanges
+		    
+		    ArrayList<Carte> infanterie = new ArrayList();
+		    ArrayList<Carte> cavalerie =  new ArrayList() ;
+		    ArrayList<Carte> artillerie =  new ArrayList();
+		    //nombreCartesEchangees+=3;
+			//nombreRegimentsRecuperes+=nbrRegiments;
+
+		    //parcourir la liste de cartes du joueur
+            for(Carte c: this.mesCartes) {
+	            if(c.getTypeRegiment()==TypeRegiment.INFANTERIE) {
+	            	infanterie.add(c);
+	             }
+	            if(c.getTypeRegiment()==TypeRegiment.CAVALERIE) {
+		            cavalerie.add(c);
+	             }
+	            if(c.getTypeRegiment()==TypeRegiment.ARTILLERIE) {
+		            artillerie.add(c);
+	            }
+	
+}
+            while (infanterie.size() >= 3 || cavalerie.size() >= 3 || artillerie.size() >= 3 ||
+            	       (infanterie.size() >= 1 && cavalerie.size() >= 1 && artillerie.size() >= 1)) {
+            	 this.nombreCartesEchangees+=3;
+            	 manche.augmenterCompteur();
+		    	if(compteur ==1){
+		    		nbrRegiments += 4;
+		    	}
+		    	else if (compteur ==2) {
+		    		nbrRegiments += 6;
+		    	}
+		    	else if (compteur ==3) {
+		    		nbrRegiments += 8;
+		    	}
+		    	else if (compteur ==4) {
+		    		nbrRegiments += 10;
+		    	}
+		    	else if (compteur ==5) {
+		    		nbrRegiments += 12;
+		    	}
+		    	else if (compteur ==6) {
+		    		nbrRegiments += 15;
+		    	}
+		    	else {
+		    		nbrRegiments += 15 + (compteur - 5) * 5; // Gagnez 15 régiments au 6e échange, puis 5 de plus à chaque échange supplémentaire
+		    		
+		        }
+		    	// Retirer les cartes échangées des listes
+		    	
+		    	if(infanterie.size() >= 3) {
+		    		for (int i = 0; i < 3; i++) {
+		                this.mesCartes.remove(infanterie.remove(0));
+		    		}
+		    	}
+		    	
+		    	else if(cavalerie.size() >= 3) {
+		    		for (int i = 0; i < 3; i++) {
+		                this.mesCartes.remove(cavalerie.remove(0));
+		    		}
+		    	}
+		    	
+		    	else if(artillerie.size() >= 3) {
+		    		for (int i = 0; i < 3; i++) {
+		                this.mesCartes.remove(artillerie.remove(0));
+		    		}
+		    	}
+		    	else if(infanterie.size() >= 1 && cavalerie.size() >= 1 && artillerie.size() >= 1) {
+		    		this.mesCartes.remove(infanterie.remove(0));
+		    		this.mesCartes.remove(cavalerie.remove(0));
+		    		this.mesCartes.remove(artillerie.remove(0));
+		    	}
+		    	
+		       
+		    }
+            nombreRegimentsRecuperes+=nbrRegiments;	
+		    return nbrRegiments;
+		}
+
+		
 		
 }
