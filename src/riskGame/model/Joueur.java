@@ -1,10 +1,12 @@
 package riskGame.model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
 *
-* @author fitia
+* @author fitia, elisa(or svrs),yasmineV
+* 
 */
 
 public class Joueur {
@@ -20,6 +22,7 @@ public class Joueur {
 		private int nombreRegimentsElimines;
 		private int nombreAttaques;
 		private int nombreDeplacement;
+		private int nombreLancerDeDes;
 		private ArrayList<Carte> mesCartes;
 		
 		//Constructor
@@ -35,8 +38,33 @@ public class Joueur {
 	        this.nombreRegimentsElimines = 0;
 	        this.nombreAttaques = 0;
 	        this.nombreDeplacement = 0;
+	        this.nombreLancerDeDes = 0;
 	    }
 		
+		public String getNomJoueur() {
+			return nomJoueur;
+		}
+
+		public void setNomJoueur(String nomJoueur) {
+			this.nomJoueur = nomJoueur;
+		}
+
+		public String getDateNaissance() {
+			return dateNaissance;
+		}
+
+		public void setDateNaissance(String dateNaissance) {
+			this.dateNaissance = dateNaissance;
+		}
+
+		public int getNombreLancerDeDes() {
+			return nombreLancerDeDes;
+		}
+
+		public void setNombreLancerDeDes(int nombreLancerDeDes) {
+			this.nombreLancerDeDes = nombreLancerDeDes;
+		}
+
 		public String getPrenomJoueur() {
 			return prenomJoueur;
 		}
@@ -110,6 +138,113 @@ public class Joueur {
 		public void setNombreDeplacement(int nombreDeplacement) {
 			this.nombreDeplacement = nombreDeplacement;
 		}
-			
+
+//[TODO] � tester 
+//fonction pour l'�change de cartes
+		public int echangerCarte(Manche manche) {
+			int compteur = manche.getNbEchanges();
+		    int nbrRegiments = 0;
+		    //un compteur pour calculer le nb d'�changes
+		    
+		    ArrayList<Carte> infanterie = new ArrayList();
+		    ArrayList<Carte> cavalerie =  new ArrayList() ;
+		    ArrayList<Carte> artillerie =  new ArrayList();
+		    //nombreCartesEchangees+=3;
+			//nombreRegimentsRecuperes+=nbrRegiments;
+
+		    //parcourir la liste de cartes du joueur
+            for(Carte c: this.mesCartes) {
+	            if(c.getTypeRegiment()==TypeRegiment.INFANTERIE) {
+	            	infanterie.add(c);
+	             }
+	            if(c.getTypeRegiment()==TypeRegiment.CAVALERIE) {
+		            cavalerie.add(c);
+	             }
+	            if(c.getTypeRegiment()==TypeRegiment.ARTILLERIE) {
+		            artillerie.add(c);
+	            }
+}
+            while (infanterie.size() >= 3 || cavalerie.size() >= 3 || artillerie.size() >= 3 ||
+            	       (infanterie.size() >= 1 && cavalerie.size() >= 1 && artillerie.size() >= 1)) {
+            	 this.nombreCartesEchangees+=3;
+            	 manche.augmenterCompteur();
+		    	if(compteur ==1){
+		    		nbrRegiments += 4;
+		    	}
+		    	else if (compteur ==2) {
+		    		nbrRegiments += 6;
+		    	}
+		    	else if (compteur ==3) {
+		    		nbrRegiments += 8;
+		    	}
+		    	else if (compteur ==4) {
+		    		nbrRegiments += 10;
+		    	}
+		    	else if (compteur ==5) {
+		    		nbrRegiments += 12;
+		    	}
+		    	else if (compteur ==6) {
+		    		nbrRegiments += 15;
+		    	}
+		    	else {
+		    		nbrRegiments += 15 + (compteur - 5) * 5; // Gagnez 15 r�giments au 6e �change, puis 5 de plus � chaque �change suppl�mentaire
+		    		
+		        }
+		    	// Retirer les cartes �chang�es des listes
+		    	
+		    	if(infanterie.size() >= 3) {
+		    		for (int i = 0; i < 3; i++) {
+		                this.mesCartes.remove(infanterie.remove(0));
+		    		}
+		    	}
+		    	
+		    	else if(cavalerie.size() >= 3) {
+		    		for (int i = 0; i < 3; i++) {
+		                this.mesCartes.remove(cavalerie.remove(0));
+		    		}
+		    	}
+		    	
+		    	else if(artillerie.size() >= 3) {
+		    		for (int i = 0; i < 3; i++) {
+		                this.mesCartes.remove(artillerie.remove(0));
+		    		}
+		    	}
+		    	else if(infanterie.size() >= 1 && cavalerie.size() >= 1 && artillerie.size() >= 1) {
+		    		this.mesCartes.remove(infanterie.remove(0));
+		    		this.mesCartes.remove(cavalerie.remove(0));
+		    		this.mesCartes.remove(artillerie.remove(0));
+		    	}
+		    	
+		       
+		    }
+            nombreRegimentsRecuperes+=nbrRegiments;	
+		    return nbrRegiments;
+		}
+
+			@Override
+		public int hashCode() {
+			return Objects.hash(couleurJoueur, dateNaissance, etatJoueur, mesCartes, nomJoueur, nombreAttaques,
+					nombreCartesEchangees, nombreCartesTirees, nombreDeplacement, nombreRegimentsElimines,
+					nombreRegimentsRecuperes, numeroJoueur, prenomJoueur);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Joueur other = (Joueur) obj;
+			return couleurJoueur == other.couleurJoueur && Objects.equals(dateNaissance, other.dateNaissance)
+					&& etatJoueur == other.etatJoueur && Objects.equals(mesCartes, other.mesCartes)
+					&& Objects.equals(nomJoueur, other.nomJoueur) && nombreAttaques == other.nombreAttaques
+					&& nombreCartesEchangees == other.nombreCartesEchangees
+					&& nombreCartesTirees == other.nombreCartesTirees && nombreDeplacement == other.nombreDeplacement
+					&& nombreRegimentsElimines == other.nombreRegimentsElimines
+					&& nombreRegimentsRecuperes == other.nombreRegimentsRecuperes && numeroJoueur == other.numeroJoueur
+					&& Objects.equals(prenomJoueur, other.prenomJoueur);
+		}
 		
 }
