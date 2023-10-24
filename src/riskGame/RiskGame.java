@@ -16,6 +16,7 @@ import riskGame.model.TypeCouleur;
 //import riskGame.model.AbstractModel;
 import riskGame.vue.PlanispherePanel;
 
+
 public class RiskGame {
 	static String tournoiChoisi = "";
 	static String competitionChoisie = "";
@@ -28,7 +29,6 @@ public class RiskGame {
 	public static void main(String[] args) {
 
 		mainMenuGUI();
-
 	}
 
 	private static void mainMenuGUI() {

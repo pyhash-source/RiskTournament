@@ -1,10 +1,16 @@
 package riskGame.model;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import javax.swing.JOptionPane;
+
 
 /**
- * @author Jean, elisa(ou svrs),
+ * @author Jean, elisa(ou svrs), Fitia
+
  **/
 
 public class Manche {
@@ -71,7 +77,52 @@ public class Manche {
 		this.joueursManche.add(joueur);
 	}
 	
-	public boolean deplacerRegiments(Joueur joueur, Territoire territoireDepart, Territoire territoireArrive, int nbrADeplacer) {
+	// Methods
+	
+	/*
+	 * Cette fonction permet de d�terminer le premier joueur d'un jeu en utilisant un lancer de d� pour chaque joueur
+	 */
+	
+	public Joueur determinerPremierJoueur() {
+		
+		Random random = new Random();
+		HashMap <Joueur, Integer> resultatLancementDe = new HashMap<>();
+		
+		// G�n�rer des nombres al�atoires pour chaque joueur 
+		for (Joueur joueur : this.joueursManche) {
+		    int randomNumber = random.nextInt(6) + 1;
+		    resultatLancementDe.put(joueur, randomNumber);
+		}
+				
+		// Rechercher le premier joueur en le recherchant dans mon HashMap resultatLancementDe
+        Joueur premierJoueur = null;
+        int maxNumber = 0;
+        
+        Iterator it;
+        it = resultatLancementDe.keySet().iterator();
+        StringBuilder message = new StringBuilder("R�sultats du lancement de d� : \n");
+		        
+        while(it.hasNext()) {
+        	Joueur joueurActuel = (Joueur) it.next(); 
+        	Integer number = resultatLancementDe.get(joueurActuel);
+        	
+        	//Afficher le nom du joueur et son score
+        	message.append(joueurActuel.getPrenomJoueur()).append(" : ").append(number).append("\n");
+        	if (number>maxNumber) {
+        		maxNumber=number;
+        		//D�terminer premier joueur
+        		premierJoueur = joueurActuel;
+        	}
+        }
+		        
+        message.append("\nLe premier joueur � jouer est ").append(premierJoueur.getPrenomJoueur());
+       
+        // Affichage popup
+        JOptionPane.showMessageDialog(null, message.toString());
+		return premierJoueur;
+
+	}
+		public boolean deplacerRegiments(Joueur joueur, Territoire territoireDepart, Territoire territoireArrive, int nbrADeplacer) {
 		if(territoireDepart.getProprietaire().equals(joueur)&&territoireArrive.getProprietaire().equals(joueur)) {
 			boolean supprime = territoireDepart.supprimerRegiments(nbrADeplacer);
 			if(supprime) {
@@ -82,6 +133,4 @@ public class Manche {
 		}
 		
 		return false;
-	}
-	
 }
