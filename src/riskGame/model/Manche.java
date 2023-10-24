@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
+import java.util.Scanner; 
 
 /**
  * @author Jean;Zhuo
@@ -61,18 +62,23 @@ public class Manche {
 	}
 	
 	// confronter(JoueurAttaque, JoueurDefense, nbrDeA, nbrDeD): void dans manche
-	public static void confronterManche(Joueur joueurAttaque, Joueur joueurDefense) {
+	public void confronterManche(Joueur joueurAttaque, Joueur joueurDefense) {
 		// get joueurInfo
 		int nomJoueurAttaque = joueurAttaque.getNumeroJoueur();
 	    int nomJoueurDefense = joueurDefense.getNumeroJoueur();
 		
-	    // resultat pour lance les dés 
 	    int[] resultAttaque = new int[3]; // maximum de trois fois
 	    int[] resultDefense = new int[2]; // maximum de deux fois
+	   
+	    // resultat pour lance les dés 
+	    Scanner scan = new Scanner(System.in);
+	    System.out.println("Combien de fois voulez-vous lancer les dés ?");
+	    int nbDeAtt = scan.nextInt();
+	    
+	    System.out.println("Combien de régiments avez-vous ?");
+	    int nbDeDef = scan.nextInt();
 	    
 	    //  lance les dés
-	    int nbDeAtt = 3;
-	    int nbDeDef = 2;
 	    for (int i = 0; i < nbDeAtt; i++) {
 	        resultAttaque[i] = lancerUnDe(); 
 	    }
@@ -95,7 +101,7 @@ public class Manche {
 	    
 	}
 	
-	public static int lancerUnDe() {
+	public int lancerUnDe() {
 	    Random random = new Random();
 	    int min = 1; 
 	    int max = 6; 
