@@ -14,14 +14,29 @@ public class Territoire {
     private ArrayList<Territoire> territoiresAccessibles;
     private int nbrRegiment;
     
+    /**
+     * retourne le joueur qui possede le territoire
+     * @return
+     */
     public Joueur getProprietaire() {
 		return proprietaire;
 	}
 
+    /**
+     * affecte un joueur a un territoire
+     * @param proprietaire
+     */
 	public void setProprietaire(Joueur proprietaire) {
 		this.proprietaire = proprietaire;
 	}
 
+	/**
+	 * cree un territoire
+	 * @param nomTerritoire
+	 * @param couleur
+	 * @param coordonneeX
+	 * @param coordonneeY
+	 */
 	public Territoire(String nomTerritoire, String couleur, int coordonneeX, int coordonneeY) {
         this.nomTerritoire = nomTerritoire;
         this.couleur = couleur;
@@ -32,18 +47,35 @@ public class Territoire {
         this.territoiresAccessibles = new ArrayList<>();
     }
 
+	/**
+	 * retourne le nombre de regiments sur le territoire
+	 * @return
+	 */
     public int getNbrRegiment() {
 		return nbrRegiment;
 	}
 
+    /**
+     * change le nombre de regiments sur le territoire
+     * @param nbrRegiment
+     */
 	public void setNbrRegiment(int nbrRegiment) {
 		this.nbrRegiment = nbrRegiment;
 	}
 	
+	/**
+	 * ajout de regiments sur un territoire
+	 * @param nbrRegimentAAjouter
+	 */
 	public void ajouterRegiments(int nbrRegimentAAjouter) {
 		this.nbrRegiment += nbrRegimentAAjouter;
 	}
 	
+	/**
+	 * supprimer des regiments: retourne vrai si c'est possible, faux sinon
+	 * @param nbrRegimentASupprimer
+	 * @return
+	 */
 	public boolean supprimerRegiments(int nbrRegimentASupprimer) {
 		if(nbrRegimentASupprimer<=this.nbrRegiment) {
 			this.nbrRegiment -= nbrRegimentASupprimer;
@@ -52,45 +84,46 @@ public class Territoire {
 		return false;
 	}
 
+	/**
+	 * retourne le nom du territoire
+	 * @return
+	 */
 	public String getNomTerritoire() {
 		return nomTerritoire;
 	}
 
-	public void setNomTerritoire(String nomTerritoire) {
-		this.nomTerritoire = nomTerritoire;
-	}
-
+	/**
+	 * retourne la couleur du territoire
+	 * @return
+	 */
 	public String getCouleur() {
 		return couleur;
 	}
 
-	public void setCouleur(String couleur) {
-		this.couleur = couleur;
-	}
-
+	/**
+	 * retourne le coordonne x
+	 * @return
+	 */
 	public int getCoordonneeX() {
 		return coordonneeX;
 	}
 
-	public void setCoordonneeX(int coordonneeX) {
-		this.coordonneeX = coordonneeX;
-	}
+	/**
+	 * retourne le coordonne y
+	 * @return
+	 */
 
 	public int getCoordonneeY() {
 		return coordonneeY;
 	}
 
-	public void setCoordonneeY(int coordonneeY) {
-		this.coordonneeY = coordonneeY;
-	}
+/**
+ * retroune les territoires accessibles depuis le territoire
+ * @return
+ */
 
 	public ArrayList<Territoire> getTerritoiresAccessibles() {
 		return territoiresAccessibles;
 	}
-
-	public void setTerritoiresAccessibles(ArrayList<Territoire> territoiresAccessibles) {
-		this.territoiresAccessibles = territoiresAccessibles;
-	}
-
 	
 }
