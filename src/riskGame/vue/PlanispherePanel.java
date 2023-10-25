@@ -625,11 +625,12 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		        g.setColor(Color.YELLOW);
 		        g.drawString("P4: " + joueur.getPrenomJoueur(), 12, componentHeight - 30);
 		    } else {
-		        g.setColor(Color.BLUE);
+		        
 		        if(this.joueurEnCours.equals(joueur)) {
 		        	g.setColor(Color.GRAY);
 		        	g.fillRect(10,componentHeight-20,70,20);
 		        }
+		        g.setColor(Color.BLUE);
 		        g.drawString("P5: " + joueur.getPrenomJoueur(), 12, componentHeight - 10);
 		    }
 		}
