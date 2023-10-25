@@ -1,5 +1,6 @@
 package riskGame.model;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Date;
@@ -28,7 +29,6 @@ public class Manche {
 	private PlanispherePanel planispherePanel;
 
 	public Manche(int numeroManche, Date debutPartie, EtatManche etatManche, PlanispherePanel planispherePanel) {
-		super();
 		this.numeroManche = numeroManche;
 		this.debutPartie = debutPartie;
 		this.etatManche = etatManche;
@@ -41,30 +41,42 @@ public class Manche {
 		for (Territoire t : this.planispherePanel.getTerritoires()) {
 			if (t.getProprietaire() == null) {
 				existeTerritoireVide = true;
+				System.out.println(t.getNomTerritoire());
 				break;
 			}
 
 		}
 		if (existeTerritoireVide) {
-			if (territoire.getProprietaire() == joueur) {
+			System.out.println("gros if va a la salle");
+			if (territoire.getProprietaire()!=null) {
+				System.out.println("je peux plus");
+				System.out.println(territoire.getNomTerritoire()+" "
+						+territoire.getProprietaire().getPrenomJoueur());
 				return false;
 			} else {
+				System.out.println("if");
 				territoire.setProprietaire(joueur);
+				System.out.println(territoire.getNomTerritoire()+" "
+						+territoire.getProprietaire().getPrenomJoueur());
 				territoire.ajouterRegiments(nbrRegiment);
+				
 				return true;
 			}
 
 		} else {
+			System.out.println("gros else");
 			// on force le joueur a ajouter des regiments dans ses territoires actuels si
 			// tous les territoires actuels sont deja
 			// occupes
 
 			// on verfie que pour le joueur courant on est dans un territoire qui lui
 			// appartient
-			if (territoire.getProprietaire() == joueur) {
+			if (territoire.getProprietaire().equals(joueur)) {
+				System.out.println("else");
 				territoire.ajouterRegiments(nbrRegiment);
 				return true;
 			} else {
+				System.out.println("fin");
 				return false;
 			}
 		}
@@ -78,9 +90,10 @@ public class Manche {
 				Joueur joueurActuel = this.planispherePanel.getJoueurEnCours();
 				
 				boolean placerRegiment = false;
+				System.out.println("premier print");
 				while (!placerRegiment) {
-				placerRegiment = this.placerRegimentTerritoire(joueurActuel,this.planispherePanel.getTerritoireSelectionne(), 1);
-
+				placerRegiment = this.placerRegimentTerritoire(joueurActuel,this.planispherePanel.getTerritoireSelectionne(), 1);	
+				
 				}
 				this.planispherePanel.updateUI();
 				this.changerJoueur();

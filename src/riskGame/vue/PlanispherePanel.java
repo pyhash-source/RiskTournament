@@ -63,7 +63,6 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		territoires.add(alaska);
 
 		Territoire argentine = new Territoire("Argentine", "#027C67", 400, 1465);
-		argentine.setProprietaire(joueurs.get(0));
 		territoires.add(argentine);
 
 		Territoire peru = new Territoire("Peru", "#3AA287", 456, 1299);
