@@ -6,10 +6,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
+
+import riskGame.vue.PlanispherePanel;
+
 import java.util.Arrays;
 
 /**
- * @author Jean, elisa(ou svrs), Fitia, Zhuo, YasmineV
+ * @author Jean, elisa/SVRS, Fitia, Zhuo, YasmineV
 
  **/
 
@@ -22,13 +25,15 @@ public class Manche {
 	private ArrayList<Joueur> classement;
 	private ArrayList<Joueur> joueursManche;
 	private int nbEchanges;
+	private PlanispherePanel planispherePanel;
 	
-	public Manche(int numeroManche, Date debutPartie, EtatManche etatManche) {
+	public Manche(int numeroManche, Date debutPartie, EtatManche etatManche, PlanispherePanel planispherePanel) {
 		super();
 		this.numeroManche = numeroManche;
 		this.debutPartie = debutPartie;
 		this.etatManche = etatManche;
 		this.nbEchanges = 0 ; 
+		this.planispherePanel = planispherePanel;
 	}
 	
 	public boolean placerRegimentTerritoire(Joueur joueur, Territoire territoire, int nbrRegiment) {
@@ -40,6 +45,27 @@ public class Manche {
 			System.out.println("Vous ne pouvez pas ajouter des regiments dans un territoire que vous ne possedez pas...");
 			return false;
 		}
+	}
+	
+	public ArrayList<Territoire> getListeTerritoires(){
+		return this.planispherePanel.getTerritoires();
+	}
+	
+	public ArrayList<Joueur> getListeJoueurs(){
+		return this.planispherePanel.getJoueurs();
+	}
+	
+	public ArrayList<Territoire> getListeTerritoiresPourUnJoueur(Joueur joueur){
+		ArrayList<Territoire> territoiresPossedes = new ArrayList<Territoire>();
+		for(Territoire territoire: this.getListeTerritoires()) {
+			if(territoire.getProprietaire()!=null) {
+				if(territoire.getProprietaire().equals(joueur)) {
+					territoiresPossedes.add(territoire);
+				}
+			}
+		}
+		
+		return territoiresPossedes;
 	}
 	
 	public void mettreAJourClassement(Joueur joueur) {

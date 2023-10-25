@@ -306,6 +306,40 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		}
 		return false;
 	}
+	
+	
+
+	public BufferedImage getPlanisphereImage() {
+		return planisphereImage;
+	}
+
+	public void setPlanisphereImage(BufferedImage planisphereImage) {
+		this.planisphereImage = planisphereImage;
+	}
+
+	public BufferedImage getPlanisphereColour() {
+		return planisphereColour;
+	}
+
+	public void setPlanisphereColour(BufferedImage planisphereColour) {
+		this.planisphereColour = planisphereColour;
+	}
+
+	public ArrayList<Territoire> getTerritoires() {
+		return territoires;
+	}
+
+	public void setTerritoires(ArrayList<Territoire> territoires) {
+		this.territoires = territoires;
+	}
+
+	public ArrayList<Joueur> getJoueurs() {
+		return joueurs;
+	}
+
+	public void setJoueurs(ArrayList<Joueur> joueurs) {
+		this.joueurs = joueurs;
+	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
