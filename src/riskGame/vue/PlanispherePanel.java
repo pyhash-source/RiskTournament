@@ -638,9 +638,7 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		    }
 		}
 		
-		for(Joueur joueur: joueurs) {
-			
-		}
+		
 		
 	}
 
