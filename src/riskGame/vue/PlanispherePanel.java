@@ -1,7 +1,7 @@
 package riskGame.vue;
 
 /**
- * @author elisa as SVRS
+ * @author elisa as SVRS, Fitia
  */
 
 import javax.swing.*;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 
 public class PlanispherePanel extends JPanel implements MouseListener {
-	// image affichée
+	// image affichÃ©e
 	private BufferedImage planisphereImage;
 	// image coloree
 	private BufferedImage planisphereColour;
@@ -177,6 +177,261 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		Territoire china = new Territoire("China", "#266B3C", 2058, 638);
 		territoires.add(china);
 		
+
+		// Ajouter territoires adjacents a chaque territoire 
+		 
+		// Alaska
+		alaska.ajouterTerritoireAdjacent(northwestterritory);
+		alaska.ajouterTerritoireAdjacent(kamchatka);
+		alaska.ajouterTerritoireAdjacent(alberta);
+		
+		// Argentine 
+		argentine.ajouterTerritoireAdjacent(peru);
+		argentine.ajouterTerritoireAdjacent(brazil);
+		
+		// Peru
+		peru.ajouterTerritoireAdjacent(brazil);
+		peru.ajouterTerritoireAdjacent(argentine);
+		peru.ajouterTerritoireAdjacent(venezuela);
+		
+		// Brazil
+		brazil.ajouterTerritoireAdjacent(northafrica);
+		brazil.ajouterTerritoireAdjacent(venezuela);
+		brazil.ajouterTerritoireAdjacent(peru);
+		brazil.ajouterTerritoireAdjacent(argentine);
+		
+		// Venezuela
+		venezuela.ajouterTerritoireAdjacent(central);
+		venezuela.ajouterTerritoireAdjacent(brazil);
+		venezuela.ajouterTerritoireAdjacent(peru);
+		
+		// central
+		central.ajouterTerritoireAdjacent(westusa);
+		central.ajouterTerritoireAdjacent(eastusa);
+		central.ajouterTerritoireAdjacent(venezuela);
+		
+		// westusa
+		westusa.ajouterTerritoireAdjacent(alberta);
+		westusa.ajouterTerritoireAdjacent(central);
+		westusa.ajouterTerritoireAdjacent(ontario);
+		westusa.ajouterTerritoireAdjacent(eastusa);
+		
+		// eastusa
+		eastusa.ajouterTerritoireAdjacent(westusa);
+		eastusa.ajouterTerritoireAdjacent(ontario);
+		eastusa.ajouterTerritoireAdjacent(central);
+		eastusa.ajouterTerritoireAdjacent(quebec);
+		
+		// quebec
+		quebec.ajouterTerritoireAdjacent(ontario);
+		quebec.ajouterTerritoireAdjacent(eastusa);
+		quebec.ajouterTerritoireAdjacent(groenland);
+		
+		// ontario
+		ontario.ajouterTerritoireAdjacent(groenland);
+		ontario.ajouterTerritoireAdjacent(northwestterritory);
+		ontario.ajouterTerritoireAdjacent(alberta);
+		ontario.ajouterTerritoireAdjacent(eastusa);
+		ontario.ajouterTerritoireAdjacent(westusa);
+		ontario.ajouterTerritoireAdjacent(quebec);
+		
+		// alberta
+		alberta.ajouterTerritoireAdjacent(northwestterritory);
+		alberta.ajouterTerritoireAdjacent(alaska);
+		alberta.ajouterTerritoireAdjacent(ontario);
+		alberta.ajouterTerritoireAdjacent(westusa);
+		
+		// northwestterritory
+		northwestterritory.ajouterTerritoireAdjacent(alaska);
+		northwestterritory.ajouterTerritoireAdjacent(groenland);
+		northwestterritory.ajouterTerritoireAdjacent(alberta);
+		northwestterritory.ajouterTerritoireAdjacent(ontario);
+		
+		// groenland
+		groenland.ajouterTerritoireAdjacent(northwestterritory);
+		groenland.ajouterTerritoireAdjacent(quebec);
+		groenland.ajouterTerritoireAdjacent(ontario);
+		groenland.ajouterTerritoireAdjacent(iceland);
+		
+		// iceland
+		iceland.ajouterTerritoireAdjacent(groenland);
+		iceland.ajouterTerritoireAdjacent(scandinavia);
+		iceland.ajouterTerritoireAdjacent(greatbritain);
+		
+		// scandinavia
+		scandinavia.ajouterTerritoireAdjacent(iceland);
+		scandinavia.ajouterTerritoireAdjacent(greatbritain);
+		scandinavia.ajouterTerritoireAdjacent(ukraine);
+		scandinavia.ajouterTerritoireAdjacent(northerneurope);
+		
+		// ukraine
+		ukraine.ajouterTerritoireAdjacent(scandinavia);
+		ukraine.ajouterTerritoireAdjacent(northerneurope);
+		ukraine.ajouterTerritoireAdjacent(southerneurope);
+		ukraine.ajouterTerritoireAdjacent(afghanistan);
+		ukraine.ajouterTerritoireAdjacent(ural);
+		ukraine.ajouterTerritoireAdjacent(middleeast);
+		
+		// greatbritain
+		greatbritain.ajouterTerritoireAdjacent(scandinavia);
+		greatbritain.ajouterTerritoireAdjacent(iceland);
+		greatbritain.ajouterTerritoireAdjacent(westerneurope);
+		greatbritain.ajouterTerritoireAdjacent(northerneurope);
+		
+		// westerneurope
+		westerneurope.ajouterTerritoireAdjacent(northerneurope);
+		westerneurope.ajouterTerritoireAdjacent(southerneurope);
+		westerneurope.ajouterTerritoireAdjacent(northafrica);
+		westerneurope.ajouterTerritoireAdjacent(greatbritain);
+		
+		// southerneurope
+		southerneurope.ajouterTerritoireAdjacent(northafrica);
+		southerneurope.ajouterTerritoireAdjacent(egypt);
+		southerneurope.ajouterTerritoireAdjacent(middleeast);
+		southerneurope.ajouterTerritoireAdjacent(westerneurope);
+		southerneurope.ajouterTerritoireAdjacent(northerneurope);
+		southerneurope.ajouterTerritoireAdjacent(ukraine);
+		
+		// northerneurope
+		northerneurope.ajouterTerritoireAdjacent(greatbritain);
+		northerneurope.ajouterTerritoireAdjacent(scandinavia);
+		northerneurope.ajouterTerritoireAdjacent(southerneurope);
+		northerneurope.ajouterTerritoireAdjacent(westerneurope);
+		northerneurope.ajouterTerritoireAdjacent(ukraine);
+		
+		// northafrica
+		northafrica.ajouterTerritoireAdjacent(westerneurope);
+		northafrica.ajouterTerritoireAdjacent(egypt);
+		northafrica.ajouterTerritoireAdjacent(brazil);
+		northafrica.ajouterTerritoireAdjacent(southerneurope);
+		northafrica.ajouterTerritoireAdjacent(congo);
+		northafrica.ajouterTerritoireAdjacent(eastafrica);
+		
+		// eastafrica
+		eastafrica.ajouterTerritoireAdjacent(middleeast);
+		eastafrica.ajouterTerritoireAdjacent(egypt);
+		eastafrica.ajouterTerritoireAdjacent(northafrica);
+		eastafrica.ajouterTerritoireAdjacent(congo);
+		eastafrica.ajouterTerritoireAdjacent(southafrica);
+		eastafrica.ajouterTerritoireAdjacent(madagascar);
+		
+		// egypt
+		egypt.ajouterTerritoireAdjacent(southerneurope);
+		egypt.ajouterTerritoireAdjacent(middleeast);
+		egypt.ajouterTerritoireAdjacent(eastafrica);
+		egypt.ajouterTerritoireAdjacent(northafrica);
+		
+		// madagascar
+		madagascar.ajouterTerritoireAdjacent(eastafrica);
+		madagascar.ajouterTerritoireAdjacent(southafrica);
+		
+		// congo
+		congo.ajouterTerritoireAdjacent(eastafrica);
+		congo.ajouterTerritoireAdjacent(northafrica);
+		congo.ajouterTerritoireAdjacent(southafrica);
+		
+		// southafrica
+		southafrica.ajouterTerritoireAdjacent(madagascar);
+		southafrica.ajouterTerritoireAdjacent(congo);
+		southafrica.ajouterTerritoireAdjacent(eastafrica);
+		
+		// indonesia
+		indonesia.ajouterTerritoireAdjacent(siam);
+		indonesia.ajouterTerritoireAdjacent(newguinea);
+		indonesia.ajouterTerritoireAdjacent(westernaustralia);
+		
+		// newguinea
+		newguinea.ajouterTerritoireAdjacent(easternaustralia);
+		newguinea.ajouterTerritoireAdjacent(westernaustralia);
+		newguinea.ajouterTerritoireAdjacent(indonesia);
+		
+		// easternaustralia
+		easternaustralia.ajouterTerritoireAdjacent(westernaustralia);
+		easternaustralia.ajouterTerritoireAdjacent(newguinea);
+		
+		// westernaustralia
+		westernaustralia.ajouterTerritoireAdjacent(indonesia);
+		westernaustralia.ajouterTerritoireAdjacent(easternaustralia);
+		westernaustralia.ajouterTerritoireAdjacent(newguinea);
+		
+		// ural
+		ural.ajouterTerritoireAdjacent(siberia);
+		ural.ajouterTerritoireAdjacent(afghanistan);
+		ural.ajouterTerritoireAdjacent(ukraine);
+		ural.ajouterTerritoireAdjacent(china);
+		
+		// siberia
+		siberia.ajouterTerritoireAdjacent(china);
+		siberia.ajouterTerritoireAdjacent(irkutsk);
+		siberia.ajouterTerritoireAdjacent(ural);
+		siberia.ajouterTerritoireAdjacent(mongolia);
+		siberia.ajouterTerritoireAdjacent(yakutsk);
+		
+		// yakutsk
+		yakutsk.ajouterTerritoireAdjacent(siberia);
+		yakutsk.ajouterTerritoireAdjacent(irkutsk);
+		yakutsk.ajouterTerritoireAdjacent(kamchatka);
+		
+		// kamchatka
+		kamchatka.ajouterTerritoireAdjacent(japan);
+		kamchatka.ajouterTerritoireAdjacent(alaska);
+		kamchatka.ajouterTerritoireAdjacent(mongolia);
+		kamchatka.ajouterTerritoireAdjacent(irkutsk);
+		kamchatka.ajouterTerritoireAdjacent(yakutsk);
+		
+		// irkutsk
+		irkutsk.ajouterTerritoireAdjacent(siberia);
+		irkutsk.ajouterTerritoireAdjacent(mongolia);
+		irkutsk.ajouterTerritoireAdjacent(kamchatka);
+		irkutsk.ajouterTerritoireAdjacent(yakutsk);
+		
+		// japan
+		japan.ajouterTerritoireAdjacent(kamchatka);
+		japan.ajouterTerritoireAdjacent(mongolia);
+		
+		// mongolia
+		mongolia.ajouterTerritoireAdjacent(china);
+		mongolia.ajouterTerritoireAdjacent(japan);
+		mongolia.ajouterTerritoireAdjacent(irkutsk);
+		mongolia.ajouterTerritoireAdjacent(kamchatka);
+		mongolia.ajouterTerritoireAdjacent(siberia);
+		
+		// india
+		india.ajouterTerritoireAdjacent(siam);
+		india.ajouterTerritoireAdjacent(middleeast);
+		india.ajouterTerritoireAdjacent(afghanistan);
+		india.ajouterTerritoireAdjacent(china);
+		
+		// middleeast
+		middleeast.ajouterTerritoireAdjacent(eastafrica);
+		middleeast.ajouterTerritoireAdjacent(egypt);
+		middleeast.ajouterTerritoireAdjacent(southerneurope);
+		middleeast.ajouterTerritoireAdjacent(ukraine);
+		middleeast.ajouterTerritoireAdjacent(afghanistan);
+		middleeast.ajouterTerritoireAdjacent(india);
+		
+		// afghanistan
+		afghanistan.ajouterTerritoireAdjacent(ural);
+		afghanistan.ajouterTerritoireAdjacent(ukraine);
+		afghanistan.ajouterTerritoireAdjacent(india);
+		afghanistan.ajouterTerritoireAdjacent(middleeast);
+		afghanistan.ajouterTerritoireAdjacent(china);
+		
+		// siam
+		siam.ajouterTerritoireAdjacent(china);
+		siam.ajouterTerritoireAdjacent(india);
+		siam.ajouterTerritoireAdjacent(indonesia);
+		
+		// china
+		china.ajouterTerritoireAdjacent(siam);
+		china.ajouterTerritoireAdjacent(india);
+		china.ajouterTerritoireAdjacent(afghanistan);
+		china.ajouterTerritoireAdjacent(ural);
+		china.ajouterTerritoireAdjacent(siberia);
+		china.ajouterTerritoireAdjacent(mongolia);
+		
+		// Fin Ajouter territoires adjacents a chaque territoire
+
 		Continent ameriqueDuSud = new Continent("Amerique du Sud",2);
 		ameriqueDuSud.ajouterTerritoireDansContinent(venezuela);
 		ameriqueDuSud.ajouterTerritoireDansContinent(brazil);
@@ -233,15 +488,6 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		australie.ajouterTerritoireDansContinent(westernaustralia);
 		australie.ajouterTerritoireDansContinent(easternaustralia);
 
-
-
-
-
-
-
-
-
-		
 	}
 
 	// transforme une image en bufferedImage
