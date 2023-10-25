@@ -27,6 +27,7 @@ public class RiskGame {
 	static String mancheChoisie = "";
 	static ArrayList<Joueur> listeJoueurs = new ArrayList<>();
 	static Manche manche;
+	static PlanispherePanel planisphere;
 
 	/**
 	 * @param args the command line arguments
@@ -196,7 +197,7 @@ public class RiskGame {
 			
 			//processing the data:
 			while(resultat.next()) {
-				if(resultat.getString("etatManche").equals("Créé")) {
+				if(resultat.getString("etatManche").equals("Cree")) {
 					bufferTableau.add(resultat.getString("numeroManche"));					
 				}
 								
@@ -241,15 +242,10 @@ public class RiskGame {
 
 	private static void lancerManche(int numeroManche) {
 
-		//creer manche
-		long miliseconds = System.currentTimeMillis();
-	    Date date = new Date(miliseconds);
-		manche = new Manche(numeroManche,date, EtatManche.EN_COURS);
 		// Récupération des joueurs
-		
-		// Connection avec la db 
 		try {
 			Statement stmt;
+			// Connection avec la db 
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = "jdbc:mysql://localhost:3306/si_risk";
 			Connection con = DriverManager.getConnection(url, "root", "");
@@ -304,13 +300,17 @@ public class RiskGame {
 			JFrame frame = new JFrame("Risk");
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			PlanispherePanel planispherePanel = new PlanispherePanel(listeJoueurs);
+			planisphere = planispherePanel;
 			frame.add(planispherePanel);
 			frame.setSize(800, 600);
 			frame.setVisible(true);
 		});
 
 		
-		// Initialisation des objets
+		//creer manche
+				long miliseconds = System.currentTimeMillis();
+			    Date date = new Date(miliseconds);
+				manche = new Manche(numeroManche,date, EtatManche.EN_COURS, planisphere);
 	}
 
 }
