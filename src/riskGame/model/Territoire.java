@@ -2,7 +2,7 @@ package riskGame.model;
 import java.util.ArrayList;
 
 /**
- * @author elisa as SVRS
+ * @author elisa as SVRS, Fitia
  */
 public class Territoire {
 	
@@ -90,6 +90,16 @@ public class Territoire {
 
 	public void setTerritoiresAccessibles(ArrayList<Territoire> territoiresAccessibles) {
 		this.territoiresAccessibles = territoiresAccessibles;
+	}
+	
+	/**
+	 * Ajouter un territoire adjacent à un territoire
+	 *
+	 * @param territoire le territoire adjacent à rajouter
+	 */
+	
+	public void ajouterTerritoireAdjacent(Territoire territoire) {
+		this.territoiresAccessibles.add(territoire);
 	}
 
 	
