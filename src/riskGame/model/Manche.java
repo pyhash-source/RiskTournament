@@ -130,9 +130,12 @@ public class Manche {
 			System.out.println(this.planispherePanel.isaClique());
 			if(this.planispherePanel.isaClique()) {
 				System.out.println("je rentre dabs le if");
-				this.placerRegimentTerritoire(this.planispherePanel.getJoueurEnCours(), this.planispherePanel.getTerritoireSelectionne(), 1);
+				boolean place = false;
+				place = this.placerRegimentTerritoire(this.planispherePanel.getJoueurEnCours(), this.planispherePanel.getTerritoireSelectionne(), 1);
 				this.planispherePanel.setaClique(false);
-				nombreAPlacer --;
+				if(place) {
+					nombreAPlacer --;
+				}
 				//tout doux: faire ,nombre a placer -- ssi placer regiment renvoie true
 				System.out.println("nbr a placer:" +nombreAPlacer);
 				this.planispherePanel.updateUI();
