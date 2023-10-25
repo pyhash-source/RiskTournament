@@ -289,10 +289,8 @@ public class Manche {
 	
 	public int lancerUnDe() {
 	    Random random = new Random();
-	    int min = 1; 
-	    int max = 6; 
 	    // obtenir entier [1,6[
-	    int deResult = random.nextInt(6) + min;
+	    int deResult = random.nextInt(6) + 1;
 	    return deResult;
 	}
 		}
