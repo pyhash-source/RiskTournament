@@ -359,6 +359,7 @@ public class RiskGame {
 				manche.setJoueursManche(listeJoueurs);
 				planisphere.setJoueurEnCours(manche.determinerPremierJoueur());  
 				manche.placerRegimentsInitiaux();
+				manche.boucleJeu();
 	}
 
 }

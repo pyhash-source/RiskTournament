@@ -39,6 +39,7 @@ public class Joueur {
 	        this.nombreAttaques = 0;
 	        this.nombreDeplacement = 0;
 	        this.nombreLancerDeDes = 0;
+	        this.mesCartes = new ArrayList<>();
 	    }
 		/**
 		 * Retourne le nom du joueur
