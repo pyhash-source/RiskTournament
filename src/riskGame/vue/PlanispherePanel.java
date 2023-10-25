@@ -96,7 +96,7 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		Territoire ukraine = new Territoire("Ukraine", "#1081AB", 1471, 464);
 		territoires.add(ukraine);
 
-		Territoire greatbritain = new Territoire("Great Britain", "#206D9B", 1151, 580);
+		Territoire greatbritain = new Territoire("Great Britain", "#206D9B", 1100, 510);
 		territoires.add(greatbritain);
 
 		Territoire westerneurope = new Territoire("Western Europe", "#1F709F", 1159, 722);
