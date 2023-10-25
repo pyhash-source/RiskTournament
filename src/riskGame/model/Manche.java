@@ -41,15 +41,16 @@ public class Manche {
 		for (Territoire t : this.planispherePanel.getTerritoires()) {
 			if (t.getProprietaire() == null) {
 				existeTerritoireVide = true;
-				System.out.println(t.getNomTerritoire());
 				break;
 			}
 
 		}
 		if (existeTerritoireVide) {
 			if (territoire.getProprietaire()!=null) {
+
 				System.out.println(territoire.getNomTerritoire()+" "
 						+territoire.getProprietaire().getPrenomJoueur());
+
 				return false;
 			} else {
 				territoire.setProprietaire(joueur);
@@ -59,7 +60,6 @@ public class Manche {
 			}
 
 		} else {
-			System.out.println("gros else");
 			// on force le joueur a ajouter des regiments dans ses territoires actuels si
 			// tous les territoires actuels sont deja
 			// occupes
