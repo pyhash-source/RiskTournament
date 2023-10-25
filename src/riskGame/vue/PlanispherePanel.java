@@ -567,41 +567,77 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 			// coordonnees de la fenetre
 			int realX = t.getCoordonneeX() * componentWidth / imageWidth;
 			int realY = t.getCoordonneeY() * componentHeight / imageHeight;
-//			if(t.getProprietaire()!=null) {
-//				
-//				if(t.getProprietaire().getCouleurJoueur()==TypeCouleur.BLANC) {
-//					System.out.println(TypeCouleur.BLANC);
 
-					// AfficherNombreRegiments
-				    g.setColor(Color.WHITE); 
-				  
-					g.drawImage(RessourcesImages.BLANC, realX, realY, (int)(0.02*componentWidth), (int)(0.04*componentHeight), this);
-					g.drawString(String.valueOf(t.getNbrRegiment()), (int)(realX+(0.02*componentWidth)), (int)(realY+(0.04*componentHeight)));
-//				}
-//			}
-				
+			if(t.getProprietaire()!=null) {
+				 if (t.getProprietaire().getCouleurJoueur() == TypeCouleur.BLANC){
+					 g.setColor(Color.WHITE);
+					 g.drawImage(RessourcesImages.BLANC, realX, realY, (int)(0.02*componentWidth), (int)(0.04*componentHeight), this);
+						g.drawString(String.valueOf(t.getNbrRegiment()), (int)(realX+(0.02*componentWidth)), (int)(realY+(0.04*componentHeight)));
+				    } else if (t.getProprietaire().getCouleurJoueur() == TypeCouleur.ROUGE) {
+				    	g.setColor(Color.RED);
+				    	g.drawImage(RessourcesImages.ROUGE, realX, realY, (int)(0.02*componentWidth), (int)(0.04*componentHeight), this);
+						g.drawString(String.valueOf(t.getNbrRegiment()), (int)(realX+(0.02*componentWidth)), (int)(realY+(0.04*componentHeight)));
+				    } else if (t.getProprietaire().getCouleurJoueur() == TypeCouleur.VERT) {
+				    	g.setColor(Color.GREEN);
+				    	g.drawImage(RessourcesImages.VERT, realX, realY, (int)(0.02*componentWidth), (int)(0.04*componentHeight), this);
+						g.drawString(String.valueOf(t.getNbrRegiment()), (int)(realX+(0.02*componentWidth)), (int)(realY+(0.04*componentHeight)));
+				    } else if (t.getProprietaire().getCouleurJoueur() == TypeCouleur.JAUNE) {
+				    	g.setColor(Color.YELLOW);
+				    	g.drawImage(RessourcesImages.JAUNE, realX, realY, (int)(0.02*componentWidth), (int)(0.04*componentHeight), this);
+						g.drawString(String.valueOf(t.getNbrRegiment()), (int)(realX+(0.02*componentWidth)), (int)(realY+(0.04*componentHeight)));
+				    } else {
+				    	g.setColor(Color.BLUE);
+				    	g.drawImage(RessourcesImages.BLEU, realX, realY, (int)(0.02*componentWidth), (int)(0.04*componentHeight), this);
+						g.drawString(String.valueOf(t.getNbrRegiment()), (int)(realX+(0.02*componentWidth)), (int)(realY+(0.04*componentHeight)));
+				    }
+			}
+
 		}
 		
 		// Dessiner un cadre qui affiche les informations du joueur
 		for (Joueur joueur : joueurs) {
 		    if (joueur.getCouleurJoueur() == TypeCouleur.BLANC){
+		    	if(this.joueurEnCours.equals(joueur)) {
+		        	g.setColor(Color.GRAY);
+		        	g.fillRect(10,componentHeight-100,70,20);
+		        }
 		        g.setColor(Color.WHITE);
 		        g.drawString("P1: " + joueur.getPrenomJoueur(), 12, componentHeight - 90);
 		    } else if (joueur.getCouleurJoueur() == TypeCouleur.ROUGE) {
+		    	if(this.joueurEnCours.equals(joueur)) {
+		        	g.setColor(Color.GRAY);
+		        	g.fillRect(10,componentHeight-80,70,20);
+		        }
 		        g.setColor(Color.RED);
 		        g.drawString("P2: " + joueur.getPrenomJoueur(), 12, componentHeight - 70);
 		    } else if (joueur.getCouleurJoueur() == TypeCouleur.VERT) {
+		    	if(this.joueurEnCours.equals(joueur)) {
+		        	g.setColor(Color.GRAY);
+		        	g.fillRect(10,componentHeight-60,70,20);
+		        }
 		        g.setColor(Color.GREEN);
 		        g.drawString("P3: " + joueur.getPrenomJoueur(), 12, componentHeight - 50);
 		    } else if (joueur.getCouleurJoueur() == TypeCouleur.JAUNE) {
+		    	if(this.joueurEnCours.equals(joueur)) {
+		        	g.setColor(Color.GRAY);
+		        	g.fillRect(10,componentHeight-40,70,20);
+		        }
 		        g.setColor(Color.YELLOW);
 		        g.drawString("P4: " + joueur.getPrenomJoueur(), 12, componentHeight - 30);
 		    } else {
 		        g.setColor(Color.BLUE);
+		        if(this.joueurEnCours.equals(joueur)) {
+		        	g.setColor(Color.GRAY);
+		        	g.fillRect(10,componentHeight-20,70,20);
+		        }
 		        g.drawString("P5: " + joueur.getPrenomJoueur(), 12, componentHeight - 10);
 		    }
 		}
-
+		
+		for(Joueur joueur: joueurs) {
+			
+		}
+		
 	}
 
 	// fonction qui permet de savoir ou on a clique
