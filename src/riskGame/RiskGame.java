@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -27,17 +26,22 @@ public class RiskGame {
 	static String mancheChoisie = "";
 	static ArrayList<Joueur> listeJoueurs = new ArrayList<>();
 	static Manche manche;
+	static PlanispherePanel planisphere;
 
 	/**
-	 * @param args the command line arguments
+	 * lance la premiere fenetre
 	 */
 	public static void main(String[] args) {
-
 		mainMenuGUI();
 	}
-
+	
+/**
+ * propose de lancer une partie, ou autre
+ */
 	private static void mainMenuGUI() {
+		//options proposees
 		String[] optionsToChoose = { "Lancer une partie", "Autres options ?..." };
+		//question affichee
 		String choice = (String) JOptionPane.showInputDialog(null, "Que voulez vous faire ? ", "Risk e-sport [MENU]",
 				JOptionPane.PLAIN_MESSAGE, null, optionsToChoose, optionsToChoose[0]);
 		if (choice == null) {
@@ -47,44 +51,57 @@ public class RiskGame {
 		}
 	}
 
+	/**
+	 * permet de choisir une competition
+	 */
 	private static void choixCompetitionGUI() {
 		// ----------debut logique recuperation des competitions--------------
+		//recuperer les noms des competitions
 		ArrayList<String> bufferTableau = new ArrayList<String>();
 		try {
+			//connection a la bd
 			Statement stmt;
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = "jdbc:mysql://localhost:3306/si_risk";
 			Connection con = DriverManager.getConnection(url, "root", "");
 			stmt = con.createStatement();
+			//execution de la requete
 			ResultSet resultat = stmt.executeQuery("SELECT c.nomCompetition FROM competition c");
 			
 			//processing the data:
 			while(resultat.next()) {
+				//recupere pour chaque ligne le nom de la competition
 				bufferTableau.add(resultat.getString("nomCompetition"));
-				System.out.println(resultat.getString("nomCompetition"));
 				
 			}
+			//fermer le connexion
 			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
 		
+		//il faut un tableau pour la boite de dialogue
+		//conversion de l'arraylist en list
 		String[] competitionToChoseFrom = new String[bufferTableau.size()];
 		for(int i=0;i<bufferTableau.size();i++) {
 			competitionToChoseFrom[i] = bufferTableau.get(i);
 		}
 
 		// -----------fin de bloc de recuperation des competition-------------
+		//pose la question et affiche le competitions qu'il est possible de choisir
 		String competition = (String) JOptionPane.showInputDialog(null, "Que voulez vous faire ? ",
 				"Choix de la competition", JOptionPane.PLAIN_MESSAGE, null, competitionToChoseFrom,
 				competitionToChoseFrom[0]);
 
+		
 		if (competition == null) {
 			System.out.println("Quitting app...");
 		} else {
+			//afficher le choix fait
 			int resultatConfirmation = JOptionPane.showConfirmDialog(null,
 					"Vous allez lancer une partie dans le cadre de la competition: " + competition);
 			if (resultatConfirmation == 0) {
+				//lance le choix pour le tournoi
 				competitionChoisie = competition;
 				choixTournoiGUI();
 			} else if (resultatConfirmation == 1) {
@@ -94,45 +111,10 @@ public class RiskGame {
 		}
 
 	}
-	private static void cloturerManche() {
-		insererStatistiques();
-		manche.setEtatManche(EtatManche.FINIE);
-	}
-	//TODO tester
-	private static void insererStatistiques() {
-
-			try {
-				Statement stmt;
-				Class.forName("com.mysql.jdbc.Driver");
-				String url = "jdbc:mysql://localhost:3306/si_risk";
-				Connection con = DriverManager.getConnection(url, "root", "");
-				stmt = con.createStatement();
-				for(Joueur joueur: listeJoueurs) {
-					int numeroJoueur = joueur.getNumeroJoueur(); 
-					int nombreCartesTirees = joueur.getNombreCartesTirees();
-					int nombreCartesEchangees= joueur.getNombreCartesEchangees();
-					int nombreRegimentsRecuperes = joueur.getNombreRegimentsRecuperes();
-					int nombreRegimentsElimines = joueur.getNombreRegimentsElimines();
-					int nombreAttaques = joueur.getNombreAttaques();
-					int nombreDeplacement = joueur.getNombreDeplacement();
-					int nombreLancerDeDes = joueur.getNombreLancerDeDes();
-					int classement = manche.recupererClassementJoueur(joueur);
-					
-					stmt.executeUpdate("INSERT INTO `participer`(`classement`, `score`, `nbrCartesTirees`, "
-							+ "`nbrLancerDeDes`, `nbrCartesEchangees`, `nbrAttaque`, `nbrDeplacement`, `nbrRegimentsElimines`, "
-							+ "`nbrRegimentsRecuperes`, `numeroJoueur`, `numeroManche`) "
-							+ "VALUES ('"+classement+"','[value-2]','"+nombreCartesTirees+"','"+nombreLancerDeDes+
-							"','"+nombreCartesEchangees+"','"+nombreAttaques+"',"
-							+ "'"+nombreDeplacement+"','"+nombreRegimentsElimines+"','"+nombreRegimentsRecuperes+
-							"','"+numeroJoueur+"','"+manche.getNumeroManche()+"')");
-
-				}
-
-		}catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
-
+	
+	/**
+	 * permet de choisir un tournoi
+	 */
 	private static void choixTournoiGUI() {
 		// ----------debut logique recuperation des Tournois--------------
 		int tailleTableau = 0;
@@ -182,7 +164,10 @@ public class RiskGame {
 		}
 
 	}
-
+	
+	/**
+	 * permet de choisir une manche
+	 */
 	private static void choixMancheGUI() {
 		// -----recuperation des infos des manches de la bd------
 		ArrayList<String> bufferTableau = new ArrayList<String>();
@@ -196,7 +181,7 @@ public class RiskGame {
 			
 			//processing the data:
 			while(resultat.next()) {
-				if(resultat.getString("etatManche").equals("Créé")) {
+				if(resultat.getString("etatManche").equals("Cree")) {
 					bufferTableau.add(resultat.getString("numeroManche"));					
 				}
 								
@@ -238,18 +223,67 @@ public class RiskGame {
 		}
 
 	}
+	
+	/**
+	 * cloture une manche et insere les statistiques
+	 */
+	private static void cloturerManche() {
+		insererStatistiques();
+		manche.setEtatManche(EtatManche.FINIE);
+	}
+	
+	/**
+	 * inserer les statistiques de la partie dans la bd
+	 */
+	//TODO tester
+	private static void insererStatistiques() {
 
+			try {
+				Statement stmt;
+				Class.forName("com.mysql.jdbc.Driver");
+				String url = "jdbc:mysql://localhost:3306/si_risk";
+				Connection con = DriverManager.getConnection(url, "root", "");
+				stmt = con.createStatement();
+				for(Joueur joueur: listeJoueurs) {
+					int numeroJoueur = joueur.getNumeroJoueur(); 
+					int nombreCartesTirees = joueur.getNombreCartesTirees();
+					int nombreCartesEchangees= joueur.getNombreCartesEchangees();
+					int nombreRegimentsRecuperes = joueur.getNombreRegimentsRecuperes();
+					int nombreRegimentsElimines = joueur.getNombreRegimentsElimines();
+					int nombreAttaques = joueur.getNombreAttaques();
+					int nombreDeplacement = joueur.getNombreDeplacement();
+					int nombreLancerDeDes = joueur.getNombreLancerDeDes();
+					int classement = manche.recupererClassementJoueur(joueur);
+					int score = manche.calculerScore(joueur);
+					
+					stmt.executeUpdate("INSERT INTO `participer`(`classement`, `score`, `nbrCartesTirees`, "
+							+ "`nbrLancerDeDes`, `nbrCartesEchangees`, `nbrAttaque`, `nbrDeplacement`, `nbrRegimentsElimines`, "
+							+ "`nbrRegimentsRecuperes`, `numeroJoueur`, `numeroManche`) "
+							+ "VALUES ('"+classement+"','"+score+"','"+nombreCartesTirees+"','"+nombreLancerDeDes+
+							"','"+nombreCartesEchangees+"','"+nombreAttaques+"',"
+							+ "'"+nombreDeplacement+"','"+nombreRegimentsElimines+"','"+nombreRegimentsRecuperes+
+							"','"+numeroJoueur+"','"+manche.getNumeroManche()+"')");
+
+				}
+
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+
+	
+
+	
+/**
+ * lance la manche en la creant, en recuperant les joueurs et en creant la vue
+ * @param numeroManche
+ */
 	private static void lancerManche(int numeroManche) {
 
-		//creer manche
-		long miliseconds = System.currentTimeMillis();
-	    Date date = new Date(miliseconds);
-		manche = new Manche(numeroManche,date, EtatManche.EN_COURS);
-		// Récupération des joueurs
-		
-		// Connection avec la db 
+		// Rï¿½cupï¿½ration des joueurs
 		try {
 			Statement stmt;
+			// Connection avec la db 
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = "jdbc:mysql://localhost:3306/si_risk";
 			Connection con = DriverManager.getConnection(url, "root", "");
@@ -297,20 +331,24 @@ public class RiskGame {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		// Fin récupération des joueurs
+		// Fin rï¿½cupï¿½ration des joueurs
 		
 		// on a initialise la vue
 		SwingUtilities.invokeLater(() -> {
 			JFrame frame = new JFrame("Risk");
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			PlanispherePanel planispherePanel = new PlanispherePanel(listeJoueurs);
+			planisphere = planispherePanel;
 			frame.add(planispherePanel);
 			frame.setSize(800, 600);
 			frame.setVisible(true);
 		});
 
 		
-		// Initialisation des objets
+		//creer manche
+				long miliseconds = System.currentTimeMillis();
+			    Date date = new Date(miliseconds);
+				manche = new Manche(numeroManche,date, EtatManche.EN_COURS, planisphere);
 	}
 
 }

@@ -5,7 +5,7 @@ import java.util.Objects;
 
 /**
 *
-* @author fitia, elisa(or svrs),yasmineV
+* @author fitia, elisa(or svrs),yasmineV, Jean
 * 
 */
 
@@ -40,51 +40,92 @@ public class Joueur {
 	        this.nombreDeplacement = 0;
 	        this.nombreLancerDeDes = 0;
 	    }
-		
+		/**
+		 * Retourne le nom du joueur
+		 * @return String
+		 */
 		public String getNomJoueur() {
 			return nomJoueur;
 		}
-
+		
+		/**
+		 * Definit le nom du joueur
+		 */
 		public void setNomJoueur(String nomJoueur) {
 			this.nomJoueur = nomJoueur;
 		}
 
+		/**
+		 * Retourne la date de naissance du joueur
+		 * @return String
+		 */
 		public String getDateNaissance() {
 			return dateNaissance;
 		}
 
+		/**
+		 * Definit la date de naissance du joueur
+		 */
 		public void setDateNaissance(String dateNaissance) {
 			this.dateNaissance = dateNaissance;
 		}
 
+		/**
+		 * Retourne le nombre de lancer de des effectues par le joueur au cours de la partie
+		 * @return int
+		 */
 		public int getNombreLancerDeDes() {
 			return nombreLancerDeDes;
 		}
 
+		/**
+		 * Definit le nombre de lancers de des effectues par le joueur
+		 */
 		public void setNombreLancerDeDes(int nombreLancerDeDes) {
 			this.nombreLancerDeDes = nombreLancerDeDes;
 		}
 
+		/**
+		 * Retourne le prenom du joueur
+		 * @return String
+		 */
 		public String getPrenomJoueur() {
 			return prenomJoueur;
 		}
 
+		/**
+		 * Definit le prenom du joueur
+		 */
 		public void setPrenomJoueur(String prenomJoueur) {
 			this.prenomJoueur = prenomJoueur;
 		}
 
+		/**
+		 * Retourne la couleur du joueur
+		 * @return TypeCouleur
+		 */
 		public TypeCouleur getCouleurJoueur() {
 			return this.couleurJoueur;
 		}
 
+		/**
+		 * Definit la couleur du joueur
+		 */
 		public void setCouleurJoueur(TypeCouleur couleurJoueur) {
 			this.couleurJoueur = couleurJoueur;
 		}
 
+		/**
+		 * Retourne les cartes du joueur
+		 * @return ArrayList<Carte>
+		 */
 		public ArrayList<Carte> getMesCartes() {
 			return mesCartes;
 		}
 
+		/**
+		 * Definit les cartes dont dispose d'un joueur
+		 */
 		public void setMesCartes(ArrayList<Carte> mesCartes) {
 			this.mesCartes = mesCartes;
 		}
@@ -139,8 +180,11 @@ public class Joueur {
 			this.nombreDeplacement = nombreDeplacement;
 		}
 
-//[TODO] � tester 
-//fonction pour l'�change de cartes
+		
+		/**
+		 * Retourne un nombre de regiments. Permet a un joueur d'echanger les cartes dont il dispose pour recuperer des regiments.
+		 * @return int
+		 */
 		public int echangerCarte(Manche manche) {
 			int compteur = manche.getNbEchanges();
 		    int nbrRegiments = 0;
