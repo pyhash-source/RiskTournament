@@ -35,11 +35,14 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 	private ArrayList<Joueur> joueurs;
 	
 	private Territoire territoireSelectionne;
+	private boolean aClique;
 	
 	//getters and setters
 	
 	
 	public PlanispherePanel(ArrayList<Joueur> joueurs) {
+		
+		this.aClique = false;
 		
 		this.joueurs = new ArrayList<>(joueurs);
 		// chargement de l'image qui represente le plateau
@@ -679,10 +682,21 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		// print le nom du territoire ou il y a le clique
 		for (Territoire t : territoires) {
 			if (isTerritoireColor(rvbHexCode, t)) {
-				System.out.println(t.getNomTerritoire());
 				this.territoireSelectionne= t;
+				this.aClique = true;
+				System.out.println(t.getNomTerritoire()+ "Le boolean: " + aClique);
 			}
 		}
+		//System.out.println(this.aClique);
+	}
+
+	public boolean isaClique() {
+		return aClique;
+	}
+
+	public void setaClique(boolean aClique) {
+		System.out.println(this.aClique);
+		this.aClique = aClique;
 	}
 
 	// regarde si la couleur correspond a la couleur du territoire

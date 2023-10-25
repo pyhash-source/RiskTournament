@@ -27,6 +27,7 @@ public class Manche {
 	private ArrayList<Joueur> joueursManche;
 	private int nbEchanges;
 	private PlanispherePanel planispherePanel;
+	private boolean mancheFinie;
 
 	public Manche(int numeroManche, Date debutPartie, EtatManche etatManche, PlanispherePanel planispherePanel) {
 		this.numeroManche = numeroManche;
@@ -34,6 +35,7 @@ public class Manche {
 		this.etatManche = etatManche;
 		this.nbEchanges = 0;
 		this.planispherePanel = planispherePanel;
+		this.mancheFinie = false;
 	}
 
 	public boolean placerRegimentTerritoire(Joueur joueur, Territoire territoire, int nbrRegiment) {
@@ -78,7 +80,7 @@ public class Manche {
 	// fonction pour le début du renfort
 	public void placerRegimentsInitiaux() {
 
-		for (int i = 0; i < 25; i++) {
+		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 5; j++) {
 				Joueur joueurActuel = this.planispherePanel.getJoueurEnCours();
 				
@@ -93,7 +95,74 @@ public class Manche {
 
 			}
 		}
+		
+
 	}
+
+	public void boucleJeu() {
+		while(!mancheFinie) {
+			renforcer();
+			attaquer();
+			manoeuvrer();
+			changerJoueur();
+		}
+	}
+
+	
+	public void renforcer() {
+		//todo bonus continent
+		System.out.println("debut phase renfort");
+		System.out.println("joueur: "+this.planispherePanel.getJoueurEnCours().getNomJoueur());
+		int nbrRegimentsCartes = this.planispherePanel.getJoueurEnCours().echangerCarte(this);
+		System.out.println("echange carte: "+nbrRegimentsCartes);
+		int nbrTerritoires = this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours()).size();
+		System.out.println("le joueur a : "+nbrTerritoires);
+		int nbrRegimentsAdd = nbrTerritoires / 3;
+		if(nbrRegimentsAdd<3) {
+			nbrRegimentsAdd = 3;
+		}
+		this.planispherePanel.getJoueurEnCours().setNombreRegimentsRecuperes(nbrRegimentsAdd+nbrRegimentsCartes+this.planispherePanel.getJoueurEnCours().getNombreRegimentsRecuperes());
+		int nombreAPlacer = nbrRegimentsAdd +nbrRegimentsCartes;
+		System.out.println("nombre a placer: "+nombreAPlacer);
+		while(nombreAPlacer!=0) {
+			System.out.println("je rentre ds le while");
+			System.out.println(this.planispherePanel.getTerritoireSelectionne().getNomTerritoire() + "EL FAMOSO valeur: " + this.planispherePanel.isaClique());
+			System.out.println(this.planispherePanel.isaClique());
+			if(this.planispherePanel.isaClique()) {
+				System.out.println("je rentre dabs le if");
+				this.placerRegimentTerritoire(this.planispherePanel.getJoueurEnCours(), this.planispherePanel.getTerritoireSelectionne(), 1);
+				this.planispherePanel.setaClique(false);
+				nombreAPlacer --;
+				//tout doux: faire ,nombre a placer -- ssi placer regiment renvoie true
+				System.out.println("nbr a placer:" +nombreAPlacer);
+				this.planispherePanel.updateUI();
+
+			}
+			
+			
+		}
+		
+	}
+	private void attaquer() {
+		System.out.println("debut phase attaque");
+		// en boucle jusquua quil veut arreter
+		
+		//choisir dequel on attaque
+		//choisir terriroire a att
+		//choisir nbr regiment
+		//lancer les des
+		//supprimer les regiments
+		//recuperer carte si je gagne un territoire
+	}
+	
+	
+	public void manoeuvrer() {
+		System.out.println("debut phase manoeuvre");
+		//en boucle
+		//deplacer
+		//joueur suivant
+	}
+	
 
 	public ArrayList<Territoire> getListeTerritoires() {
 		return this.planispherePanel.getTerritoires();
