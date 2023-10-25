@@ -6,6 +6,7 @@ package riskGame.vue;
 
 import javax.swing.*;
 
+import riskGame.model.Continent;
 import riskGame.model.Equipe;
 import riskGame.model.Joueur;
 import riskGame.model.Territoire;
@@ -175,6 +176,72 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 
 		Territoire china = new Territoire("China", "#266B3C", 2058, 638);
 		territoires.add(china);
+		
+		Continent ameriqueDuSud = new Continent("Amerique du Sud",2);
+		ameriqueDuSud.ajouterTerritoireDansContinent(venezuela);
+		ameriqueDuSud.ajouterTerritoireDansContinent(brazil);
+		ameriqueDuSud.ajouterTerritoireDansContinent(peru);
+		ameriqueDuSud.ajouterTerritoireDansContinent(argentine);
+		
+		Continent ameriqueDuNord = new Continent("Amerique Du Nord",5);
+		ameriqueDuNord.ajouterTerritoireDansContinent(alaska);
+		ameriqueDuNord.ajouterTerritoireDansContinent(northwestterritory);
+		ameriqueDuNord.ajouterTerritoireDansContinent(groenland);
+		ameriqueDuNord.ajouterTerritoireDansContinent(alberta);
+		ameriqueDuNord.ajouterTerritoireDansContinent(ontario);
+		ameriqueDuNord.ajouterTerritoireDansContinent(quebec);
+		ameriqueDuNord.ajouterTerritoireDansContinent(westusa);
+		ameriqueDuNord.ajouterTerritoireDansContinent(eastusa);
+		ameriqueDuNord.ajouterTerritoireDansContinent(central);
+		
+		Continent europe = new Continent("Europe",5);
+		europe.ajouterTerritoireDansContinent(iceland);
+		europe.ajouterTerritoireDansContinent(scandinavia);
+		europe.ajouterTerritoireDansContinent(greatbritain);
+		europe.ajouterTerritoireDansContinent(northerneurope);
+		europe.ajouterTerritoireDansContinent(westerneurope);
+		europe.ajouterTerritoireDansContinent(southerneurope);
+		europe.ajouterTerritoireDansContinent(iceland);
+
+		
+		Continent afrique = new Continent("Afrique",3);
+		afrique.ajouterTerritoireDansContinent(northafrica);
+		afrique.ajouterTerritoireDansContinent(egypt);
+		afrique.ajouterTerritoireDansContinent(eastafrica);
+		afrique.ajouterTerritoireDansContinent(congo);
+		afrique.ajouterTerritoireDansContinent(southafrica);
+		afrique.ajouterTerritoireDansContinent(madagascar);
+		
+		
+		Continent asie = new Continent("Asie",7);
+		asie.ajouterTerritoireDansContinent(yakutsk);
+		asie.ajouterTerritoireDansContinent(siberia);
+		asie.ajouterTerritoireDansContinent(irkutsk);
+		asie.ajouterTerritoireDansContinent(kamchatka);
+		asie.ajouterTerritoireDansContinent(mongolia);
+		asie.ajouterTerritoireDansContinent(japan);
+		asie.ajouterTerritoireDansContinent(ural);
+		asie.ajouterTerritoireDansContinent(afghanistan);
+		asie.ajouterTerritoireDansContinent(china);
+		asie.ajouterTerritoireDansContinent(india);
+		asie.ajouterTerritoireDansContinent(siam);
+		asie.ajouterTerritoireDansContinent(middleeast);
+		
+		Continent australie = new Continent("Australie",2);
+		australie.ajouterTerritoireDansContinent(indonesia);
+		australie.ajouterTerritoireDansContinent(newguinea);
+		australie.ajouterTerritoireDansContinent(westernaustralia);
+		australie.ajouterTerritoireDansContinent(easternaustralia);
+
+
+
+
+
+
+
+
+
+		
 	}
 
 	// transforme une image en bufferedImage
