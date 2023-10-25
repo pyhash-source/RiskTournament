@@ -331,7 +331,7 @@ public class RiskGame {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		// Fin r�cup�ration des joueurs
+		// Fin recuperation des joueurs
 		
 		// on a initialise la vue
 		SwingUtilities.invokeLater(() -> {
@@ -348,7 +348,10 @@ public class RiskGame {
 		//creer manche
 				long miliseconds = System.currentTimeMillis();
 			    Date date = new Date(miliseconds);
+			    
 				manche = new Manche(numeroManche,date, EtatManche.EN_COURS, planisphere);
+				planisphere.setJoueurEnCours(manche.determinerPremierJoueur());  
+				//manche.placerRegimentsInitiaux();
 	}
 
 }

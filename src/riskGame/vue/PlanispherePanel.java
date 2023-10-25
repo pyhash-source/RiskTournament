@@ -9,6 +9,7 @@ import javax.swing.*;
 import riskGame.model.Continent;
 import riskGame.model.Equipe;
 import riskGame.model.Joueur;
+import riskGame.model.PhaseJoueur;
 import riskGame.model.Territoire;
 import riskGame.model.TypeCouleur;
 
@@ -19,6 +20,11 @@ import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 
 public class PlanispherePanel extends JPanel implements MouseListener {
+	//Joueur en cours 
+	private Joueur joueurEnCours;
+	//phase joueur
+	private PhaseJoueur phaseJoueur = PhaseJoueur.RENFORT;
+	
 	// image affichÃ©e
 	private BufferedImage planisphereImage;
 	// image coloree
@@ -27,6 +33,11 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 	private ArrayList<Territoire> territoires;
 	// liste des joueurs
 	private ArrayList<Joueur> joueurs;
+	
+	private Territoire territoireSelectionne;
+	
+	//getters and setters
+	
 	
 	public PlanispherePanel(ArrayList<Joueur> joueurs) {
 		
@@ -490,6 +501,30 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 
 	}
 
+	public Territoire getTerritoireSelectionne() {
+		return territoireSelectionne;
+	}
+
+	public void setTerritoireSelectionne(Territoire territoireSelectionne) {
+		this.territoireSelectionne = territoireSelectionne;
+	}
+
+	public Joueur getJoueurEnCours() {
+		return joueurEnCours;
+	}
+
+	public void setJoueurEnCours(Joueur joueurEnCours) {
+		this.joueurEnCours = joueurEnCours;
+	}
+
+	public PhaseJoueur getPhaseJoueur() {
+		return phaseJoueur;
+	}
+
+	public void setPhaseJoueur(PhaseJoueur phaseJoueur) {
+		this.phaseJoueur = phaseJoueur;
+	}
+
 	// transforme une image en bufferedImage
 	private BufferedImage toBufferedImage(Image image) {
 		// regarde si cest deja une instance de bufferedImage
@@ -608,6 +643,7 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		for (Territoire t : territoires) {
 			if (isTerritoireColor(rvbHexCode, t)) {
 				System.out.println(t.getNomTerritoire());
+				this.territoireSelectionne= t;
 			}
 		}
 	}
