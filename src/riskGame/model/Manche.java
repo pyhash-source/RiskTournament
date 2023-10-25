@@ -47,7 +47,10 @@ public class Manche {
 		}
 		if (existeTerritoireVide) {
 			if (territoire.getProprietaire()!=null) {
-				
+
+				System.out.println(territoire.getNomTerritoire()+" "
+						+territoire.getProprietaire().getPrenomJoueur());
+
 				return false;
 			} else {
 				territoire.setProprietaire(joueur);
@@ -80,7 +83,6 @@ public class Manche {
 				Joueur joueurActuel = this.planispherePanel.getJoueurEnCours();
 				
 				boolean placerRegiment = false;
-				System.out.println("premier print");
 				while (!placerRegiment) {
 				placerRegiment = this.placerRegimentTerritoire(joueurActuel,this.planispherePanel.getTerritoireSelectionne(), 1);	
 				
