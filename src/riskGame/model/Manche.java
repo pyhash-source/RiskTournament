@@ -41,30 +41,22 @@ public class Manche {
 		for (Territoire t : this.planispherePanel.getTerritoires()) {
 			if (t.getProprietaire() == null) {
 				existeTerritoireVide = true;
-				System.out.println(t.getNomTerritoire());
 				break;
 			}
 
 		}
 		if (existeTerritoireVide) {
-			System.out.println("gros if va a la salle");
 			if (territoire.getProprietaire()!=null) {
-				System.out.println("je peux plus");
-				System.out.println(territoire.getNomTerritoire()+" "
-						+territoire.getProprietaire().getPrenomJoueur());
+				
 				return false;
 			} else {
-				System.out.println("if");
 				territoire.setProprietaire(joueur);
-				System.out.println(territoire.getNomTerritoire()+" "
-						+territoire.getProprietaire().getPrenomJoueur());
 				territoire.ajouterRegiments(nbrRegiment);
 				
 				return true;
 			}
 
 		} else {
-			System.out.println("gros else");
 			// on force le joueur a ajouter des regiments dans ses territoires actuels si
 			// tous les territoires actuels sont deja
 			// occupes
@@ -72,11 +64,9 @@ public class Manche {
 			// on verfie que pour le joueur courant on est dans un territoire qui lui
 			// appartient
 			if (territoire.getProprietaire().equals(joueur)) {
-				System.out.println("else");
 				territoire.ajouterRegiments(nbrRegiment);
 				return true;
 			} else {
-				System.out.println("fin");
 				return false;
 			}
 		}
@@ -248,7 +238,7 @@ public class Manche {
 
 		Iterator it;
 		it = resultatLancementDe.keySet().iterator();
-		StringBuilder message = new StringBuilder("Resultats du lancement de d� : \n");
+		StringBuilder message = new StringBuilder("Resultats du lancement de dé : \n");
 
 		while (it.hasNext()) {
 			Joueur joueurActuel = (Joueur) it.next();
