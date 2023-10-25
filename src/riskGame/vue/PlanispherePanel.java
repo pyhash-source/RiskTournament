@@ -499,6 +499,7 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		australie.ajouterTerritoireDansContinent(westernaustralia);
 		australie.ajouterTerritoireDansContinent(easternaustralia);
 
+		this.territoireSelectionne = argentine;
 	}
 
 	public Territoire getTerritoireSelectionne() {

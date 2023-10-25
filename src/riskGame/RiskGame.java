@@ -343,6 +343,12 @@ public class RiskGame {
 			frame.setSize(800, 600);
 			frame.setVisible(true);
 		});
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		
 		//creer manche
@@ -350,8 +356,9 @@ public class RiskGame {
 			    Date date = new Date(miliseconds);
 			    
 				manche = new Manche(numeroManche,date, EtatManche.EN_COURS, planisphere);
+				manche.setJoueursManche(listeJoueurs);
 				planisphere.setJoueurEnCours(manche.determinerPremierJoueur());  
-				//manche.placerRegimentsInitiaux();
+				manche.placerRegimentsInitiaux();
 	}
 
 }

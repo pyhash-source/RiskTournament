@@ -79,10 +79,12 @@ public class Manche {
 				
 				boolean placerRegiment = false;
 				while (!placerRegiment) {
-					placerRegiment = this.placerRegimentTerritoire(joueurActuel,
-							this.planispherePanel.getTerritoireSelectionne(), 1);
+				placerRegiment = this.placerRegimentTerritoire(joueurActuel,this.planispherePanel.getTerritoireSelectionne(), 1);
+
 				}
+				this.planispherePanel.updateUI();
 				this.changerJoueur();
+				
 
 			}
 		}
