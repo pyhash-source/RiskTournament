@@ -331,7 +331,7 @@ public class RiskGame {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		// Fin r�cup�ration des joueurs
+		// Fin recuperation des joueurs
 		
 		// on a initialise la vue
 		SwingUtilities.invokeLater(() -> {
@@ -343,12 +343,22 @@ public class RiskGame {
 			frame.setSize(800, 600);
 			frame.setVisible(true);
 		});
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		
 		//creer manche
 				long miliseconds = System.currentTimeMillis();
 			    Date date = new Date(miliseconds);
+			    
 				manche = new Manche(numeroManche,date, EtatManche.EN_COURS, planisphere);
+				manche.setJoueursManche(listeJoueurs);
+				planisphere.setJoueurEnCours(manche.determinerPremierJoueur());  
+				manche.placerRegimentsInitiaux();
 	}
 
 }

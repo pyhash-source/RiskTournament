@@ -9,6 +9,7 @@ import javax.swing.*;
 import riskGame.model.Continent;
 import riskGame.model.Equipe;
 import riskGame.model.Joueur;
+import riskGame.model.PhaseJoueur;
 import riskGame.model.Territoire;
 import riskGame.model.TypeCouleur;
 
@@ -19,6 +20,11 @@ import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 
 public class PlanispherePanel extends JPanel implements MouseListener {
+	//Joueur en cours 
+	private Joueur joueurEnCours;
+	//phase joueur
+	private PhaseJoueur phaseJoueur = PhaseJoueur.RENFORT;
+	
 	// image affichÃ©e
 	private BufferedImage planisphereImage;
 	// image coloree
@@ -27,6 +33,11 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 	private ArrayList<Territoire> territoires;
 	// liste des joueurs
 	private ArrayList<Joueur> joueurs;
+	
+	private Territoire territoireSelectionne;
+	
+	//getters and setters
+	
 	
 	public PlanispherePanel(ArrayList<Joueur> joueurs) {
 		
@@ -52,7 +63,6 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		territoires.add(alaska);
 
 		Territoire argentine = new Territoire("Argentine", "#027C67", 400, 1465);
-		argentine.setProprietaire(joueurs.get(0));
 		territoires.add(argentine);
 
 		Territoire peru = new Territoire("Peru", "#3AA287", 456, 1299);
@@ -488,6 +498,31 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		australie.ajouterTerritoireDansContinent(westernaustralia);
 		australie.ajouterTerritoireDansContinent(easternaustralia);
 
+		this.territoireSelectionne = argentine;
+	}
+
+	public Territoire getTerritoireSelectionne() {
+		return territoireSelectionne;
+	}
+
+	public void setTerritoireSelectionne(Territoire territoireSelectionne) {
+		this.territoireSelectionne = territoireSelectionne;
+	}
+
+	public Joueur getJoueurEnCours() {
+		return joueurEnCours;
+	}
+
+	public void setJoueurEnCours(Joueur joueurEnCours) {
+		this.joueurEnCours = joueurEnCours;
+	}
+
+	public PhaseJoueur getPhaseJoueur() {
+		return phaseJoueur;
+	}
+
+	public void setPhaseJoueur(PhaseJoueur phaseJoueur) {
+		this.phaseJoueur = phaseJoueur;
 	}
 
 	// transforme une image en bufferedImage
@@ -532,41 +567,77 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 			// coordonnees de la fenetre
 			int realX = t.getCoordonneeX() * componentWidth / imageWidth;
 			int realY = t.getCoordonneeY() * componentHeight / imageHeight;
-//			if(t.getProprietaire()!=null) {
-//				
-//				if(t.getProprietaire().getCouleurJoueur()==TypeCouleur.BLANC) {
-//					System.out.println(TypeCouleur.BLANC);
 
-					// AfficherNombreRegiments
-				    g.setColor(Color.WHITE); 
-				  
-					g.drawImage(RessourcesImages.BLANC, realX, realY, (int)(0.02*componentWidth), (int)(0.04*componentHeight), this);
-					g.drawString(String.valueOf(t.getNbrRegiment()), (int)(realX+(0.02*componentWidth)), (int)(realY+(0.04*componentHeight)));
-//				}
-//			}
-				
+			if(t.getProprietaire()!=null) {
+				 if (t.getProprietaire().getCouleurJoueur() == TypeCouleur.BLANC){
+					 g.setColor(Color.WHITE);
+					 g.drawImage(RessourcesImages.BLANC, realX, realY, (int)(0.02*componentWidth), (int)(0.04*componentHeight), this);
+						g.drawString(String.valueOf(t.getNbrRegiment()), (int)(realX+(0.02*componentWidth)), (int)(realY+(0.04*componentHeight)));
+				    } else if (t.getProprietaire().getCouleurJoueur() == TypeCouleur.ROUGE) {
+				    	g.setColor(Color.RED);
+				    	g.drawImage(RessourcesImages.ROUGE, realX, realY, (int)(0.02*componentWidth), (int)(0.04*componentHeight), this);
+						g.drawString(String.valueOf(t.getNbrRegiment()), (int)(realX+(0.02*componentWidth)), (int)(realY+(0.04*componentHeight)));
+				    } else if (t.getProprietaire().getCouleurJoueur() == TypeCouleur.VERT) {
+				    	g.setColor(Color.GREEN);
+				    	g.drawImage(RessourcesImages.VERT, realX, realY, (int)(0.02*componentWidth), (int)(0.04*componentHeight), this);
+						g.drawString(String.valueOf(t.getNbrRegiment()), (int)(realX+(0.02*componentWidth)), (int)(realY+(0.04*componentHeight)));
+				    } else if (t.getProprietaire().getCouleurJoueur() == TypeCouleur.JAUNE) {
+				    	g.setColor(Color.YELLOW);
+				    	g.drawImage(RessourcesImages.JAUNE, realX, realY, (int)(0.02*componentWidth), (int)(0.04*componentHeight), this);
+						g.drawString(String.valueOf(t.getNbrRegiment()), (int)(realX+(0.02*componentWidth)), (int)(realY+(0.04*componentHeight)));
+				    } else {
+				    	g.setColor(Color.BLUE);
+				    	g.drawImage(RessourcesImages.BLEU, realX, realY, (int)(0.02*componentWidth), (int)(0.04*componentHeight), this);
+						g.drawString(String.valueOf(t.getNbrRegiment()), (int)(realX+(0.02*componentWidth)), (int)(realY+(0.04*componentHeight)));
+				    }
+			}
+
 		}
 		
 		// Dessiner un cadre qui affiche les informations du joueur
 		for (Joueur joueur : joueurs) {
 		    if (joueur.getCouleurJoueur() == TypeCouleur.BLANC){
+		    	if(this.joueurEnCours.equals(joueur)) {
+		        	g.setColor(Color.GRAY);
+		        	g.fillRect(10,componentHeight-100,70,20);
+		        }
 		        g.setColor(Color.WHITE);
 		        g.drawString("P1: " + joueur.getPrenomJoueur(), 12, componentHeight - 90);
 		    } else if (joueur.getCouleurJoueur() == TypeCouleur.ROUGE) {
+		    	if(this.joueurEnCours.equals(joueur)) {
+		        	g.setColor(Color.GRAY);
+		        	g.fillRect(10,componentHeight-80,70,20);
+		        }
 		        g.setColor(Color.RED);
 		        g.drawString("P2: " + joueur.getPrenomJoueur(), 12, componentHeight - 70);
 		    } else if (joueur.getCouleurJoueur() == TypeCouleur.VERT) {
+		    	if(this.joueurEnCours.equals(joueur)) {
+		        	g.setColor(Color.GRAY);
+		        	g.fillRect(10,componentHeight-60,70,20);
+		        }
 		        g.setColor(Color.GREEN);
 		        g.drawString("P3: " + joueur.getPrenomJoueur(), 12, componentHeight - 50);
 		    } else if (joueur.getCouleurJoueur() == TypeCouleur.JAUNE) {
+		    	if(this.joueurEnCours.equals(joueur)) {
+		        	g.setColor(Color.GRAY);
+		        	g.fillRect(10,componentHeight-40,70,20);
+		        }
 		        g.setColor(Color.YELLOW);
 		        g.drawString("P4: " + joueur.getPrenomJoueur(), 12, componentHeight - 30);
 		    } else {
 		        g.setColor(Color.BLUE);
+		        if(this.joueurEnCours.equals(joueur)) {
+		        	g.setColor(Color.GRAY);
+		        	g.fillRect(10,componentHeight-20,70,20);
+		        }
 		        g.drawString("P5: " + joueur.getPrenomJoueur(), 12, componentHeight - 10);
 		    }
 		}
-
+		
+		for(Joueur joueur: joueurs) {
+			
+		}
+		
 	}
 
 	// fonction qui permet de savoir ou on a clique
@@ -608,6 +679,7 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		for (Territoire t : territoires) {
 			if (isTerritoireColor(rvbHexCode, t)) {
 				System.out.println(t.getNomTerritoire());
+				this.territoireSelectionne= t;
 			}
 		}
 	}

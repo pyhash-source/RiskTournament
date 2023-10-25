@@ -68,6 +68,7 @@ public class Territoire {
 	 * @param nbrRegimentAAjouter
 	 */
 	public void ajouterRegiments(int nbrRegimentAAjouter) {
+		System.out.println("jajoute");
 		this.nbrRegiment += nbrRegimentAAjouter;
 	}
 	
