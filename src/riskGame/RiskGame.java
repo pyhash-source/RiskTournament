@@ -149,30 +149,74 @@ public class RiskGame {
 			//fermer le connexion
 			con.close();
 			
-//			//connection a la bd
-//			Statement stmt2;
-//			Class.forName("com.mysql.jdbc.Driver");
-//			String url2 = "jdbc:mysql://localhost:3306/si_risk";
-//			Connection con2 = DriverManager.getConnection(url, "root", "");
-//			stmt2 = con2.createStatement();
-//			//execution de la requete
-//			ResultSet resultat2 = stmt2.executeQuery("SELECT J.nomJoueur "
-//					+ "FROM joueur J, participer P "
-//					+ "GROUP BY J.numeroJoueur, J.nomJoueur "
-//					+ "HAVING SUM(P.nbrAttaquesLancees = (SELECT MAX(nbrAttLancees) FROM("
-//					+ "	SELECT SUM(P2.nbrAttaquesLancees) as “nbrAttLancees” "
-//					+ "FROM joueur J2, participer P2 "
-//					+ "GROUP BY J2.numeroJoueur, J2.nomJoueur));"
-//					+ "");	
-//			//recupere pour chaque ligne le nom de la competition
-//			bufferTableau.add(resultat2.getString("nomJoueur"));
-//			//fermer le connexion
-//			con2.close();
+			//connection a la bd
+			Statement stmt2;
+			Class.forName("com.mysql.jdbc.Driver");
+			String url2 = "jdbc:mysql://localhost:3306/si_risk";
+			Connection con2 = DriverManager.getConnection(url2, "root", "");
+			stmt2 = con2.createStatement();
+			//execution de la requete
+			ResultSet resultat2 = stmt2.executeQuery("SELECT j.nomJoueur, SUM(p.nbrAttaquesLancees)\r\n"
+					+ "FROM joueur j, participer p\r\n"
+					+ "WHERE j.numeroJoueur = p.numeroJoueur\r\n"
+					+ "GROUP BY j.numeroJoueur, j.nomJoueur\r\n"
+					+ "HAVING SUM(P.nbrAttaquesLancees) = (SELECT MAX(nbrAttL) FROM (SELECT SUM(p2.nbrAttaquesLancees) as 'nbrAttL'\r\n"
+					+ "FROM joueur j2, participer p2\r\n"
+					+ "WHERE j2.numeroJoueur = p2.numeroJoueur\r\n"
+					+ "GROUP BY j2.numeroJoueur, j2.nomJoueur) as s);");	
+			
+			resultat2.next();
+			//recupere pour chaque ligne le nom de la competition
+			bufferTableau.add(resultat2.getString("nomJoueur"));
+			//fermer le connexion
+			con2.close();
+			
+			Statement stmt3;
+			Class.forName("com.mysql.jdbc.Driver");
+			String url3 = "jdbc:mysql://localhost:3306/si_risk";
+			Connection con3 = DriverManager.getConnection(url2, "root", "");
+			stmt3 = con3.createStatement();
+			//execution de la requete
+			ResultSet resultat3 = stmt3.executeQuery("SELECT j.nomJoueur, SUM(p.nbrDefensesReussies)\r\n"
+					+ "FROM joueur j, participer p\r\n"
+					+ "WHERE j.numeroJoueur = p.numeroJoueur\r\n"
+					+ "GROUP BY j.numeroJoueur, j.nomJoueur\r\n"
+					+ "HAVING SUM(P.nbrDefensesReussies) = (SELECT MAX(nbrDefR) FROM (SELECT SUM(p2.nbrDefensesReussies) as 'nbrDefR'\r\n"
+					+ "FROM joueur j2, participer p2\r\n"
+					+ "WHERE j2.numeroJoueur = p2.numeroJoueur\r\n"
+					+ "GROUP BY j2.numeroJoueur, j2.nomJoueur) as s);");	
+			
+			resultat3.next();
+			//recupere pour chaque ligne le nom de la competition
+			bufferTableau.add(resultat3.getString("nomJoueur"));
+			//fermer le connexion
+			con3.close();
+			
+			Statement stmt4;
+			Class.forName("com.mysql.jdbc.Driver");
+			String url4 = "jdbc:mysql://localhost:3306/si_risk";
+			Connection con4 = DriverManager.getConnection(url2, "root", "");
+			stmt4 = con4.createStatement();
+			//execution de la requete
+			ResultSet resultat4 = stmt4.executeQuery("SELECT j.nomJoueur, SUM(p.nbrTerritoiresConquis)\r\n"
+					+ "FROM joueur j, participer p\r\n"
+					+ "WHERE j.numeroJoueur = p.numeroJoueur\r\n"
+					+ "GROUP BY j.numeroJoueur, j.nomJoueur\r\n"
+					+ "HAVING SUM(P.nbrTerritoiresConquis) = (SELECT MAX(nbrTerrC) FROM (SELECT SUM(p2.nbrTerritoiresConquis) as 'nbrTerrC'\r\n"
+					+ "FROM joueur j2, participer p2\r\n"
+					+ "WHERE j2.numeroJoueur = p2.numeroJoueur\r\n"
+					+ "GROUP BY j2.numeroJoueur, j2.nomJoueur) as s);");	
+			
+			resultat4.next();
+			//recupere pour chaque ligne le nom de la competition
+			bufferTableau.add(resultat4.getString("nomJoueur"));
+			//fermer le connexion
+			con4.close();
 			
 			message.append("\nLe trophée Malchanceux est attribué à ").append(bufferTableau.get(0));
-//			message.append("\nLe trophée Belliqueux est attribué à ").append(bufferTableau.get(1));
-			message.append("\nLe trophée Bouclier est attribué à ").append("");
-			message.append("\nLe trophée Conquérant est attribué à ").append("");
+			message.append("\nLe trophée Belliqueux est attribué à ").append(bufferTableau.get(1));
+			message.append("\nLe trophée Bouclier est attribué à ").append(bufferTableau.get(2));
+			message.append("\nLe trophée Conquérant est attribué à ").append(bufferTableau.get(3));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
