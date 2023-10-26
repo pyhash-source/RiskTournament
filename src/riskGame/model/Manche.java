@@ -842,5 +842,10 @@ public class Manche {
 			mettreAJourClassement(joueur);
 		}
 	}
+	
+	// Fonction pour verifier fin partie
+	public boolean verifierFinPartie() {
+		return this.joueursManche.size()==1;
+	}
 }
 
