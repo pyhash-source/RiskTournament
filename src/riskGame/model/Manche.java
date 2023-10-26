@@ -328,6 +328,8 @@ public class Manche {
 			//de propriétaire et la récupération de cartes
 				// recuperer carte si je gagne un territoire
 			if(territoireDefendant.getNbrRegiment()==0) {
+				eliminerJoueur(territoireDefendant.getProprietaire());
+				this.mancheFinie = verifierFinPartie();
 				territoireDefendant.setProprietaire(territoireAttaquant.getProprietaire());
 				territoireDefendant.setNbrRegiment(Integer.parseInt(nombreRegimentsPourAttaquer));
 				territoireAttaquant.setNbrRegiment(territoireAttaquant.getNbrRegiment() - Integer.parseInt(nombreRegimentsPourAttaquer) );
