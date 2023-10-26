@@ -83,8 +83,8 @@ public class Manche {
 
 	// fonction pour le début du renfort
 	public void placerRegimentsInitiaux() {
-
-		for (int i = 0; i < 25; i++) {
+//normalement c'est 25 regiments par joueur mais c'est trop long pour la démo on garde que 9 
+		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 5; j++) {
 				Joueur joueurActuel = this.planispherePanel.getJoueurEnCours();
 
