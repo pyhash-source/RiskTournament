@@ -415,7 +415,7 @@ public class Manche {
 		
 		
 		String territoireDepartString = (String) JOptionPane.showInputDialog(null,
-				"Avec quel territoire voulez-vous attaquer ? ", "Choix des territoires attaquants: ",
+				"DEPUIS quel territoire voulez vous déplacer des régiments ? ", "Choix du territoire pour déplacer des régiments: ",
 				JOptionPane.PLAIN_MESSAGE, null, listeTerritoireToChoseFromDepart, listeTerritoireToChoseFromDepart[0]);
 		Territoire territoireDepart = convertirTerritoireFromStringToTerritoire(territoireDepartString);
 		
@@ -469,7 +469,10 @@ public class Manche {
 		
 		//deplacer
 		Territoire territoireArriveeManoeuvre = convertirTerritoireFromStringToTerritoire(territoireArriveeChoisi);
-		
+		territoireDepart.supprimerRegiments(Integer.parseInt(nombreDeRegimentsADeplacer));
+		territoireArriveeManoeuvre.ajouterRegiments(Integer.parseInt(nombreDeRegimentsADeplacer));
+		this.planispherePanel.updateUI();
+
 		
 	}
 
