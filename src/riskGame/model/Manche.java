@@ -448,8 +448,10 @@ public class Manche {
 				
 			}
 		}
+		territoiresAccessibles.remove(territoireDepart);
 		
-		String[] territoiresArriveeToChoseFrom = new String[territoiresAccessibles.size()];
+		String[] territoiresArriveeToChoseFrom = new String
+				[territoiresAccessibles.size()];
 		for(int i=0;i<territoiresAccessibles.size();i++) {
 			territoiresArriveeToChoseFrom[i] = territoiresAccessibles.get(i).getNomTerritoire();
 		}
