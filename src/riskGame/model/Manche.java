@@ -7,10 +7,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import riskGame.vue.PlanispherePanel;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author Jean, elisa/SVRS, Fitia, Zhuo, YasmineV
@@ -151,7 +153,9 @@ public class Manche {
 				"La phase renfort est terminee! \n Vous allez passer à la phase d'attaque.");
 
 	}
-
+	//TODO: donner carte au joueur
+	//TODO: joueur a perdu a ce tour la ? 
+	//TODO: quelqu'un a gagné ? 
 	private void attaquer() {
 		System.out.println("debut phase attaque");
 		boolean attaquer = true;
@@ -256,23 +260,65 @@ public class Manche {
 			
 			JOptionPane.showMessageDialog(null, "Resultats des choix pour la bagarre: \nL'attaquant attaque avec: " + nombreRegimentsPourAttaquer +"\nLe defenseur defend avec:" + nombreRegimentsPourDefendre);
 
-				
-				// il faut implémenter nbrRegimentsAttaque avec le choix du joueur jsp comment
-				// faire
 
 				// lancer les des
+			//GOTO
+			//titrage des dés attaque
+			int[] resultatsDesAttaque = new int[Integer.parseInt(nombreRegimentsPourAttaquer)];
+			for(int i=0; i < resultatsDesAttaque.length-1; i++) {
+				resultatsDesAttaque[i]= lancerUnDe();
+			}
+			//titrage des dés défense
+			int[] resultatsDesDefense = new int[Integer.parseInt(nombreRegimentsPourDefendre)];
+			for(int j=0; j < resultatsDesDefense.length-1; j++) {
+				resultatsDesDefense[j]= lancerUnDe();
+			}
+			//comparer les résultats des différents dés
+			//triage des tableaux
+			Arrays.sort(resultatsDesAttaque);
+			reverse(resultatsDesAttaque);
+			
+			Arrays.sort(resultatsDesDefense);
+			reverse(resultatsDesDefense);
+			int nombreRegimentsDefenseTues = 0;
+			int nombreRegimentsAttaqueTues = 0;
 
-				// supprimer les regiments
+			if(resultatsDesDefense.length > resultatsDesAttaque.length) {
+				for(int i=0;i<=resultatsDesAttaque.length-1;i++) {
+					if(resultatsDesAttaque[i] > resultatsDesDefense[i]) {
+						nombreRegimentsDefenseTues++;
+					} else {
+						nombreRegimentsAttaqueTues ++;
+					}
+				}
+			} else {
+				for(int i=0;i<=resultatsDesDefense.length-1;i++) {
+					if(resultatsDesAttaque[i] > resultatsDesDefense[i]) {
+						nombreRegimentsDefenseTues++;
+					} else {
+						nombreRegimentsAttaqueTues ++;
+					}
+				}
+			}
+			
+			String resultatDesDefenseString = arrayToString(resultatsDesDefense);
+			String resultatDesAttaqueString = arrayToString(resultatsDesAttaque);
+			
+			//affichaqge au joueur du lancer des dés et des résultats de l'attaque
+			JOptionPane.showMessageDialog(null, "Résultat de l'attaque: \nLancers de dés de l'attaquant: "+ resultatDesAttaqueString+"\n"
+					+ "Lancers de dés du défenseur: " + resultatDesDefenseString+ "\n"+
+					"Bilan des morts:\n "+ "Morts attaquants: "+ nombreRegimentsAttaqueTues + "\nMorts défenseurs: " + nombreRegimentsDefenseTues);
+			
+			// supprimer les regiments
+			territoireAttaquant.supprimerRegiments(nombreRegimentsAttaqueTues);
+			territoireDefendant.supprimerRegiments(nombreRegimentsDefenseTues);
+			this.planispherePanel.updateUI();
+			//regarder si on bute tous les marcs du territoire qui defend, si oui, il faut que l'on trigger le changemen
+			//de propriétaire et la récupération de cartes
 				// recuperer carte si je gagne un territoire
 			
 
-			// ------------fin code dy Y
 
-			// ajouter une condition pour ne choisir que les territoires attaquants avec >1
-			// marc
-			// lancer les des
-			// supprimer les regiments
-			// recuperer carte si je gagne un territoire
 			attaquer();
 		} else {
 			System.out.println("Fin de la phase d'attaque !");
@@ -282,6 +328,32 @@ public class Manche {
 		}
 	}
 
+	private String arrayToString(int[] resultatsDesDefense) {
+		String resultatDesDefenseString = "[ ";
+		for(int i=0;i<=resultatsDesDefense.length-1;i++) {
+			resultatDesDefenseString += resultatsDesDefense[i];
+			resultatDesDefenseString += " ";
+			
+		}
+		resultatDesDefenseString += "]";
+		return resultatDesDefenseString;
+	}
+
+	private static void reverse(int[] array) {
+        if (array == null) {
+            return;
+        }
+        int i = 0;
+        int j = array.length - 1;
+        int tmp;
+        while (j > i) {
+            tmp = array[j];
+            array[j] = array[i];
+            array[i] = tmp;
+            j--;
+            i++;
+        }
+}
 	private boolean demanderConfirmation() {
 		boolean attaquer;
 		int confirmationAttaque = JOptionPane.showConfirmDialog(null, "Souhaitez-vous attaquer?");
