@@ -29,6 +29,15 @@ public class Joueur {
 		private ArrayList<Carte> mesCartes;
 		
 		//Constructor
+		/**
+		 * Constructeur du joueur
+		 * @param nomJoueur
+		 * @param prenomJoueur
+		 * @param dateNaissance
+		 * @param etatJoueur
+		 * @param numeroJoueur
+		 * @param typeCouleur
+		 */
 		public Joueur(String nomJoueur, String prenomJoueur, String dateNaissance, EtatJoueur etatJoueur,int numeroJoueur, TypeCouleur typeCouleur) {
 	        this.nomJoueur = nomJoueur;
 	        this.prenomJoueur = prenomJoueur;
@@ -138,79 +147,184 @@ public class Joueur {
 		}
 
 		//Getters and setters
+		/**
+		 * retourne le numero du joueur
+		 * @return numeroJoueur
+		 */
 		public int getNumeroJoueur() {
 			return numeroJoueur;
 		}
+		
+		/**
+		 * permet de changer le numero du jouer
+		 * @param numeroJoueur
+		 */
 		public void setNumeroJoueur(int numeroJoueur) {
 			this.numeroJoueur = numeroJoueur;
 		}
+		
+		/**
+		 * permet de recuperer l'etat d'un joueur
+		 * @return etatJoueur
+		 */
 		public EtatJoueur getEtatJoueur() {
 			return etatJoueur;
 		}
+		
+		/**
+		 * permet de mettre a jour l'etat du joueur
+		 * @param etatJoueur
+		 */
 		public void setEtatJoueur(EtatJoueur etatJoueur) {
 			this.etatJoueur = etatJoueur;
 		}
+		/**
+		 * retourne le nombre de cartes tirees par le joueur au cours de la manche
+		 * @return nombre de cartes tirees
+		 */
 		public int getNombreCartesTirees() {
 			return nombreCartesTirees;
 		}
+		
+		/**
+		 * permet de changer la valeur de nombreCartesTirees
+		 * @param nombreCartesTirees
+		 */
 		public void setNombreCartesTirees(int nombreCartesTirees) {
 			this.nombreCartesTirees = nombreCartesTirees;
 		}
+		
+		/**
+		 * retourne le nombre de cartes echangees par le joueur au cours de la manche
+		 * @return nombre de cartes echangees
+		 */
 		public int getNombreCartesEchangees() {
 			return nombreCartesEchangees;
 		}
+		/**
+		 * permet de changer la valeur de nombreCartesEchangees
+		 * @param nombreCartesEchangees
+		 */
 		public void setNombreCartesEchangees(int nombreCartesEchangees) {
 			this.nombreCartesEchangees = nombreCartesEchangees;
 		}
+		/**
+		 * retourne le nombre de regiments recuperes par le joueur au cours de la manche
+		 * @return nombre de cartes recuperes
+		 */
 		public int getNombreRegimentsRecuperes() {
 			return nombreRegimentsRecuperes;
 		}
+		/**
+		 * permet de changer la valeur de nombreRegimentsRecuperes
+		 * @param nombreRegimentsRecuperes
+		 */
 		public void setNombreRegimentsRecuperes(int nombreRegimentsRecuperes) {
 			this.nombreRegimentsRecuperes = nombreRegimentsRecuperes;
 		}
+		
+		/**
+		 * retourne le nombre de regiments elimines par le joueur au cours de la manche
+		 * @return nombre de regiments elimines
+		 */
 		public int getNombreRegimentsElimines() {
 			return nombreRegimentsElimines;
 		}
+		/**
+		 * permet de changer la valeur de nombreRegimentsElimines
+		 * @param nombreRegimentsElimines
+		 */
 		public void setNombreRegimentsElimines(int nombreRegimentsElimines) {
 			this.nombreRegimentsElimines = nombreRegimentsElimines;
 		}
 
+		/**
+		 * retourne le nombre de nombre de deplacement par le joueur au cours de la manche
+		 * @return nombre de deplacement
+		 */
 		public int getNombreDeplacement() {
 			return nombreDeplacement;
 		}
+		/**
+		 * permet de changer la valeur de nombreDeplacement
+		 * @param nombreDeplacement
+		 */
 		public void setNombreDeplacement(int nombreDeplacement) {
 			this.nombreDeplacement = nombreDeplacement;
 		}
-		
+
+		/**
+		 * permet d 'ajouter une carte aux cartes du joueur
+		 * @param carte
+		 */
 		public void ajouterCarte(Carte carte) {
 			this.mesCartes.add(carte);
 		}
 
-
+		/**
+		 * retourne le nombre d'attaques lancees par le joueur au cours de la manche
+		 * @return nombre d'attaques lancees
+		 */
 		public int getNombreAttaquesLancees() {
 			return nombreAttaquesLancees;
 		}
+		/**
+		 * permet de changer la valeur de nombreAttaquesLancees
+		 * @param nombreAttaquesLancees
+		 */
 		public void setNombreAttaquesLancees(int nombreAttaquesLancees) {
 			this.nombreAttaquesLancees = nombreAttaquesLancees;
 		}
+		
+		/**
+		 * retourne le nombre de fois ou le joueur a eu un au lancer de dé
+		 * @return nombre de un au lancer de des
+		 */
 		public int getNombreDesUn() {
 			return nombreDesUn;
 		}
+		
+		/**
+		 * permet de changer la valeur de nombreDesUn
+		 * @param nombreDesUns
+		 */
 		public void setNombreDesUn(int nombreDesUn) {
 			this.nombreDesUn = nombreDesUn;
 		}
+		
+		/**
+		 * retourne le nombre de defenses reussies par le joueur au cours de la manche
+		 * @return nombre de defenses reussies
+		 */
 		public int getNombreDefensesReussies() {
 			return nombreDefensesReussies;
 		}
+		
+		/**
+		 * permet de changer la valeur de nombreDefensesReussies
+		 * @param nombreDefensesReussies
+		 */
 		public void setNombreDefensesReussies(int nombreDefensesReussies) {
 			this.nombreDefensesReussies = nombreDefensesReussies;
 		}
+		/**
+		 * retourne le nombre de territoires conquis par le joueur au cours de la manche
+		 * @return nombre de terriroires conquis
+		 */
 		public int getNombreTerritoiresConquis() {
 			return nombreTerritoiresConquis;
 		}
+		
+		/**
+		 * permet de changer la valeur de nombreTerritoiresConquis
+		 * @param nombreTerritoiresConquis
+		 */
 		public void setNombreTerritoiresConquis(int nombreTerritoiresConquis) {
 			this.nombreTerritoiresConquis = nombreTerritoiresConquis;
 		}
+		/**
+		 * permet de calculer le hascode de la classe
+		 */
 		@Override
 		public int hashCode() {
 			return Objects.hash(couleurJoueur, dateNaissance, etatJoueur, mesCartes, nomJoueur, nombreAttaquesLancees,
@@ -218,6 +332,9 @@ public class Joueur {
 					nombreLancerDeDes, nombreRegimentsElimines, nombreRegimentsRecuperes, nombreTerritoiresConquis,
 					numeroJoueur, prenomJoueur);
 		}
+		/**
+		 * permet de verifier l'egalite entre deux objets de la classe
+		 */
 		@Override
 		public boolean equals(Object obj) {
 			if (this == obj)
