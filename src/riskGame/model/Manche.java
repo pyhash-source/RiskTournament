@@ -265,21 +265,29 @@ public class Manche {
 			//GOTO
 			//titrage des dés attaque
 			int[] resultatsDesAttaque = new int[Integer.parseInt(nombreRegimentsPourAttaquer)];
-			for(int i=0; i < resultatsDesAttaque.length-1; i++) {
+			for(int i=0; i < resultatsDesAttaque.length; i++) {
 				resultatsDesAttaque[i]= lancerUnDe();
+				System.out.println("Resultat du lancer de dé attaque: " + resultatsDesAttaque[i]);
 			}
 			//titrage des dés défense
 			int[] resultatsDesDefense = new int[Integer.parseInt(nombreRegimentsPourDefendre)];
-			for(int j=0; j < resultatsDesDefense.length-1; j++) {
+			for(int j=0; j < resultatsDesDefense.length; j++) {
 				resultatsDesDefense[j]= lancerUnDe();
+				System.out.println("Resultat du lancer de dé defense" + resultatsDesDefense[j]);
+
 			}
 			//comparer les résultats des différents dés
 			//triage des tableaux
+			System.out.println( arrayToString(resultatsDesAttaque));
 			Arrays.sort(resultatsDesAttaque);
 			reverse(resultatsDesAttaque);
+			System.out.println(arrayToString(resultatsDesAttaque));
 			
+			System.out.println(arrayToString(resultatsDesDefense));
 			Arrays.sort(resultatsDesDefense);
 			reverse(resultatsDesDefense);
+			System.out.println(arrayToString(resultatsDesDefense));
+			
 			int nombreRegimentsDefenseTues = 0;
 			int nombreRegimentsAttaqueTues = 0;
 
@@ -316,8 +324,14 @@ public class Manche {
 			//regarder si on bute tous les marcs du territoire qui defend, si oui, il faut que l'on trigger le changemen
 			//de propriétaire et la récupération de cartes
 				// recuperer carte si je gagne un territoire
+			if(territoireDefendant.getNbrRegiment()==0) {
+				territoireDefendant.setProprietaire(territoireAttaquant.getProprietaire());
+				territoireDefendant.setNbrRegiment(Integer.parseInt(nombreRegimentsPourAttaquer));
+				territoireAttaquant.setNbrRegiment(territoireAttaquant.getNbrRegiment() - Integer.parseInt(nombreRegimentsPourAttaquer) );
+				
+			}
 			
-
+			
 
 			attaquer();
 		} else {
@@ -617,9 +631,14 @@ public class Manche {
 
 	public int lancerUnDe() {
 		Random random = new Random();
-		// obtenir entier [1,6[
-		int deResult = random.nextInt(6) + 1;
-		return deResult;
+		// obtenir entier [1,6]
+		int deResultReel = random.nextInt(6) + 1;
+		JOptionPane.showMessageDialog(null, "lancer de dé: "+ deResultReel);
+//		if(deResultReel==1) {
+//			joueur.
+		//TODO: continuer cette fonction
+//		}
+		return deResultReel;
 	}
 
 	// fonction pour changer de joueur
