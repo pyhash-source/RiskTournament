@@ -160,13 +160,17 @@ public class Manche {
 
 		// en boucle jusqu'a quil veut arreter
 		if (attaquer) {
+			ArrayList<Territoire> bufferArrayList = this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours());
+			for (Territoire t :this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours()) ) {
+				if(t.getNbrRegiment()<2) {
+					bufferArrayList.remove(t);
+				}
+			}
 
-			String[] territoireToChooseFrom = new String[this
-					.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours()).size()];
-			for (int i = 0; i <= this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours()).size()
+			String[] territoireToChooseFrom = new String[bufferArrayList.size()];
+			for (int i = 0; i <= bufferArrayList.size()
 					- 1; i++) {
-				territoireToChooseFrom[i] = this
-						.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours()).get(i)
+				territoireToChooseFrom[i] = bufferArrayList.get(i)
 						.getNomTerritoire();
 			}
 
