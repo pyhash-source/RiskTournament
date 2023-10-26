@@ -113,7 +113,7 @@ public class Manche {
 		// todo bonus continent
 		System.out.println("debut phase renfort");
 		System.out.println("joueur: " + this.planispherePanel.getJoueurEnCours().getNomJoueur());
-		int nbrRegimentsCartes = this.planispherePanel.getJoueurEnCours().echangerCarte(this);
+		int nbrRegimentsCartes = echangerCarte();
 		System.out.println("echange carte: " + nbrRegimentsCartes);
 		int nbrTerritoires = this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours()).size();
 		System.out.println("le joueur a : " + nbrTerritoires);
@@ -418,13 +418,8 @@ public class Manche {
 
 	// Methods
 
-	/*
-	 * Cette fonction permet de determiner le premier joueur d'un jeu en utilisant
-	 * un lancer de de pour chaque joueur
-	 */
-	public void augmenterCompteur() {
-		this.nbEchanges++;
-	}
+
+
 
 	public Joueur determinerPremierJoueur() {
 
@@ -606,5 +601,115 @@ public class Manche {
 			return territoiresPossedes==continent.getTerritoires().size();
 	}
 		
+	// fonction pour donner carte joueur
+	public void donnerCarteJoueur() {
+		Carte carteDonnee = this.pileCartes.remove(0);
+		this.planispherePanel.getJoueurEnCours().ajouterCarte(carteDonnee);
+		StringBuilder message = new StringBuilder("Bravo, vous avez récupéré une carte \n "
+				+ "de type : " + carteDonnee.getTypeRegiment()+ 
+				"pour le territoire : " +carteDonnee.getTerritoire().getNomTerritoire());
+		JOptionPane.showMessageDialog(null, message.toString());
+	}
+	
+	
+	/**
+	 * Retourne un nombre de regiments. Permet a un joueur d'echanger les cartes dont il dispose pour recuperer des regiments.
+	 * @return int
+	 */
+	public int echangerCarte() {
+		int compteur = this.nbEchanges;
+	    int nbrRegiments = 0;
+	    //un compteur pour calculer le nb d'�changes
+	    
+	    ArrayList<Carte> infanterie = new ArrayList();
+	    ArrayList<Carte> cavalerie =  new ArrayList() ;
+	    ArrayList<Carte> artillerie =  new ArrayList();
+	    //nombreCartesEchangees+=3;
+		//nombreRegimentsRecuperes+=nbrRegiments;
+
+	    //parcourir la liste de cartes du joueur
+        for(Carte c: this.planispherePanel.getJoueurEnCours().getMesCartes()) {
+            if(c.getTypeRegiment()==TypeRegiment.INFANTERIE) {
+            	infanterie.add(c);
+             }
+            if(c.getTypeRegiment()==TypeRegiment.CAVALERIE) {
+	            cavalerie.add(c);
+             }
+            if(c.getTypeRegiment()==TypeRegiment.ARTILLERIE) {
+	            artillerie.add(c);
+            }
+}
+        while (infanterie.size() >= 3 || cavalerie.size() >= 3 || artillerie.size() >= 3 ||
+        	       (infanterie.size() >= 1 && cavalerie.size() >= 1 && artillerie.size() >= 1)) {
+        	this.planispherePanel.getJoueurEnCours().setNombreCartesEchangees(this.planispherePanel.getJoueurEnCours().getNombreCartesEchangees()+ 3);
+        	this.nbEchanges++;
+	    	if(compteur ==1){
+	    		nbrRegiments += 4;
+	    	}
+	    	else if (compteur ==2) {
+	    		nbrRegiments += 6;
+	    	}
+	    	else if (compteur ==3) {
+	    		nbrRegiments += 8;
+	    	}
+	    	else if (compteur ==4) {
+	    		nbrRegiments += 10;
+	    	}
+	    	else if (compteur ==5) {
+	    		nbrRegiments += 12;
+	    	}
+	    	else if (compteur ==6) {
+	    		nbrRegiments += 15;
+	    	}
+	    	else {
+	    		nbrRegiments += 15 + (compteur - 5) * 5; // Gagnez 15 r�giments au 6e �change, puis 5 de plus � chaque �change suppl�mentaire
+	    		
+	        }
+	    	// Retirer les cartes �chang�es des listes
+	    	
+	    	if(infanterie.size() >= 3) {
+	    		for (int i = 0; i < 3; i++) {
+	    			Carte carteInfanterie = infanterie.remove(0);
+		    		this.planispherePanel.getJoueurEnCours().getMesCartes().remove(carteInfanterie);
+		    		this.pileCartes.add(carteInfanterie);
+	    		}
+	    	}
+	    	
+	    	else if(cavalerie.size() >= 3) {
+	    		for (int i = 0; i < 3; i++) {
+	    			Carte carteCavalerie = cavalerie.remove(0);
+		    		this.planispherePanel.getJoueurEnCours().getMesCartes().remove(carteCavalerie);
+		    		this.pileCartes.add(carteCavalerie);
+	    		}
+	    	}
+	    	
+	    	else if(artillerie.size() >= 3) {
+	    		for (int i = 0; i < 3; i++) {
+	    			Carte carteArtillerie = artillerie.remove(0);
+		    		this.planispherePanel.getJoueurEnCours().getMesCartes().remove(carteArtillerie);
+		    		this.pileCartes.add(carteArtillerie);
+	    		}
+	    	}
+	    	else if(infanterie.size() >= 1 && cavalerie.size() >= 1 && artillerie.size() >= 1) {
+	    		Carte carteInfanterie = infanterie.remove(0);
+	    		this.planispherePanel.getJoueurEnCours().getMesCartes().remove(carteInfanterie);
+	    		this.pileCartes.add(carteInfanterie);
+	    		
+	    		Carte carteCavalerie = cavalerie.remove(0);
+	    		this.planispherePanel.getJoueurEnCours().getMesCartes().remove(carteCavalerie);
+	    		this.pileCartes.add(carteCavalerie);
+	    		
+	    		Carte carteArtillerie = artillerie.remove(0);
+	    		this.planispherePanel.getJoueurEnCours().getMesCartes().remove(carteArtillerie);
+	    		this.pileCartes.add(carteArtillerie);
+	    		
+	    	}
+	    	
+	       
+	    }
+        this.planispherePanel.getJoueurEnCours().setNombreRegimentsRecuperes(nbrRegiments+this.planispherePanel.getJoueurEnCours().getNombreRegimentsRecuperes());
+
+	    return nbrRegiments;
+	}
 }
 
