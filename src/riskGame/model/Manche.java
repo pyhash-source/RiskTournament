@@ -265,6 +265,7 @@ public class Manche {
 
 				// lancer les des
 			//GOTO
+			//TODO: robustifier
 			//titrage des dés attaque
 			int[] resultatsDesAttaque = new int[Integer.parseInt(nombreRegimentsPourAttaquer)];
 			for(int i=0; i < resultatsDesAttaque.length; i++) {
@@ -330,6 +331,7 @@ public class Manche {
 				territoireDefendant.setProprietaire(territoireAttaquant.getProprietaire());
 				territoireDefendant.setNbrRegiment(Integer.parseInt(nombreRegimentsPourAttaquer));
 				territoireAttaquant.setNbrRegiment(territoireAttaquant.getNbrRegiment() - Integer.parseInt(nombreRegimentsPourAttaquer) );
+				donnerCarteJoueur();
 				
 			}
 			
@@ -631,10 +633,10 @@ public class Manche {
 		// obtenir entier [1,6]
 		int deResultReel = random.nextInt(6) + 1;
 		JOptionPane.showMessageDialog(null, "lancer de dé: "+ deResultReel);
-//		if(deResultReel==1) {
-//			joueur.
-		//TODO: continuer cette fonction
-//		}
+		if(deResultReel==1) {
+			this.planispherePanel.getJoueurEnCours().setNombreDesUn(this.planispherePanel.getJoueurEnCours().getNombreDesUn()+1);
+//		TODO: continuer cette fonction
+		}
 		return deResultReel;
 	}
 
