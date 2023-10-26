@@ -181,159 +181,172 @@ public class Manche {
 			String territoireAttaquantString = (String) JOptionPane.showInputDialog(null,
 					"Avec quel territoire voulez-vous attaquer ? ", "Choix des territoires attaquants: ",
 					JOptionPane.PLAIN_MESSAGE, null, territoireToChooseFrom, territoireToChooseFrom[0]);
-			Territoire territoireAttaquant = null;
-			for (Territoire t : this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours())) {
-				if (t.getNomTerritoire().equals(territoireAttaquantString)) {
-					territoireAttaquant = t;
-					break;
-				}
-			}
-
-			// choisir terriroire a att
-			ArrayList<Territoire> territoiresPossibles = new ArrayList<>();
-			territoiresPossibles = territoireAttaquant.getTerritoiresAccessibles();
-			ArrayList<Territoire> territoiresAccessibles = new ArrayList<>();
-
-			territoiresAccessibles = (ArrayList<Territoire>) territoiresPossibles.clone();
-
-			ArrayList<Territoire> territoiresDuJoueur = new ArrayList<>();
-			territoiresDuJoueur = this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours());
-
-			for (Territoire t : territoiresPossibles) {
-				if (territoiresDuJoueur.contains(t)) {
-					territoiresAccessibles.remove(t);
-				}
-			}
-
-			String[] territoireToAttack = new String[territoiresAccessibles.size()];
-			for (int i = 0; i <= territoiresAccessibles.size() - 1; i++) {
-
-				territoireToAttack[i] = territoiresAccessibles.get(i).getNomTerritoire();
-			}
-
-			String territoireAAttaquerString = (String) JOptionPane.showInputDialog(null,
-					"Quel territoire souhaitez-vous attaquer? ", "Choix des territoires à attaquer: ",
-					JOptionPane.PLAIN_MESSAGE, null, territoireToAttack, territoireToAttack[0]);
-			
-			Territoire territoireDefendant = null;
-			for(Territoire territoireListe : this.planispherePanel.getTerritoires()) {
-				if(territoireListe.getNomTerritoire().equals(territoireAAttaquerString)) {
-					territoireDefendant = territoireListe;
-				}
-			}
-			// on a territoireAttant et TerritoireAATtaquer
-
-			// choisir nbr regiment attaquant + defense
-			String[] optionsToChoseFrom;
-			if(territoireAttaquant.getNbrRegiment() == 2) {
-				String[] options = { "1"};
-				optionsToChoseFrom = options;
-			} else if(territoireAttaquant.getNbrRegiment() == 3) {
-				String[] options = { "1","2"};	
-				optionsToChoseFrom = options;
-
-			} else {
-				String[] options = { "1","2","3"};	
-				optionsToChoseFrom = options;
-
-			}
-			
-			String[] optionsToChoseFromDefense;
-			if(territoireDefendant.getNbrRegiment() >= 2) {
-				String[] options = { "1", "2"};
-				optionsToChoseFromDefense = options;
-			} else {
-				String[] options = { "1"};	
-				optionsToChoseFromDefense = options;
-			} 
-
-
-			// le joueur peut attaquer avec 1,2 ou 3 régiments
-			String nombreRegimentsPourAttaquer = (String) JOptionPane.showInputDialog(null,
-					"Combien de régiments souhaitez-vous déplacer pour l'attaque? ",
-					"Choix du nb régiments attaque: ", JOptionPane.PLAIN_MESSAGE, null, optionsToChoseFrom , optionsToChoseFrom[0]);
-			
-			String nombreRegimentsPourDefendre = (String) JOptionPane.showInputDialog(null,
-					"[ " + territoireDefendant.getProprietaire().getPrenomJoueur() + "Tu te fais attaquer ]\n Avec combien de régiments souhaitez-vous défendre ?",
-					"Choix du nombre de régiments pour la défense: ", JOptionPane.PLAIN_MESSAGE, null, optionsToChoseFromDefense , optionsToChoseFromDefense[0]);
-			
-			JOptionPane.showMessageDialog(null, "Resultats des choix pour la bagarre: \nL'attaquant attaque avec: " + nombreRegimentsPourAttaquer +"\nLe defenseur defend avec:" + nombreRegimentsPourDefendre);
-
-
-				// lancer les des
-			//GOTO
-			//TODO: 
-			//titrage des dés attaque
-			int[] resultatsDesAttaque = new int[Integer.parseInt(nombreRegimentsPourAttaquer)];
-			for(int i=0; i < resultatsDesAttaque.length; i++) {
-				resultatsDesAttaque[i]= lancerUnDe();
-			}
-			//titrage des dés défense
-			int[] resultatsDesDefense = new int[Integer.parseInt(nombreRegimentsPourDefendre)];
-			for(int j=0; j < resultatsDesDefense.length; j++) {
-				resultatsDesDefense[j]= lancerUnDe();
-
-			}
-			//comparer les résultats des différents dés
-			//triage des tableaux
-			Arrays.sort(resultatsDesAttaque);
-			reverse(resultatsDesAttaque);
-			
-			Arrays.sort(resultatsDesDefense);
-			reverse(resultatsDesDefense);
-			
-			int nombreRegimentsDefenseTues = 0;
-			int nombreRegimentsAttaqueTues = 0;
-
-			if(resultatsDesDefense.length > resultatsDesAttaque.length) {
-				for(int i=0;i<=resultatsDesAttaque.length-1;i++) {
-					if(resultatsDesAttaque[i] > resultatsDesDefense[i]) {
-						nombreRegimentsDefenseTues++;
-					} else {
-						nombreRegimentsAttaqueTues ++;
-					}
-				}
-			} else {
-				for(int i=0;i<=resultatsDesDefense.length-1;i++) {
-					if(resultatsDesAttaque[i] > resultatsDesDefense[i]) {
-						nombreRegimentsDefenseTues++;
-					} else {
-						nombreRegimentsAttaqueTues ++;
-					}
-				}
-			}
-			
-			String resultatDesDefenseString = arrayToString(resultatsDesDefense);
-			String resultatDesAttaqueString = arrayToString(resultatsDesAttaque);
-			
-			//affichaqge au joueur du lancer des dés et des résultats de l'attaque
-			JOptionPane.showMessageDialog(null, "Résultat de l'attaque: \nLancers de dés de l'attaquant: "+ resultatDesAttaqueString+"\n"
-					+ "Lancers de dés du défenseur: " + resultatDesDefenseString+ "\n"+
-					"Bilan des morts:\n "+ "Morts attaquants: "+ nombreRegimentsAttaqueTues + "\nMorts défenseurs: " + nombreRegimentsDefenseTues);
-			
-			// supprimer les regiments
-			territoireAttaquant.supprimerRegiments(nombreRegimentsAttaqueTues);
-			territoireDefendant.supprimerRegiments(nombreRegimentsDefenseTues);
-			this.planispherePanel.updateUI();
-			//regarder si on bute tous les marcs du territoire qui defend, si oui, il faut que l'on trigger le changemen
-			//de propriétaire et la récupération de cartes
-				// recuperer carte si je gagne un territoire
-			if(territoireDefendant.getNbrRegiment()==0) {
-				eliminerJoueur(territoireDefendant.getProprietaire());
-				this.mancheFinie = verifierFinPartie();
-				if(mancheFinie) {
-					mettreAJourClassement(this.joueursManche.get(nombreRegimentsAttaqueTues));
-				}
-				territoireDefendant.setProprietaire(territoireAttaquant.getProprietaire());
-				territoireDefendant.setNbrRegiment(Integer.parseInt(nombreRegimentsPourAttaquer));
-				territoireAttaquant.setNbrRegiment(territoireAttaquant.getNbrRegiment() - Integer.parseInt(nombreRegimentsPourAttaquer) );
-				donnerCarteJoueur();
-				
-			}
-			
-			if(checkPeutAttaquer()) {
+			if(territoireAttaquantString == null) {
+				JOptionPane.showMessageDialog(null, "Vous avez annulé l'attaque");
 				attaquer();
+			} else {
+				Territoire territoireAttaquant = null;
+				for (Territoire t : this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours())) {
+					if (t.getNomTerritoire().equals(territoireAttaquantString)) {
+						territoireAttaquant = t;
+						break;
+					}
+				}
+
+				// choisir terriroire a att
+				ArrayList<Territoire> territoiresPossibles = new ArrayList<>();
+				territoiresPossibles = territoireAttaquant.getTerritoiresAccessibles();
+				ArrayList<Territoire> territoiresAccessibles = new ArrayList<>();
+
+				territoiresAccessibles = (ArrayList<Territoire>) territoiresPossibles.clone();
+
+				ArrayList<Territoire> territoiresDuJoueur = new ArrayList<>();
+				territoiresDuJoueur = this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours());
+
+				for (Territoire t : territoiresPossibles) {
+					if (territoiresDuJoueur.contains(t)) {
+						territoiresAccessibles.remove(t);
+					}
+				}
+
+				String[] territoireToAttack = new String[territoiresAccessibles.size()];
+				for (int i = 0; i <= territoiresAccessibles.size() - 1; i++) {
+
+					territoireToAttack[i] = territoiresAccessibles.get(i).getNomTerritoire();
+				}
+
+				String territoireAAttaquerString = (String) JOptionPane.showInputDialog(null,
+						"Quel territoire souhaitez-vous attaquer? ", "Choix des territoires à attaquer: ",
+						JOptionPane.PLAIN_MESSAGE, null, territoireToAttack, territoireToAttack[0]);
+				if(territoireAAttaquerString == null) {
+					JOptionPane.showMessageDialog(null, "Vous avez annulé l'attaque.");
+					attaquer();
+
+				} else {
+					Territoire territoireDefendant = null;
+					for(Territoire territoireListe : this.planispherePanel.getTerritoires()) {
+						if(territoireListe.getNomTerritoire().equals(territoireAAttaquerString)) {
+							territoireDefendant = territoireListe;
+						}
+					}
+					// on a territoireAttant et TerritoireAATtaquer
+
+					// choisir nbr regiment attaquant + defense
+					String[] optionsToChoseFrom;
+					if(territoireAttaquant.getNbrRegiment() == 2) {
+						String[] options = { "1"};
+						optionsToChoseFrom = options;
+					} else if(territoireAttaquant.getNbrRegiment() == 3) {
+						String[] options = { "1","2"};	
+						optionsToChoseFrom = options;
+
+					} else {
+						String[] options = { "1","2","3"};	
+						optionsToChoseFrom = options;
+
+					}
+					
+					String[] optionsToChoseFromDefense;
+					if(territoireDefendant.getNbrRegiment() >= 2) {
+						String[] options = { "1", "2"};
+						optionsToChoseFromDefense = options;
+					} else {
+						String[] options = { "1"};	
+						optionsToChoseFromDefense = options;
+					} 
+
+
+					// le joueur peut attaquer avec 1,2 ou 3 régiments
+					String nombreRegimentsPourAttaquer = (String) JOptionPane.showInputDialog(null,
+							"Combien de régiments souhaitez-vous déplacer pour l'attaque? ",
+							"Choix du nb régiments attaque: ", JOptionPane.PLAIN_MESSAGE, null, optionsToChoseFrom , optionsToChoseFrom[0]);
+					
+					String nombreRegimentsPourDefendre = (String) JOptionPane.showInputDialog(null,
+							"[ " + territoireDefendant.getProprietaire().getPrenomJoueur() + "Tu te fais attaquer ]\n Avec combien de régiments souhaitez-vous défendre ?",
+							"Choix du nombre de régiments pour la défense: ", JOptionPane.PLAIN_MESSAGE, null, optionsToChoseFromDefense , optionsToChoseFromDefense[0]);
+					
+					JOptionPane.showMessageDialog(null, "Resultats des choix pour la bagarre: \nL'attaquant attaque avec: " + nombreRegimentsPourAttaquer +"\nLe defenseur defend avec:" + nombreRegimentsPourDefendre);
+
+
+						// lancer les des
+					//GOTO
+					//TODO: 
+					//titrage des dés attaque
+					int[] resultatsDesAttaque = new int[Integer.parseInt(nombreRegimentsPourAttaquer)];
+					for(int i=0; i < resultatsDesAttaque.length; i++) {
+						resultatsDesAttaque[i]= lancerUnDe();
+					}
+					//titrage des dés défense
+					int[] resultatsDesDefense = new int[Integer.parseInt(nombreRegimentsPourDefendre)];
+					for(int j=0; j < resultatsDesDefense.length; j++) {
+						resultatsDesDefense[j]= lancerUnDe();
+
+					}
+					//comparer les résultats des différents dés
+					//triage des tableaux
+					Arrays.sort(resultatsDesAttaque);
+					reverse(resultatsDesAttaque);
+					
+					Arrays.sort(resultatsDesDefense);
+					reverse(resultatsDesDefense);
+					
+					int nombreRegimentsDefenseTues = 0;
+					int nombreRegimentsAttaqueTues = 0;
+
+					if(resultatsDesDefense.length > resultatsDesAttaque.length) {
+						for(int i=0;i<=resultatsDesAttaque.length-1;i++) {
+							if(resultatsDesAttaque[i] > resultatsDesDefense[i]) {
+								nombreRegimentsDefenseTues++;
+							} else {
+								nombreRegimentsAttaqueTues ++;
+							}
+						}
+					} else {
+						for(int i=0;i<=resultatsDesDefense.length-1;i++) {
+							if(resultatsDesAttaque[i] > resultatsDesDefense[i]) {
+								nombreRegimentsDefenseTues++;
+							} else {
+								nombreRegimentsAttaqueTues ++;
+							}
+						}
+					}
+					
+					String resultatDesDefenseString = arrayToString(resultatsDesDefense);
+					String resultatDesAttaqueString = arrayToString(resultatsDesAttaque);
+					
+					//affichaqge au joueur du lancer des dés et des résultats de l'attaque
+					JOptionPane.showMessageDialog(null, "Résultat de l'attaque: \nLancers de dés de l'attaquant: "+ resultatDesAttaqueString+"\n"
+							+ "Lancers de dés du défenseur: " + resultatDesDefenseString+ "\n"+
+							"Bilan des morts:\n "+ "Morts attaquants: "+ nombreRegimentsAttaqueTues + "\nMorts défenseurs: " + nombreRegimentsDefenseTues);
+					
+					// supprimer les regiments
+					territoireAttaquant.supprimerRegiments(nombreRegimentsAttaqueTues);
+					territoireDefendant.supprimerRegiments(nombreRegimentsDefenseTues);
+					this.planispherePanel.updateUI();
+					//regarder si on bute tous les marcs du territoire qui defend, si oui, il faut que l'on trigger le changemen
+					//de propriétaire et la récupération de cartes
+						// recuperer carte si je gagne un territoire
+					if(territoireDefendant.getNbrRegiment()==0) {
+						eliminerJoueur(territoireDefendant.getProprietaire());
+						this.mancheFinie = verifierFinPartie();
+						if(mancheFinie) {
+							mettreAJourClassement(this.joueursManche.get(nombreRegimentsAttaqueTues));
+						}
+						territoireDefendant.setProprietaire(territoireAttaquant.getProprietaire());
+						territoireDefendant.setNbrRegiment(Integer.parseInt(nombreRegimentsPourAttaquer));
+						territoireAttaquant.setNbrRegiment(territoireAttaquant.getNbrRegiment() - Integer.parseInt(nombreRegimentsPourAttaquer) );
+						donnerCarteJoueur();
+						
+					}
+				}
+				
+				
+				
+				if(checkPeutAttaquer()) {
+					attaquer();
+				}
 			}
+			
 		} else {
 			JOptionPane.showMessageDialog(null,
 					"Fin de la phase d'attaque ! Vous passez à présent à la phase de mouvement !");
@@ -393,16 +406,19 @@ public class Manche {
 
 	public void manoeuvrer() {
 		boolean peutManoeuvrer = true;
+		System.out.println("Je rentre dans manoeuvrer");
 		//demander de quel territoire il veut partir
 		
 		ArrayList<Territoire> territoireToChoseFromDepartFiltered =  getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours());
 		for(Territoire territoire : getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours())) {
 			if(territoire.getNbrRegiment()<2) {
+				System.out.println("Je rentre dans l'endroit ou il le met en false");
 				territoireToChoseFromDepartFiltered.remove(territoire);
-				peutManoeuvrer = false;
+//				peutManoeuvrer = false;
 			}
 		}
 		
+		System.out.println("valeur de peut manoeuvrer:" + peutManoeuvrer);
 		if(peutManoeuvrer) {
 			String[] listeTerritoireToChoseFromDepart = new String[territoireToChoseFromDepartFiltered.size()];
 			for(int i=0;i<=territoireToChoseFromDepartFiltered.size()-1;i++) {
@@ -470,7 +486,7 @@ public class Manche {
 			territoireArriveeManoeuvre.ajouterRegiments(Integer.parseInt(nombreDeRegimentsADeplacer));
 			this.planispherePanel.updateUI();
 		} else {
-			JOptionPane.showMessageDialog(null, "Vous n'avez pas assez de régiments pour effectuer une manoeuvre, vous passez votre tour.");
+			JOptionPane.showMessageDialog(null, "Vous ne pouvez pas manoeuvrer.");
 		}
 		
 		
