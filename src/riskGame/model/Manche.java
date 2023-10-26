@@ -53,10 +53,6 @@ public class Manche {
 		}
 		if (existeTerritoireVide) {
 			if (territoire.getProprietaire()!=null) {
-				System.out.println(territoire.getNomTerritoire()+" "
-						+territoire.getProprietaire().getPrenomJoueur());
-
-
 				return false;
 			} else {
 				territoire.setProprietaire(joueur);
@@ -92,6 +88,14 @@ public class Manche {
 				while (!placerRegiment) {
 					placerRegiment = this.placerRegimentTerritoire(joueurActuel,
 							this.planispherePanel.getTerritoireSelectionne(), 1);
+					
+					//awaiting thread synchronisation
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 				}
 				this.planispherePanel.updateUI();
@@ -113,12 +117,10 @@ public class Manche {
 
 	public void renforcer() {
 		// todo bonus continent
-		System.out.println("debut phase renfort");
 		System.out.println("joueur: " + this.planispherePanel.getJoueurEnCours().getNomJoueur());
 		int nbrRegimentsCartes = echangerCarte();
 		System.out.println("echange carte: " + nbrRegimentsCartes);
 		int nbrTerritoires = this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours()).size();
-		System.out.println("le joueur a : " + nbrTerritoires);
 		int nbrRegimentsAdd = nbrTerritoires / 3;
 		if (nbrRegimentsAdd < 3) {
 			nbrRegimentsAdd = 3;
@@ -144,7 +146,6 @@ public class Manche {
 					nombreAPlacer--;
 				}
 				// tout doux: faire ,nombre a placer -- ssi placer regiment renvoie true
-				System.out.println("nbr a placer:" + nombreAPlacer);
 				this.planispherePanel.updateUI();
 
 			}
@@ -270,7 +271,6 @@ public class Manche {
 			int[] resultatsDesAttaque = new int[Integer.parseInt(nombreRegimentsPourAttaquer)];
 			for(int i=0; i < resultatsDesAttaque.length; i++) {
 				resultatsDesAttaque[i]= lancerUnDe();
-				System.out.println("Resultat du lancer de dé attaque: " + resultatsDesAttaque[i]);
 			}
 			//titrage des dés défense
 			int[] resultatsDesDefense = new int[Integer.parseInt(nombreRegimentsPourDefendre)];
