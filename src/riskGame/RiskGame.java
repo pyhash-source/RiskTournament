@@ -359,7 +359,7 @@ public class RiskGame {
 				String url = "jdbc:mysql://localhost:3306/si_risk";
 				Connection con = DriverManager.getConnection(url, "root", "");
 				stmt = con.createStatement();
-				for(Joueur joueur: listeJoueurs) {
+				for(Joueur joueur: manche.getClassement()) {
 					int numeroJoueur = joueur.getNumeroJoueur(); 
 					int nombreCartesTirees = joueur.getNombreCartesTirees();
 					int nombreCartesEchangees= joueur.getNombreCartesEchangees();
@@ -481,6 +481,8 @@ public class RiskGame {
 				planisphere.setJoueurEnCours(manche.determinerPremierJoueur());  
 				manche.placerRegimentsInitiaux();
 				manche.boucleJeu();
+				insererStatistiques();
+				mainMenuGUI();
 	}
 
 }

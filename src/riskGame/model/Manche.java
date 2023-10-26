@@ -330,6 +330,9 @@ public class Manche {
 			if(territoireDefendant.getNbrRegiment()==0) {
 				eliminerJoueur(territoireDefendant.getProprietaire());
 				this.mancheFinie = verifierFinPartie();
+				if(mancheFinie) {
+					mettreAJourClassement(this.joueursManche.get(0));
+				}
 				territoireDefendant.setProprietaire(territoireAttaquant.getProprietaire());
 				territoireDefendant.setNbrRegiment(Integer.parseInt(nombreRegimentsPourAttaquer));
 				territoireAttaquant.setNbrRegiment(territoireAttaquant.getNbrRegiment() - Integer.parseInt(nombreRegimentsPourAttaquer) );
