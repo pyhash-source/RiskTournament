@@ -28,6 +28,7 @@ public class Manche {
 	private int nbEchanges;
 	private PlanispherePanel planispherePanel;
 	private boolean mancheFinie;
+	private ArrayList<Carte> pileCartes;
 
 	public Manche(int numeroManche, Date debutPartie, EtatManche etatManche, PlanispherePanel planispherePanel) {
 		this.numeroManche = numeroManche;
@@ -36,6 +37,7 @@ public class Manche {
 		this.nbEchanges = 0;
 		this.planispherePanel = planispherePanel;
 		this.mancheFinie = false;
+		this.pileCartes = new ArrayList<>();
 	}
 
 	public boolean placerRegimentTerritoire(Joueur joueur, Territoire territoire, int nbrRegiment) {
@@ -48,10 +50,10 @@ public class Manche {
 
 		}
 		if (existeTerritoireVide) {
-			if (territoire.getProprietaire() != null) {
+			if (territoire.getProprietaire()!=null) {
+				System.out.println(territoire.getNomTerritoire()+" "
+						+territoire.getProprietaire().getPrenomJoueur());
 
-				System.out
-						.println(territoire.getNomTerritoire() + " " + territoire.getProprietaire().getPrenomJoueur());
 
 				return false;
 			} else {
@@ -172,7 +174,6 @@ public class Manche {
 			String territoireAttaquantString = (String) JOptionPane.showInputDialog(null,
 					"Avec quel territoire voulez-vous attaquer ? ", "Choix des territoires attaquants: ",
 					JOptionPane.PLAIN_MESSAGE, null, territoireToChooseFrom, territoireToChooseFrom[0]);
-
 			Territoire territoireAttaquant = null;
 			for (Territoire t : this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours())) {
 				if (t.getNomTerritoire().equals(territoireAttaquantString)) {
@@ -180,8 +181,6 @@ public class Manche {
 					break;
 				}
 			}
-			
-			
 
 			// choisir terriroire a att
 			ArrayList<Territoire> territoiresPossibles = new ArrayList<>();
@@ -275,6 +274,7 @@ public class Manche {
 			System.out.println("Fin de la phase d'attaque !");
 			JOptionPane.showMessageDialog(null,
 					"Fin de la phase d'attaque ! Vous passez à présent à la phase de mouvement !");
+
 		}
 	}
 
@@ -426,6 +426,10 @@ public class Manche {
 
 	public Joueur determinerPremierJoueur() {
 
+		// Generation pile de cartes en début de partie
+		creerPileCartes();
+		// Fin generation pile de cartes en début de partie
+		
 		Random random = new Random();
 		HashMap<Joueur, Integer> resultatLancementDe = new HashMap<>();
 
@@ -557,5 +561,19 @@ public class Manche {
 	// fonction pour changer de tour
 	public void changerTour() {
 
+	}
+	
+	// Fonction pour générer la liste de 42 cartes
+	public void creerPileCartes() {
+
+        Random random = new Random();
+        TypeRegiment[] types = TypeRegiment.values();
+        
+        for (Territoire t : this.planispherePanel.getTerritoires()) {
+            TypeRegiment typeRegiment = types[random.nextInt(types.length)];
+
+            Carte carte = new Carte(t, typeRegiment);
+            this.pileCartes.add(carte);
+        }
 	}
 }
