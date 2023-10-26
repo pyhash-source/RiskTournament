@@ -463,34 +463,37 @@ public class Manche {
 				territoiresArriveeToChoseFrom[i] = territoiresAccessibles.get(i).getNomTerritoire();
 			}
 			
-			String territoireArriveeChoisi = (String) JOptionPane.showInputDialog(null,
-					"Ou souhaitez vous déplacer vos régiments ? ", "Choix du territoire d'arrivée: ",
-					JOptionPane.PLAIN_MESSAGE, null, territoiresArriveeToChoseFrom, territoiresArriveeToChoseFrom[0]);
-			
-			
-			
-			//on doit trouver combien de marcs il veut bouger
-			String[] regimentsDeplacables = new String[territoireDepart.getNbrRegiment() - 1];
-			for(int i=0;i<regimentsDeplacables.length;i++) {
-				regimentsDeplacables[i] = String.valueOf(i+1);
+			if(territoiresArriveeToChoseFrom.length != 0) {
+				String territoireArriveeChoisi = (String) JOptionPane.showInputDialog(null,
+						"Ou souhaitez vous déplacer vos régiments ? ", "Choix du territoire d'arrivée: ",
+						JOptionPane.PLAIN_MESSAGE, null, territoiresArriveeToChoseFrom, territoiresArriveeToChoseFrom[0]);
+				
+				
+				
+				//on doit trouver combien de marcs il veut bouger
+				String[] regimentsDeplacables = new String[territoireDepart.getNbrRegiment() - 1];
+				for(int i=0;i<regimentsDeplacables.length;i++) {
+					regimentsDeplacables[i] = String.valueOf(i+1);
+				}
+				
+				String nombreDeRegimentsADeplacer = (String) JOptionPane.showInputDialog(null,
+						"Combien de régiments voulez vous déplacer ? ", "Choix du nombre de régiments a deplacer ",
+						JOptionPane.PLAIN_MESSAGE, null, regimentsDeplacables, regimentsDeplacables[0]);
+				
+				
+				//deplacer
+				Territoire territoireArriveeManoeuvre = convertirTerritoireFromStringToTerritoire(territoireArriveeChoisi);
+				territoireDepart.supprimerRegiments(Integer.parseInt(nombreDeRegimentsADeplacer));
+				territoireArriveeManoeuvre.ajouterRegiments(Integer.parseInt(nombreDeRegimentsADeplacer));
+				this.planispherePanel.updateUI();
+			}else {
+				JOptionPane.showMessageDialog(null, "Vous avez les régiments nécessaires ! Cependant vos forces sont acculées, et ne peuvent se réfiguer nulle part, il va falloir se battre...");
 			}
 			
-			String nombreDeRegimentsADeplacer = (String) JOptionPane.showInputDialog(null,
-					"Combien de régiments voulez vous déplacer ? ", "Choix du nombre de régiments a deplacer ",
-					JOptionPane.PLAIN_MESSAGE, null, regimentsDeplacables, regimentsDeplacables[0]);
 			
-			
-			//deplacer
-			Territoire territoireArriveeManoeuvre = convertirTerritoireFromStringToTerritoire(territoireArriveeChoisi);
-			territoireDepart.supprimerRegiments(Integer.parseInt(nombreDeRegimentsADeplacer));
-			territoireArriveeManoeuvre.ajouterRegiments(Integer.parseInt(nombreDeRegimentsADeplacer));
-			this.planispherePanel.updateUI();
 		} else {
 			JOptionPane.showMessageDialog(null, "Vous ne pouvez pas manoeuvrer.");
 		}
-		
-		
-
 		
 	}
 
