@@ -7,10 +7,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import riskGame.vue.PlanispherePanel;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author Jean, elisa/SVRS, Fitia, Zhuo, YasmineV
@@ -153,7 +155,9 @@ public class Manche {
 				"La phase renfort est terminee! \n Vous allez passer à la phase d'attaque.");
 
 	}
-
+	//TODO: donner carte au joueur
+	//TODO: joueur a perdu a ce tour la ? 
+	//TODO: quelqu'un a gagné ? 
 	private void attaquer() {
 		System.out.println("debut phase attaque");
 		boolean attaquer = true;
@@ -162,13 +166,17 @@ public class Manche {
 
 		// en boucle jusqu'a quil veut arreter
 		if (attaquer) {
+			ArrayList<Territoire> bufferArrayList = this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours());
+			for (Territoire t :this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours()) ) {
+				if(t.getNbrRegiment()<2) {
+					bufferArrayList.remove(t);
+				}
+			}
 
-			String[] territoireToChooseFrom = new String[this
-					.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours()).size()];
-			for (int i = 0; i <= this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours()).size()
+			String[] territoireToChooseFrom = new String[bufferArrayList.size()];
+			for (int i = 0; i <= bufferArrayList.size()
 					- 1; i++) {
-				territoireToChooseFrom[i] = this
-						.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours()).get(i)
+				territoireToChooseFrom[i] = bufferArrayList.get(i)
 						.getNomTerritoire();
 			}
 
@@ -254,23 +262,79 @@ public class Manche {
 			
 			JOptionPane.showMessageDialog(null, "Resultats des choix pour la bagarre: \nL'attaquant attaque avec: " + nombreRegimentsPourAttaquer +"\nLe defenseur defend avec:" + nombreRegimentsPourDefendre);
 
-				
-				// il faut implémenter nbrRegimentsAttaque avec le choix du joueur jsp comment
-				// faire
 
 				// lancer les des
+			//GOTO
+			//titrage des dés attaque
+			int[] resultatsDesAttaque = new int[Integer.parseInt(nombreRegimentsPourAttaquer)];
+			for(int i=0; i < resultatsDesAttaque.length; i++) {
+				resultatsDesAttaque[i]= lancerUnDe();
+				System.out.println("Resultat du lancer de dé attaque: " + resultatsDesAttaque[i]);
+			}
+			//titrage des dés défense
+			int[] resultatsDesDefense = new int[Integer.parseInt(nombreRegimentsPourDefendre)];
+			for(int j=0; j < resultatsDesDefense.length; j++) {
+				resultatsDesDefense[j]= lancerUnDe();
+				System.out.println("Resultat du lancer de dé defense" + resultatsDesDefense[j]);
 
-				// supprimer les regiments
+			}
+			//comparer les résultats des différents dés
+			//triage des tableaux
+			System.out.println( arrayToString(resultatsDesAttaque));
+			Arrays.sort(resultatsDesAttaque);
+			reverse(resultatsDesAttaque);
+			System.out.println(arrayToString(resultatsDesAttaque));
+			
+			System.out.println(arrayToString(resultatsDesDefense));
+			Arrays.sort(resultatsDesDefense);
+			reverse(resultatsDesDefense);
+			System.out.println(arrayToString(resultatsDesDefense));
+			
+			int nombreRegimentsDefenseTues = 0;
+			int nombreRegimentsAttaqueTues = 0;
+
+			if(resultatsDesDefense.length > resultatsDesAttaque.length) {
+				for(int i=0;i<=resultatsDesAttaque.length-1;i++) {
+					if(resultatsDesAttaque[i] > resultatsDesDefense[i]) {
+						nombreRegimentsDefenseTues++;
+					} else {
+						nombreRegimentsAttaqueTues ++;
+					}
+				}
+			} else {
+				for(int i=0;i<=resultatsDesDefense.length-1;i++) {
+					if(resultatsDesAttaque[i] > resultatsDesDefense[i]) {
+						nombreRegimentsDefenseTues++;
+					} else {
+						nombreRegimentsAttaqueTues ++;
+					}
+				}
+			}
+			
+			String resultatDesDefenseString = arrayToString(resultatsDesDefense);
+			String resultatDesAttaqueString = arrayToString(resultatsDesAttaque);
+			
+			//affichaqge au joueur du lancer des dés et des résultats de l'attaque
+			JOptionPane.showMessageDialog(null, "Résultat de l'attaque: \nLancers de dés de l'attaquant: "+ resultatDesAttaqueString+"\n"
+					+ "Lancers de dés du défenseur: " + resultatDesDefenseString+ "\n"+
+					"Bilan des morts:\n "+ "Morts attaquants: "+ nombreRegimentsAttaqueTues + "\nMorts défenseurs: " + nombreRegimentsDefenseTues);
+			
+			// supprimer les regiments
+			territoireAttaquant.supprimerRegiments(nombreRegimentsAttaqueTues);
+			territoireDefendant.supprimerRegiments(nombreRegimentsDefenseTues);
+			this.planispherePanel.updateUI();
+			//regarder si on bute tous les marcs du territoire qui defend, si oui, il faut que l'on trigger le changemen
+			//de propriétaire et la récupération de cartes
 				// recuperer carte si je gagne un territoire
+			if(territoireDefendant.getNbrRegiment()==0) {
+				territoireDefendant.setProprietaire(territoireAttaquant.getProprietaire());
+				territoireDefendant.setNbrRegiment(Integer.parseInt(nombreRegimentsPourAttaquer));
+				territoireAttaquant.setNbrRegiment(territoireAttaquant.getNbrRegiment() - Integer.parseInt(nombreRegimentsPourAttaquer) );
+				
+			}
+			
 			
 
-			// ------------fin code dy Y
-
-			// ajouter une condition pour ne choisir que les territoires attaquants avec >1
-			// marc
-			// lancer les des
-			// supprimer les regiments
-			// recuperer carte si je gagne un territoire
 			attaquer();
 		} else {
 			System.out.println("Fin de la phase d'attaque !");
@@ -280,6 +344,32 @@ public class Manche {
 		}
 	}
 
+	private String arrayToString(int[] resultatsDesDefense) {
+		String resultatDesDefenseString = "[ ";
+		for(int i=0;i<=resultatsDesDefense.length-1;i++) {
+			resultatDesDefenseString += resultatsDesDefense[i];
+			resultatDesDefenseString += " ";
+			
+		}
+		resultatDesDefenseString += "]";
+		return resultatDesDefenseString;
+	}
+
+	private static void reverse(int[] array) {
+        if (array == null) {
+            return;
+        }
+        int i = 0;
+        int j = array.length - 1;
+        int tmp;
+        while (j > i) {
+            tmp = array[j];
+            array[j] = array[i];
+            array[i] = tmp;
+            j--;
+            i++;
+        }
+}
 	private boolean demanderConfirmation() {
 		boolean attaquer;
 		int confirmationAttaque = JOptionPane.showConfirmDialog(null, "Souhaitez-vous attaquer?");
@@ -538,9 +628,14 @@ public class Manche {
 
 	public int lancerUnDe() {
 		Random random = new Random();
-		// obtenir entier [1,6[
-		int deResult = random.nextInt(6) + 1;
-		return deResult;
+		// obtenir entier [1,6]
+		int deResultReel = random.nextInt(6) + 1;
+		JOptionPane.showMessageDialog(null, "lancer de dé: "+ deResultReel);
+//		if(deResultReel==1) {
+//			joueur.
+		//TODO: continuer cette fonction
+//		}
+		return deResultReel;
 	}
 
 	// fonction pour changer de joueur
