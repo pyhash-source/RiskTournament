@@ -40,10 +40,10 @@ public class Continent {
 	public void setNomContinent(String nomContinent) {
 		this.nomContinent = nomContinent;
 	}
-	public ArrayList getTerritoires() {
+	public ArrayList<Territoire> getTerritoires() {
 		return territoires;
 	}
-	public void setTerritoires(ArrayList territoires) {
+	public void setTerritoires(ArrayList<Territoire> territoires) {
 		this.territoires = territoires;
 	}
 	
