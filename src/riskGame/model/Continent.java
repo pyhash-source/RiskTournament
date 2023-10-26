@@ -18,6 +18,11 @@ public class Continent {
 		this.valeur = valeur;
 	}
 	
+	/**
+	 * constructeur permet d initialiser un continent
+	 * @param nomContinent
+	 * @param valeur
+	 */
 	public Continent(String nomContinent, int valeur) {
 		this.nomContinent = nomContinent;
 		this.valeur = valeur;
