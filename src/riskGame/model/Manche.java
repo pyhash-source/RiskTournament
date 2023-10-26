@@ -84,7 +84,7 @@ public class Manche {
 	// fonction pour le début du renfort
 	public void placerRegimentsInitiaux() {
 
-		for (int i = 0; i < 9; i++) {
+		for (int i = 0; i < 25; i++) {
 			for (int j = 0; j < 5; j++) {
 				Joueur joueurActuel = this.planispherePanel.getJoueurEnCours();
 
