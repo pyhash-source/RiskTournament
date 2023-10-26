@@ -40,7 +40,7 @@ public class RiskGame {
  */
 	private static void mainMenuGUI() {
 		//options proposees
-		String[] optionsToChoose = { "Lancer une partie", "Autres options ?..." };
+		String[] optionsToChoose = { "Lancer une partie", "Consulter trophées" };
 		//question affichee
 		String choice = (String) JOptionPane.showInputDialog(null, "Que voulez vous faire ? ", "Risk e-sport [MENU]",
 				JOptionPane.PLAIN_MESSAGE, null, optionsToChoose, optionsToChoose[0]);
@@ -48,6 +48,8 @@ public class RiskGame {
 			System.out.println("Quitting app...");
 		} else if (choice == "Lancer une partie") {
 			choixCompetitionGUI();
+		} else if(choice == "Consulter trophées") {
+			afficherTrophees();
 		}
 	}
 
@@ -110,6 +112,119 @@ public class RiskGame {
 			}
 		}
 
+	}
+
+//	- Le belliqueux : remis au joueur qui a déclenché le plus grand nombre
+//	d’attaques.
+//	- Le bouclier : remis au joueur qui a réussis le plus de défenses.
+//	- Le conquérant : remis au joueur qui a conquis le plus de territoires.
+	
+	private static void afficherTrophees() {
+		StringBuilder message = new StringBuilder("Les trophées sont:");
+		
+
+		ArrayList<String> bufferTableau = new ArrayList<String>();
+		try {
+			//connection a la bd
+			Statement stmt;
+			Class.forName("com.mysql.jdbc.Driver");
+			String url = "jdbc:mysql://localhost:3306/si_risk";
+			Connection con = DriverManager.getConnection(url, "root", "");
+			stmt = con.createStatement();
+			//execution de la requete
+			ResultSet resultat = stmt.executeQuery("SELECT j.nomJoueur, SUM(p.nbrDesUn)\r\n"
+					+ "FROM joueur j, participer p\r\n"
+					+ "WHERE j.numeroJoueur = p.numeroJoueur\r\n"
+					+ "GROUP BY j.numeroJoueur, j.nomJoueur\r\n"
+					+ "HAVING SUM(P.nbrDesUn) = (SELECT MAX(nbrUn) FROM (SELECT SUM(p2.nbrDesUn) as 'nbrUn'\r\n"
+					+ "FROM joueur j2, participer p2\r\n"
+					+ "WHERE j2.numeroJoueur = p2.numeroJoueur\r\n"
+					+ "GROUP BY j2.numeroJoueur, j2.nomJoueur) as s);");
+
+			
+	
+			//recupere pour chaque ligne le nom de la competition
+			resultat.next();
+			bufferTableau.add(resultat.getString("nomJoueur"));
+			//fermer le connexion
+			con.close();
+			
+			//connection a la bd
+			Statement stmt2;
+			Class.forName("com.mysql.jdbc.Driver");
+			String url2 = "jdbc:mysql://localhost:3306/si_risk";
+			Connection con2 = DriverManager.getConnection(url2, "root", "");
+			stmt2 = con2.createStatement();
+			//execution de la requete
+			ResultSet resultat2 = stmt2.executeQuery("SELECT j.nomJoueur, SUM(p.nbrAttaquesLancees)\r\n"
+					+ "FROM joueur j, participer p\r\n"
+					+ "WHERE j.numeroJoueur = p.numeroJoueur\r\n"
+					+ "GROUP BY j.numeroJoueur, j.nomJoueur\r\n"
+					+ "HAVING SUM(P.nbrAttaquesLancees) = (SELECT MAX(nbrAttL) FROM (SELECT SUM(p2.nbrAttaquesLancees) as 'nbrAttL'\r\n"
+					+ "FROM joueur j2, participer p2\r\n"
+					+ "WHERE j2.numeroJoueur = p2.numeroJoueur\r\n"
+					+ "GROUP BY j2.numeroJoueur, j2.nomJoueur) as s);");	
+			
+			resultat2.next();
+			//recupere pour chaque ligne le nom de la competition
+			bufferTableau.add(resultat2.getString("nomJoueur"));
+			//fermer le connexion
+			con2.close();
+			
+			Statement stmt3;
+			Class.forName("com.mysql.jdbc.Driver");
+			String url3 = "jdbc:mysql://localhost:3306/si_risk";
+			Connection con3 = DriverManager.getConnection(url2, "root", "");
+			stmt3 = con3.createStatement();
+			//execution de la requete
+			ResultSet resultat3 = stmt3.executeQuery("SELECT j.nomJoueur, SUM(p.nbrDefensesReussies)\r\n"
+					+ "FROM joueur j, participer p\r\n"
+					+ "WHERE j.numeroJoueur = p.numeroJoueur\r\n"
+					+ "GROUP BY j.numeroJoueur, j.nomJoueur\r\n"
+					+ "HAVING SUM(P.nbrDefensesReussies) = (SELECT MAX(nbrDefR) FROM (SELECT SUM(p2.nbrDefensesReussies) as 'nbrDefR'\r\n"
+					+ "FROM joueur j2, participer p2\r\n"
+					+ "WHERE j2.numeroJoueur = p2.numeroJoueur\r\n"
+					+ "GROUP BY j2.numeroJoueur, j2.nomJoueur) as s);");	
+			
+			resultat3.next();
+			//recupere pour chaque ligne le nom de la competition
+			bufferTableau.add(resultat3.getString("nomJoueur"));
+			//fermer le connexion
+			con3.close();
+			
+			Statement stmt4;
+			Class.forName("com.mysql.jdbc.Driver");
+			String url4 = "jdbc:mysql://localhost:3306/si_risk";
+			Connection con4 = DriverManager.getConnection(url2, "root", "");
+			stmt4 = con4.createStatement();
+			//execution de la requete
+			ResultSet resultat4 = stmt4.executeQuery("SELECT j.nomJoueur, SUM(p.nbrTerritoiresConquis)\r\n"
+					+ "FROM joueur j, participer p\r\n"
+					+ "WHERE j.numeroJoueur = p.numeroJoueur\r\n"
+					+ "GROUP BY j.numeroJoueur, j.nomJoueur\r\n"
+					+ "HAVING SUM(P.nbrTerritoiresConquis) = (SELECT MAX(nbrTerrC) FROM (SELECT SUM(p2.nbrTerritoiresConquis) as 'nbrTerrC'\r\n"
+					+ "FROM joueur j2, participer p2\r\n"
+					+ "WHERE j2.numeroJoueur = p2.numeroJoueur\r\n"
+					+ "GROUP BY j2.numeroJoueur, j2.nomJoueur) as s);");	
+			
+			resultat4.next();
+			//recupere pour chaque ligne le nom de la competition
+			bufferTableau.add(resultat4.getString("nomJoueur"));
+			//fermer le connexion
+			con4.close();
+			
+			message.append("\nLe trophée Malchanceux est attribué à ").append(bufferTableau.get(0));
+			message.append("\nLe trophée Belliqueux est attribué à ").append(bufferTableau.get(1));
+			message.append("\nLe trophée Bouclier est attribué à ").append(bufferTableau.get(2));
+			message.append("\nLe trophée Conquérant est attribué à ").append(bufferTableau.get(3));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+		
+		// Affichage popup
+		JOptionPane.showMessageDialog(null, message.toString());
+		mainMenuGUI();
 	}
 	
 	/**
@@ -250,18 +365,24 @@ public class RiskGame {
 					int nombreCartesEchangees= joueur.getNombreCartesEchangees();
 					int nombreRegimentsRecuperes = joueur.getNombreRegimentsRecuperes();
 					int nombreRegimentsElimines = joueur.getNombreRegimentsElimines();
-					int nombreAttaques = joueur.getNombreAttaques();
+					int nombreAttaques = joueur.getNombreAttaquesLancees();
 					int nombreDeplacement = joueur.getNombreDeplacement();
 					int nombreLancerDeDes = joueur.getNombreLancerDeDes();
 					int classement = manche.recupererClassementJoueur(joueur);
 					int score = manche.calculerScore(joueur);
+					int nbrDesUn = joueur.getNombreDesUn();
+					int nbrDefensesReussies = joueur.getNombreDefensesReussies();
+					int nbrTerritoiresConquis = joueur.getNombreTerritoiresConquis();
 					
 					stmt.executeUpdate("INSERT INTO `participer`(`classement`, `score`, `nbrCartesTirees`, "
-							+ "`nbrLancerDeDes`, `nbrCartesEchangees`, `nbrAttaque`, `nbrDeplacement`, `nbrRegimentsElimines`, "
-							+ "`nbrRegimentsRecuperes`, `numeroJoueur`, `numeroManche`) "
+							+ "`nbrLancerDeDes`, `nbrCartesEchangees`, `nbrAttaqueLancees`, `nbrDeplacement`, `nbrRegimentsElimines`, "
+							+ "`nbrRegimentsRecuperes`, `nbrDesUn`, `nbrDefensesReussies`, `nbrTerritoiresConquis`,`numeroJoueur`, `numeroManche`) "
 							+ "VALUES ('"+classement+"','"+score+"','"+nombreCartesTirees+"','"+nombreLancerDeDes+
 							"','"+nombreCartesEchangees+"','"+nombreAttaques+"',"
 							+ "'"+nombreDeplacement+"','"+nombreRegimentsElimines+"','"+nombreRegimentsRecuperes+
+							"','"+nbrDesUn+"','"+
+							"','"+nbrDefensesReussies+"','"+
+							"','"+nbrTerritoiresConquis+"','"+
 							"','"+numeroJoueur+"','"+manche.getNumeroManche()+"')");
 
 				}
