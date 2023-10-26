@@ -34,6 +34,9 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 	// liste des joueurs
 	private ArrayList<Joueur> joueurs;
 	
+	// liste des continents
+	private ArrayList<Continent> continents;
+	
 	private Territoire territoireSelectionne;
 	private boolean aClique;
 	
@@ -61,6 +64,7 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 
 		// ajout des territoires
 		territoires = new ArrayList<>();
+		continents = new ArrayList<>();
 
 		Territoire alaska = new Territoire("Alaska", "#CC7D3B", 95, 160);
 		territoires.add(alaska);
@@ -450,6 +454,7 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		ameriqueDuSud.ajouterTerritoireDansContinent(brazil);
 		ameriqueDuSud.ajouterTerritoireDansContinent(peru);
 		ameriqueDuSud.ajouterTerritoireDansContinent(argentine);
+		continents.add(ameriqueDuSud);
 		
 		Continent ameriqueDuNord = new Continent("Amerique Du Nord",5);
 		ameriqueDuNord.ajouterTerritoireDansContinent(alaska);
@@ -461,6 +466,7 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		ameriqueDuNord.ajouterTerritoireDansContinent(westusa);
 		ameriqueDuNord.ajouterTerritoireDansContinent(eastusa);
 		ameriqueDuNord.ajouterTerritoireDansContinent(central);
+		continents.add(ameriqueDuNord);
 		
 		Continent europe = new Continent("Europe",5);
 		europe.ajouterTerritoireDansContinent(iceland);
@@ -470,7 +476,7 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		europe.ajouterTerritoireDansContinent(westerneurope);
 		europe.ajouterTerritoireDansContinent(southerneurope);
 		europe.ajouterTerritoireDansContinent(iceland);
-
+		continents.add(europe);
 		
 		Continent afrique = new Continent("Afrique",3);
 		afrique.ajouterTerritoireDansContinent(northafrica);
@@ -479,6 +485,7 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		afrique.ajouterTerritoireDansContinent(congo);
 		afrique.ajouterTerritoireDansContinent(southafrica);
 		afrique.ajouterTerritoireDansContinent(madagascar);
+		continents.add(afrique);
 		
 		
 		Continent asie = new Continent("Asie",7);
@@ -494,14 +501,24 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		asie.ajouterTerritoireDansContinent(india);
 		asie.ajouterTerritoireDansContinent(siam);
 		asie.ajouterTerritoireDansContinent(middleeast);
+		continents.add(asie);
 		
 		Continent australie = new Continent("Australie",2);
 		australie.ajouterTerritoireDansContinent(indonesia);
 		australie.ajouterTerritoireDansContinent(newguinea);
 		australie.ajouterTerritoireDansContinent(westernaustralia);
 		australie.ajouterTerritoireDansContinent(easternaustralia);
-
+		continents.add(australie);
+		
 		this.territoireSelectionne = argentine;
+	}
+
+	public ArrayList<Continent> getContinents() {
+		return continents;
+	}
+
+	public void setContinents(ArrayList<Continent> continents) {
+		this.continents = continents;
 	}
 
 	public Territoire getTerritoireSelectionne() {

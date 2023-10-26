@@ -121,9 +121,11 @@ public class Manche {
 		if (nbrRegimentsAdd < 3) {
 			nbrRegimentsAdd = 3;
 		}
-		this.planispherePanel.getJoueurEnCours().setNombreRegimentsRecuperes(nbrRegimentsAdd + nbrRegimentsCartes
+		int nbrRegimentsContinent = joueurContinent();
+		int nombreAPlacer = nbrRegimentsAdd + nbrRegimentsCartes +nbrRegimentsContinent ;
+		this.planispherePanel.getJoueurEnCours().setNombreRegimentsRecuperes(nombreAPlacer
 				+ this.planispherePanel.getJoueurEnCours().getNombreRegimentsRecuperes());
-		int nombreAPlacer = nbrRegimentsAdd + nbrRegimentsCartes;
+		
 		System.out.println("nombre a placer: " + nombreAPlacer);
 		while (nombreAPlacer != 0) {
 			System.out.println("je rentre ds le while");
@@ -576,4 +578,33 @@ public class Manche {
             this.pileCartes.add(carte);
         }
 	}
+	
+	// Fonction pour vérifier si joueur possede un continent 
+	// Retourner nombre de regiments a gagner pour la possession d'un continent
+	
+	public int joueurContinent () {
+		
+		int nbrRegiments=0;
+		for (Continent continent : this.planispherePanel.getContinents()) {
+			if (joueurEnCoursPossede(continent)) {
+				nbrRegiments = continent.getValeur();
+			}
+			
+		}
+		return nbrRegiments;
+	}
+	
+	public boolean joueurEnCoursPossede(Continent continent) {
+		int territoiresPossedes=0;
+		ArrayList<Territoire> territoiresJoueur = this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours());
+
+			for (Territoire territoireContinent : continent.getTerritoires()) {
+				if (territoiresJoueur.contains(territoireContinent)) {
+					territoiresPossedes++;
+				}
+			}
+			return territoiresPossedes==continent.getTerritoires().size();
+	}
+		
 }
+
