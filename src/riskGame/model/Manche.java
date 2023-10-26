@@ -619,6 +619,7 @@ public class Manche {
 	public int echangerCarte() {
 		int compteur = this.nbEchanges;
 	    int nbrRegiments = 0;
+	    boolean regimentsTerritoire = false;
 	    //un compteur pour calculer le nb d'�changes
 	    
 	    ArrayList<Carte> infanterie = new ArrayList();
@@ -672,6 +673,9 @@ public class Manche {
 	    			Carte carteInfanterie = infanterie.remove(0);
 		    		this.planispherePanel.getJoueurEnCours().getMesCartes().remove(carteInfanterie);
 		    		this.pileCartes.add(carteInfanterie);
+		    		if(!regimentsTerritoire) {
+		    			regimentsTerritoire = carteInfanterie.getTerritoire().verifierAppartenance(this.planispherePanel.getJoueurEnCours());
+		    		}
 	    		}
 	    	}
 	    	
@@ -680,6 +684,9 @@ public class Manche {
 	    			Carte carteCavalerie = cavalerie.remove(0);
 		    		this.planispherePanel.getJoueurEnCours().getMesCartes().remove(carteCavalerie);
 		    		this.pileCartes.add(carteCavalerie);
+		    		if(!regimentsTerritoire) {
+		    			regimentsTerritoire = carteCavalerie.getTerritoire().verifierAppartenance(this.planispherePanel.getJoueurEnCours());
+		    		}
 	    		}
 	    	}
 	    	
@@ -688,27 +695,44 @@ public class Manche {
 	    			Carte carteArtillerie = artillerie.remove(0);
 		    		this.planispherePanel.getJoueurEnCours().getMesCartes().remove(carteArtillerie);
 		    		this.pileCartes.add(carteArtillerie);
+		    		if(!regimentsTerritoire) {
+		    			regimentsTerritoire = carteArtillerie.getTerritoire().verifierAppartenance(this.planispherePanel.getJoueurEnCours());
+		    		}
 	    		}
 	    	}
 	    	else if(infanterie.size() >= 1 && cavalerie.size() >= 1 && artillerie.size() >= 1) {
 	    		Carte carteInfanterie = infanterie.remove(0);
 	    		this.planispherePanel.getJoueurEnCours().getMesCartes().remove(carteInfanterie);
 	    		this.pileCartes.add(carteInfanterie);
+	    		if(!regimentsTerritoire) {
+	    			regimentsTerritoire = carteInfanterie.getTerritoire().verifierAppartenance(this.planispherePanel.getJoueurEnCours());
+	    		}
 	    		
 	    		Carte carteCavalerie = cavalerie.remove(0);
 	    		this.planispherePanel.getJoueurEnCours().getMesCartes().remove(carteCavalerie);
 	    		this.pileCartes.add(carteCavalerie);
+	    		if(!regimentsTerritoire) {
+	    			regimentsTerritoire = carteCavalerie.getTerritoire().verifierAppartenance(this.planispherePanel.getJoueurEnCours());
+	    		}
 	    		
 	    		Carte carteArtillerie = artillerie.remove(0);
 	    		this.planispherePanel.getJoueurEnCours().getMesCartes().remove(carteArtillerie);
 	    		this.pileCartes.add(carteArtillerie);
+	    		if(!regimentsTerritoire) {
+	    			regimentsTerritoire = carteArtillerie.getTerritoire().verifierAppartenance(this.planispherePanel.getJoueurEnCours());
+	    		}
 	    		
 	    	}
 	    	
 	       
 	    }
+        //ajouter regiments bonus pour possession territoire pour au moins une carte
+        if(regimentsTerritoire) {
+        	nbrRegiments += 2;
+        }
         this.planispherePanel.getJoueurEnCours().setNombreRegimentsRecuperes(nbrRegiments+this.planispherePanel.getJoueurEnCours().getNombreRegimentsRecuperes());
 
+        
 	    return nbrRegiments;
 	}
 }
