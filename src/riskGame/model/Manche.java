@@ -28,6 +28,7 @@ public class Manche {
 	private int nbEchanges;
 	private PlanispherePanel planispherePanel;
 	private boolean mancheFinie;
+	private ArrayList<Carte> pileCartes;
 
 	public Manche(int numeroManche, Date debutPartie, EtatManche etatManche, PlanispherePanel planispherePanel) {
 		this.numeroManche = numeroManche;
@@ -36,6 +37,7 @@ public class Manche {
 		this.nbEchanges = 0;
 		this.planispherePanel = planispherePanel;
 		this.mancheFinie = false;
+		this.pileCartes = new ArrayList<>();
 	}
 
 	public boolean placerRegimentTerritoire(Joueur joueur, Territoire territoire, int nbrRegiment) {
@@ -49,7 +51,6 @@ public class Manche {
 		}
 		if (existeTerritoireVide) {
 			if (territoire.getProprietaire()!=null) {
-
 				System.out.println(territoire.getNomTerritoire()+" "
 						+territoire.getProprietaire().getPrenomJoueur());
 
@@ -162,7 +163,7 @@ public class Manche {
 				territoireToChooseFrom[i] = this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours()).get(i).getNomTerritoire();
 			}
 			
-			//choisir dequel on attaque
+			// choisir dequel on attaque
 			String territoireAttaquantString = (String) JOptionPane.showInputDialog(null, "Avec quel territoire voulez-vous attaquer ? ",
 					"Choix des territoires attaquants: ", JOptionPane.PLAIN_MESSAGE, null,
 					territoireToChooseFrom,territoireToChooseFrom[0] );
@@ -175,7 +176,7 @@ public class Manche {
 				}
 			}
 			
-			//choisir terriroire a att
+			// choisir terriroire a att
 			ArrayList<Territoire> territoiresPossibles = new ArrayList<>();
 	        territoiresPossibles = territoireAttaquant.getTerritoiresAccessibles();
 	        ArrayList<Territoire> territoiresAccessibles = new ArrayList<>();
@@ -201,10 +202,10 @@ public class Manche {
 					"Choix des territoires à attaquer: ", JOptionPane.PLAIN_MESSAGE, null,
 					territoireToAttack,territoireToAttack[0] );
 			
-			//choisir nbr regiment
-			//lancer les des
-			//supprimer les regiments
-			//recuperer carte si je gagne un territoire
+			// choisir nbr regiment
+			// lancer les des
+			// supprimer les regiments
+			// recuperer carte si je gagne un territoire
 		}
 	}
 
@@ -359,6 +360,10 @@ public class Manche {
 
 	public Joueur determinerPremierJoueur() {
 
+		// Generation pile de cartes en début de partie
+		creerPileCartes();
+		// Fin generation pile de cartes en début de partie
+		
 		Random random = new Random();
 		HashMap<Joueur, Integer> resultatLancementDe = new HashMap<>();
 
@@ -490,5 +495,19 @@ public class Manche {
 	// fonction pour changer de tour
 	public void changerTour() {
 
+	}
+	
+	// Fonction pour générer la liste de 42 cartes
+	public void creerPileCartes() {
+
+        Random random = new Random();
+        TypeRegiment[] types = TypeRegiment.values();
+        
+        for (Territoire t : this.planispherePanel.getTerritoires()) {
+            TypeRegiment typeRegiment = types[random.nextInt(types.length)];
+
+            Carte carte = new Carte(t, typeRegiment);
+            this.pileCartes.add(carte);
+        }
 	}
 }
