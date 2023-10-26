@@ -113,8 +113,7 @@ public class RiskGame {
 		}
 
 	}
-//	Le malchanceux : remis au joueur qui a obtenu le plus de 1 à ses lancés de
-//	dès lors des phases d’attaque/défense
+
 //	- Le belliqueux : remis au joueur qui a déclenché le plus grand nombre
 //	d’attaques.
 //	- Le bouclier : remis au joueur qui a réussis le plus de défenses.
@@ -122,10 +121,7 @@ public class RiskGame {
 	
 	private static void afficherTrophees() {
 		StringBuilder message = new StringBuilder("Les trophées sont:");
-		message.append("\nLe trophée Malchanceux est attribué à ").append("");
-		message.append("\nLe trophée Belliqueux est attribué à ").append("");
-		message.append("\nLe trophée Bouclier est attribué à ").append("");
-		message.append("\nLe trophée Conquérant est attribué à ").append("");
+		
 
 		ArrayList<String> bufferTableau = new ArrayList<String>();
 		try {
@@ -136,16 +132,47 @@ public class RiskGame {
 			Connection con = DriverManager.getConnection(url, "root", "");
 			stmt = con.createStatement();
 			//execution de la requete
-			ResultSet resultat = stmt.executeQuery("SELECT j.nomJoueur FROM joueur j");
+			ResultSet resultat = stmt.executeQuery("SELECT j.nomJoueur, SUM(p.nbrDesUn)\r\n"
+					+ "FROM joueur j, participer p\r\n"
+					+ "WHERE j.numeroJoueur = p.numeroJoueur\r\n"
+					+ "GROUP BY j.numeroJoueur, j.nomJoueur\r\n"
+					+ "HAVING SUM(P.nbrDesUn) = (SELECT MAX(nbrUn) FROM (SELECT SUM(p2.nbrDesUn) as 'nbrUn'\r\n"
+					+ "FROM joueur j2, participer p2\r\n"
+					+ "WHERE j2.numeroJoueur = p2.numeroJoueur\r\n"
+					+ "GROUP BY j2.numeroJoueur, j2.nomJoueur) as s);");
+
 			
-			//processing the data:
-			while(resultat.next()) {
-				//recupere pour chaque ligne le nom de la competition
-				bufferTableau.add(resultat.getString("nomJoueur"));
-				
-			}
+	
+			//recupere pour chaque ligne le nom de la competition
+			resultat.next();
+			bufferTableau.add(resultat.getString("nomJoueur"));
 			//fermer le connexion
 			con.close();
+			
+//			//connection a la bd
+//			Statement stmt2;
+//			Class.forName("com.mysql.jdbc.Driver");
+//			String url2 = "jdbc:mysql://localhost:3306/si_risk";
+//			Connection con2 = DriverManager.getConnection(url, "root", "");
+//			stmt2 = con2.createStatement();
+//			//execution de la requete
+//			ResultSet resultat2 = stmt2.executeQuery("SELECT J.nomJoueur "
+//					+ "FROM joueur J, participer P "
+//					+ "GROUP BY J.numeroJoueur, J.nomJoueur "
+//					+ "HAVING SUM(P.nbrAttaquesLancees = (SELECT MAX(nbrAttLancees) FROM("
+//					+ "	SELECT SUM(P2.nbrAttaquesLancees) as “nbrAttLancees” "
+//					+ "FROM joueur J2, participer P2 "
+//					+ "GROUP BY J2.numeroJoueur, J2.nomJoueur));"
+//					+ "");	
+//			//recupere pour chaque ligne le nom de la competition
+//			bufferTableau.add(resultat2.getString("nomJoueur"));
+//			//fermer le connexion
+//			con2.close();
+			
+			message.append("\nLe trophée Malchanceux est attribué à ").append(bufferTableau.get(0));
+//			message.append("\nLe trophée Belliqueux est attribué à ").append(bufferTableau.get(1));
+			message.append("\nLe trophée Bouclier est attribué à ").append("");
+			message.append("\nLe trophée Conquérant est attribué à ").append("");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
