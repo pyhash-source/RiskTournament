@@ -701,7 +701,6 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 			if (isTerritoireColor(rvbHexCode, t)) {
 				this.territoireSelectionne= t;
 				this.aClique = true;
-				System.out.println(t.getNomTerritoire()+ "Le boolean: " + aClique);
 			}
 		}
 		//System.out.println(this.aClique);
