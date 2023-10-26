@@ -499,20 +499,15 @@ public class Manche {
 	
 	// Fonction pour générer la liste de 42 cartes
 	public void creerPileCartes() {
-        ArrayList<Carte> cartes = new ArrayList<>();
-        ArrayList<Territoire> territoires = new ArrayList<>();
-        territoires = this.planispherePanel.getTerritoires();
 
         Random random = new Random();
-
-        for (Territoire t : territoires) {
-            TypeRegiment[] types = TypeRegiment.values();
+        TypeRegiment[] types = TypeRegiment.values();
+        
+        for (Territoire t : this.planispherePanel.getTerritoires()) {
             TypeRegiment typeRegiment = types[random.nextInt(types.length)];
 
             Carte carte = new Carte(t, typeRegiment);
-            cartes.add(carte);
+            this.pileCartes.add(carte);
         }
-
-        this.pileCartes = cartes;
 	}
 }
