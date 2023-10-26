@@ -397,6 +397,7 @@ public class Manche {
 	}
 
 	public void manoeuvrer() {
+		boolean peutManoeuvrer = true;
 		System.out.println("Debut phase manoeuvre");
 		//demander de quel territoire il veut partir
 		
@@ -404,74 +405,81 @@ public class Manche {
 		for(Territoire territoire : getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours())) {
 			if(territoire.getNbrRegiment()<2) {
 				territoireToChoseFromDepartFiltered.remove(territoire);
+				peutManoeuvrer = false;
 			}
 		}
 		
-		String[] listeTerritoireToChoseFromDepart = new String[territoireToChoseFromDepartFiltered.size()];
-		for(int i=0;i<=territoireToChoseFromDepartFiltered.size()-1;i++) {
-			listeTerritoireToChoseFromDepart[i] = territoireToChoseFromDepartFiltered.get(i).getNomTerritoire();
-		}
-		
-		
-		
-		String territoireDepartString = (String) JOptionPane.showInputDialog(null,
-				"DEPUIS quel territoire voulez vous déplacer des régiments ? ", "Choix du territoire pour déplacer des régiments: ",
-				JOptionPane.PLAIN_MESSAGE, null, listeTerritoireToChoseFromDepart, listeTerritoireToChoseFromDepart[0]);
-		Territoire territoireDepart = convertirTerritoireFromStringToTerritoire(territoireDepartString);
-		
-		ArrayList<Territoire> territoiresAccessibles = new ArrayList<>();
-		ArrayList<Territoire> territoiresToCheck = new ArrayList<>();
-		territoiresToCheck.add(territoireDepart);
-		
-		while(territoiresToCheck.size() != 0) {
-			ArrayList<Territoire> territoireToCheckClone = (ArrayList<Territoire>)territoiresToCheck.clone();
-			for(Territoire territoire : territoireToCheckClone) {
-				ArrayList<Territoire> territoireToAdd = territoire.getTerritoiresAccessibles();
-				
-				for(Territoire territoireAccessible : territoireToAdd) {
-					if(territoireAccessible.getProprietaire() ==  this.planispherePanel.getJoueurEnCours()) {
-						if(!territoiresAccessibles.contains(territoireAccessible) && !territoiresToCheck.contains(territoireAccessible)) {
-							territoiresToCheck.add(territoireAccessible);
+		if(peutManoeuvrer) {
+			String[] listeTerritoireToChoseFromDepart = new String[territoireToChoseFromDepartFiltered.size()];
+			for(int i=0;i<=territoireToChoseFromDepartFiltered.size()-1;i++) {
+				listeTerritoireToChoseFromDepart[i] = territoireToChoseFromDepartFiltered.get(i).getNomTerritoire();
+			}
+			
+			
+			
+			String territoireDepartString = (String) JOptionPane.showInputDialog(null,
+					"DEPUIS quel territoire voulez vous déplacer des régiments ? ", "Choix du territoire pour déplacer des régiments: ",
+					JOptionPane.PLAIN_MESSAGE, null, listeTerritoireToChoseFromDepart, listeTerritoireToChoseFromDepart[0]);
+			Territoire territoireDepart = convertirTerritoireFromStringToTerritoire(territoireDepartString);
+			
+			ArrayList<Territoire> territoiresAccessibles = new ArrayList<>();
+			ArrayList<Territoire> territoiresToCheck = new ArrayList<>();
+			territoiresToCheck.add(territoireDepart);
+			
+			while(territoiresToCheck.size() != 0) {
+				ArrayList<Territoire> territoireToCheckClone = (ArrayList<Territoire>)territoiresToCheck.clone();
+				for(Territoire territoire : territoireToCheckClone) {
+					ArrayList<Territoire> territoireToAdd = territoire.getTerritoiresAccessibles();
+					
+					for(Territoire territoireAccessible : territoireToAdd) {
+						if(territoireAccessible.getProprietaire() ==  this.planispherePanel.getJoueurEnCours()) {
+							if(!territoiresAccessibles.contains(territoireAccessible) && !territoiresToCheck.contains(territoireAccessible)) {
+								territoiresToCheck.add(territoireAccessible);
+							}
 						}
 					}
+					
+					territoiresToCheck.remove(territoire);
+					territoiresAccessibles.add(territoire);
+					
+					
 				}
-				
-				territoiresToCheck.remove(territoire);
-				territoiresAccessibles.add(territoire);
-				
-				
 			}
+			territoiresAccessibles.remove(territoireDepart);
+			
+			String[] territoiresArriveeToChoseFrom = new String
+					[territoiresAccessibles.size()];
+			for(int i=0;i<territoiresAccessibles.size();i++) {
+				territoiresArriveeToChoseFrom[i] = territoiresAccessibles.get(i).getNomTerritoire();
+			}
+			
+			String territoireArriveeChoisi = (String) JOptionPane.showInputDialog(null,
+					"Ou souhaitez vous déplacer vos régiments ? ", "Choix du territoire d'arrivée: ",
+					JOptionPane.PLAIN_MESSAGE, null, territoiresArriveeToChoseFrom, territoiresArriveeToChoseFrom[0]);
+			
+			
+			
+			//on doit trouver combien de marcs il veut bouger
+			String[] regimentsDeplacables = new String[territoireDepart.getNbrRegiment() - 1];
+			for(int i=0;i<regimentsDeplacables.length;i++) {
+				regimentsDeplacables[i] = String.valueOf(i+1);
+			}
+			
+			String nombreDeRegimentsADeplacer = (String) JOptionPane.showInputDialog(null,
+					"Combien de régiments voulez vous déplacer ? ", "Choix du nombre de régiments a deplacer ",
+					JOptionPane.PLAIN_MESSAGE, null, regimentsDeplacables, regimentsDeplacables[0]);
+			
+			
+			//deplacer
+			Territoire territoireArriveeManoeuvre = convertirTerritoireFromStringToTerritoire(territoireArriveeChoisi);
+			territoireDepart.supprimerRegiments(Integer.parseInt(nombreDeRegimentsADeplacer));
+			territoireArriveeManoeuvre.ajouterRegiments(Integer.parseInt(nombreDeRegimentsADeplacer));
+			this.planispherePanel.updateUI();
+		} else {
+			JOptionPane.showMessageDialog(null, "Vous n'avez pas assez de régiments pour effectuer une manoeuvre, vous passez votre tour.");
 		}
-		territoiresAccessibles.remove(territoireDepart);
-		
-		String[] territoiresArriveeToChoseFrom = new String
-				[territoiresAccessibles.size()];
-		for(int i=0;i<territoiresAccessibles.size();i++) {
-			territoiresArriveeToChoseFrom[i] = territoiresAccessibles.get(i).getNomTerritoire();
-		}
-		
-		String territoireArriveeChoisi = (String) JOptionPane.showInputDialog(null,
-				"Ou souhaitez vous déplacer vos régiments ? ", "Choix du territoire d'arrivée: ",
-				JOptionPane.PLAIN_MESSAGE, null, territoiresArriveeToChoseFrom, territoiresArriveeToChoseFrom[0]);
 		
 		
-		
-		//on doit trouver combien de marcs il veut bouger
-		String[] regimentsDeplacables = new String[territoireDepart.getNbrRegiment() - 1];
-		for(int i=0;i<regimentsDeplacables.length;i++) {
-			regimentsDeplacables[i] = String.valueOf(i+1);
-		}
-		
-		String nombreDeRegimentsADeplacer = (String) JOptionPane.showInputDialog(null,
-				"Combien de régiments voulez vous déplacer ? ", "Choix du nombre de régiments a deplacer ",
-				JOptionPane.PLAIN_MESSAGE, null, regimentsDeplacables, regimentsDeplacables[0]);
-		
-		
-		//deplacer
-		Territoire territoireArriveeManoeuvre = convertirTerritoireFromStringToTerritoire(territoireArriveeChoisi);
-		territoireDepart.supprimerRegiments(Integer.parseInt(nombreDeRegimentsADeplacer));
-		territoireArriveeManoeuvre.ajouterRegiments(Integer.parseInt(nombreDeRegimentsADeplacer));
-		this.planispherePanel.updateUI();
 
 		
 	}
