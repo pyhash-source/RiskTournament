@@ -830,5 +830,17 @@ public class Manche {
         
 	    return nbrRegiments;
 	}
+	
+	// Fonction qui elimine un joueur
+	public void eliminerJoueur(Joueur joueur) {
+		
+		//Verifier si le joueur ne possede plus de territoires
+		ArrayList<Territoire> territoiresJoueurs = new ArrayList<>();
+		territoiresJoueurs = getListeTerritoiresPourUnJoueur(joueur);
+		if (territoiresJoueurs.size()<1) {
+			this.joueursManche.remove(joueur);
+			mettreAJourClassement(joueur);
+		}
+	}
 }
 
