@@ -417,13 +417,7 @@ public class Manche {
 		String territoireDepartString = (String) JOptionPane.showInputDialog(null,
 				"Avec quel territoire voulez-vous attaquer ? ", "Choix des territoires attaquants: ",
 				JOptionPane.PLAIN_MESSAGE, null, listeTerritoireToChoseFromDepart, listeTerritoireToChoseFromDepart[0]);
-		Territoire territoireDepart = null;
-		for (Territoire t : this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours())) {
-			if (t.getNomTerritoire().equals(territoireDepartString)) {
-				territoireDepart = t;
-				break;
-			}
-		}
+		Territoire territoireDepart = convertirTerritoireFromStringToTerritoire(territoireDepartString);
 		
 		ArrayList<Territoire> territoiresAccessibles = new ArrayList<>();
 		ArrayList<Territoire> territoiresToCheck = new ArrayList<>();
@@ -461,8 +455,33 @@ public class Manche {
 				JOptionPane.PLAIN_MESSAGE, null, territoiresArriveeToChoseFrom, territoiresArriveeToChoseFrom[0]);
 		
 		
-		//deplacer
 		
+		//on doit trouver combien de marcs il veut bouger
+		String[] regimentsDeplacables = new String[territoireDepart.getNbrRegiment() - 1];
+		for(int i=0;i<regimentsDeplacables.length;i++) {
+			regimentsDeplacables[i] = String.valueOf(i+1);
+		}
+		
+		String nombreDeRegimentsADeplacer = (String) JOptionPane.showInputDialog(null,
+				"Combien de régiments voulez vous déplacer ? ", "Choix du nombre de régiments a deplacer ",
+				JOptionPane.PLAIN_MESSAGE, null, regimentsDeplacables, regimentsDeplacables[0]);
+		
+		
+		//deplacer
+		Territoire territoireArriveeManoeuvre = convertirTerritoireFromStringToTerritoire(territoireArriveeChoisi);
+		
+		
+	}
+
+	private Territoire convertirTerritoireFromStringToTerritoire(String territoireDepartString) {
+		Territoire territoireDepart = null;
+		for (Territoire t : this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours())) {
+			if (t.getNomTerritoire().equals(territoireDepartString)) {
+				territoireDepart = t;
+				break;
+			}
+		}
+		return territoireDepart;
 	}
 
 	public ArrayList<Territoire> getListeTerritoires() {
