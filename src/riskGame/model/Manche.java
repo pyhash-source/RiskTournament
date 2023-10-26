@@ -116,10 +116,7 @@ public class Manche {
 	}
 
 	public void renforcer() {
-		// todo bonus continent
-		System.out.println("joueur: " + this.planispherePanel.getJoueurEnCours().getNomJoueur());
 		int nbrRegimentsCartes = echangerCarte();
-		System.out.println("echange carte: " + nbrRegimentsCartes);
 		int nbrTerritoires = this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours()).size();
 		int nbrRegimentsAdd = nbrTerritoires / 3;
 		if (nbrRegimentsAdd < 3) {
@@ -130,14 +127,14 @@ public class Manche {
 		this.planispherePanel.getJoueurEnCours().setNombreRegimentsRecuperes(nombreAPlacer
 				+ this.planispherePanel.getJoueurEnCours().getNombreRegimentsRecuperes());
 		
-		System.out.println("nombre a placer: " + nombreAPlacer);
 		while (nombreAPlacer != 0) {
-			System.out.println("je rentre ds le while");
-			System.out.println(this.planispherePanel.getTerritoireSelectionne().getNomTerritoire()
-					+ "EL FAMOSO valeur: " + this.planispherePanel.isaClique());
-			System.out.println(this.planispherePanel.isaClique());
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if (this.planispherePanel.isaClique()) {
-				System.out.println("je rentre dabs le if");
 				boolean place = false;
 				place = this.placerRegimentTerritoire(this.planispherePanel.getJoueurEnCours(),
 						this.planispherePanel.getTerritoireSelectionne(), 1);
@@ -145,7 +142,7 @@ public class Manche {
 				if (place) {
 					nombreAPlacer--;
 				}
-				// tout doux: faire ,nombre a placer -- ssi placer regiment renvoie true
+				
 				this.planispherePanel.updateUI();
 
 			}
@@ -160,7 +157,6 @@ public class Manche {
 	//TODO: joueur a perdu a ce tour la ? 
 	//TODO: quelqu'un a gagné ? 
 	private void attaquer() {
-		System.out.println("debut phase attaque");
 		boolean attaquer = true;
 
 		attaquer = demanderConfirmation();
@@ -276,20 +272,15 @@ public class Manche {
 			int[] resultatsDesDefense = new int[Integer.parseInt(nombreRegimentsPourDefendre)];
 			for(int j=0; j < resultatsDesDefense.length; j++) {
 				resultatsDesDefense[j]= lancerUnDe();
-				System.out.println("Resultat du lancer de dé defense" + resultatsDesDefense[j]);
 
 			}
 			//comparer les résultats des différents dés
 			//triage des tableaux
-			System.out.println( arrayToString(resultatsDesAttaque));
 			Arrays.sort(resultatsDesAttaque);
 			reverse(resultatsDesAttaque);
-			System.out.println(arrayToString(resultatsDesAttaque));
 			
-			System.out.println(arrayToString(resultatsDesDefense));
 			Arrays.sort(resultatsDesDefense);
 			reverse(resultatsDesDefense);
-			System.out.println(arrayToString(resultatsDesDefense));
 			
 			int nombreRegimentsDefenseTues = 0;
 			int nombreRegimentsAttaqueTues = 0;
@@ -331,7 +322,7 @@ public class Manche {
 				eliminerJoueur(territoireDefendant.getProprietaire());
 				this.mancheFinie = verifierFinPartie();
 				if(mancheFinie) {
-					mettreAJourClassement(this.joueursManche.get(0));
+					mettreAJourClassement(this.joueursManche.get(nombreRegimentsAttaqueTues));
 				}
 				territoireDefendant.setProprietaire(territoireAttaquant.getProprietaire());
 				territoireDefendant.setNbrRegiment(Integer.parseInt(nombreRegimentsPourAttaquer));
@@ -344,7 +335,6 @@ public class Manche {
 				attaquer();
 			}
 		} else {
-			System.out.println("Fin de la phase d'attaque !");
 			JOptionPane.showMessageDialog(null,
 					"Fin de la phase d'attaque ! Vous passez à présent à la phase de mouvement !");
 
@@ -403,7 +393,6 @@ public class Manche {
 
 	public void manoeuvrer() {
 		boolean peutManoeuvrer = true;
-		System.out.println("Debut phase manoeuvre");
 		//demander de quel territoire il veut partir
 		
 		ArrayList<Territoire> territoireToChoseFromDepartFiltered =  getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours());
@@ -725,10 +714,8 @@ public class Manche {
 
 		for (int i = 0; i < Math.min(nbrAttaque, nbrRegimentsDefense); i++) {
 			if (resultAttaque[i] > resultDefense[i]) {
-				System.out.println("Pour valeur" + (i + 1) + "Joueur Attaque gagne !");
 				nbrRegimentASupprimerDef += 1;
 			} else {
-				System.out.println("Pour valeur" + (i + 1) + "Joueur Defense gagne !");
 				nbrRegimentASupprimerAtt += 1;
 			}
 		}
@@ -823,7 +810,6 @@ public class Manche {
 	 * @return int
 	 */
 	public int echangerCarte() {
-		int compteur = this.nbEchanges;
 	    int nbrRegiments = 0;
 	    boolean regimentsTerritoire = false;
 	    //un compteur pour calculer le nb d'�changes
@@ -850,26 +836,29 @@ public class Manche {
         	       (infanterie.size() >= 1 && cavalerie.size() >= 1 && artillerie.size() >= 1)) {
         	this.planispherePanel.getJoueurEnCours().setNombreCartesEchangees(this.planispherePanel.getJoueurEnCours().getNombreCartesEchangees()+ 3);
         	this.nbEchanges++;
-	    	if(compteur ==1){
+        	System.out.println("print du compteur de points: " + this.nbEchanges);
+	    	if(this.nbEchanges ==1){
 	    		nbrRegiments += 4;
 	    	}
-	    	else if (compteur ==2) {
+	    	else if (this.nbEchanges ==2) {
 	    		nbrRegiments += 6;
 	    	}
-	    	else if (compteur ==3) {
+	    	else if (this.nbEchanges ==3) {
 	    		nbrRegiments += 8;
 	    	}
-	    	else if (compteur ==4) {
+	    	else if (this.nbEchanges ==4) {
 	    		nbrRegiments += 10;
 	    	}
-	    	else if (compteur ==5) {
+	    	else if (this.nbEchanges ==5) {
 	    		nbrRegiments += 12;
 	    	}
-	    	else if (compteur ==6) {
+	    	else if (this.nbEchanges ==6) {
 	    		nbrRegiments += 15;
 	    	}
 	    	else {
-	    		nbrRegiments += 15 + (compteur - 5) * 5; // Gagnez 15 r�giments au 6e �change, puis 5 de plus � chaque �change suppl�mentaire
+	    		System.out.println("Je rentre dans le else et le compteur a pour valeur: " + this.nbEchanges);
+	    		System.out.println("VA: " + 15 + (this.nbEchanges - 5) * 5);
+	    		nbrRegiments += 15 + (this.nbEchanges - 5) * 5; // Gagnez 15 r�giments au 6e �change, puis 5 de plus � chaque �change suppl�mentaire
 	    		
 	        }
 	    	// Retirer les cartes �chang�es des listes
@@ -938,7 +927,6 @@ public class Manche {
         }
         this.planispherePanel.getJoueurEnCours().setNombreRegimentsRecuperes(nbrRegiments+this.planispherePanel.getJoueurEnCours().getNombreRegimentsRecuperes());
 
-        
 	    return nbrRegiments;
 	}
 	
