@@ -20,9 +20,12 @@ public class Joueur {
 		private int nombreCartesEchangees;
 		private int nombreRegimentsRecuperes;
 		private int nombreRegimentsElimines;
-		private int nombreAttaques;
+		private int nombreAttaquesLancees;
 		private int nombreDeplacement;
 		private int nombreLancerDeDes;
+		private int nombreDesUn;
+		private int nombreDefensesReussies;
+		private int nombreTerritoiresConquis;
 		private ArrayList<Carte> mesCartes;
 		
 		//Constructor
@@ -36,9 +39,12 @@ public class Joueur {
 	        this.nombreCartesEchangees = 0;
 	        this.nombreRegimentsRecuperes = 0;
 	        this.nombreRegimentsElimines = 0;
-	        this.nombreAttaques = 0;
+	        this.nombreAttaquesLancees = 0;
 	        this.nombreDeplacement = 0;
 	        this.nombreLancerDeDes = 0;
+	        this.nombreDesUn = 0;
+	        this.nombreDefensesReussies = 0;
+	        this.nombreTerritoiresConquis=0;
 	        this.mesCartes = new ArrayList<>();
 	    }
 		/**
@@ -168,12 +174,7 @@ public class Joueur {
 		public void setNombreRegimentsElimines(int nombreRegimentsElimines) {
 			this.nombreRegimentsElimines = nombreRegimentsElimines;
 		}
-		public int getNombreAttaques() {
-			return nombreAttaques;
-		}
-		public void setNombreAttaques(int nombreAttaques) {
-			this.nombreAttaques = nombreAttaques;
-		}
+
 		public int getNombreDeplacement() {
 			return nombreDeplacement;
 		}
@@ -265,14 +266,37 @@ public class Joueur {
             nombreRegimentsRecuperes+=nbrRegiments;	
 		    return nbrRegiments;
 		}
-
-			@Override
-		public int hashCode() {
-			return Objects.hash(couleurJoueur, dateNaissance, etatJoueur, mesCartes, nomJoueur, nombreAttaques,
-					nombreCartesEchangees, nombreCartesTirees, nombreDeplacement, nombreRegimentsElimines,
-					nombreRegimentsRecuperes, numeroJoueur, prenomJoueur);
+		public int getNombreAttaquesLancees() {
+			return nombreAttaquesLancees;
 		}
-
+		public void setNombreAttaquesLancees(int nombreAttaquesLancees) {
+			this.nombreAttaquesLancees = nombreAttaquesLancees;
+		}
+		public int getNombreDesUn() {
+			return nombreDesUn;
+		}
+		public void setNombreDesUn(int nombreDesUn) {
+			this.nombreDesUn = nombreDesUn;
+		}
+		public int getNombreDefensesReussies() {
+			return nombreDefensesReussies;
+		}
+		public void setNombreDefensesReussies(int nombreDefensesReussies) {
+			this.nombreDefensesReussies = nombreDefensesReussies;
+		}
+		public int getNombreTerritoiresConquis() {
+			return nombreTerritoiresConquis;
+		}
+		public void setNombreTerritoiresConquis(int nombreTerritoiresConquis) {
+			this.nombreTerritoiresConquis = nombreTerritoiresConquis;
+		}
+		@Override
+		public int hashCode() {
+			return Objects.hash(couleurJoueur, dateNaissance, etatJoueur, mesCartes, nomJoueur, nombreAttaquesLancees,
+					nombreCartesEchangees, nombreCartesTirees, nombreDefensesReussies, nombreDeplacement, nombreDesUn,
+					nombreLancerDeDes, nombreRegimentsElimines, nombreRegimentsRecuperes, nombreTerritoiresConquis,
+					numeroJoueur, prenomJoueur);
+		}
 		@Override
 		public boolean equals(Object obj) {
 			if (this == obj)
@@ -284,12 +308,18 @@ public class Joueur {
 			Joueur other = (Joueur) obj;
 			return couleurJoueur == other.couleurJoueur && Objects.equals(dateNaissance, other.dateNaissance)
 					&& etatJoueur == other.etatJoueur && Objects.equals(mesCartes, other.mesCartes)
-					&& Objects.equals(nomJoueur, other.nomJoueur) && nombreAttaques == other.nombreAttaques
+					&& Objects.equals(nomJoueur, other.nomJoueur)
+					&& nombreAttaquesLancees == other.nombreAttaquesLancees
 					&& nombreCartesEchangees == other.nombreCartesEchangees
-					&& nombreCartesTirees == other.nombreCartesTirees && nombreDeplacement == other.nombreDeplacement
+					&& nombreCartesTirees == other.nombreCartesTirees
+					&& nombreDefensesReussies == other.nombreDefensesReussies
+					&& nombreDeplacement == other.nombreDeplacement && nombreDesUn == other.nombreDesUn
+					&& nombreLancerDeDes == other.nombreLancerDeDes
 					&& nombreRegimentsElimines == other.nombreRegimentsElimines
-					&& nombreRegimentsRecuperes == other.nombreRegimentsRecuperes && numeroJoueur == other.numeroJoueur
+					&& nombreRegimentsRecuperes == other.nombreRegimentsRecuperes
+					&& nombreTerritoiresConquis == other.nombreTerritoiresConquis && numeroJoueur == other.numeroJoueur
 					&& Objects.equals(prenomJoueur, other.prenomJoueur);
 		}
+
 		
 }
