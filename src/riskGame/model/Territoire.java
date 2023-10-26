@@ -131,4 +131,8 @@ public class Territoire {
 	}
 
 	
+	public boolean verifierAppartenance(Joueur joueur) {
+		return this.proprietaire.equals(joueur);
+	}
+	
 }
