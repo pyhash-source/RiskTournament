@@ -615,6 +615,8 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		}
 		
 		// Dessiner un cadre qui affiche les informations du joueur
+		if (this.joueurEnCours != null) {
+		
 		for (Joueur joueur : joueurs) {
 		    if (joueur.getCouleurJoueur() == TypeCouleur.BLANC){
 		    	if(this.joueurEnCours.equals(joueur)) {
@@ -655,7 +657,7 @@ public class PlanispherePanel extends JPanel implements MouseListener {
 		    }
 		}
 		
-		
+		}
 		
 	}
 
