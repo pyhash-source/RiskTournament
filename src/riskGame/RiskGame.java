@@ -340,7 +340,8 @@ public class RiskGame {
 	/**
 	 * inserer les statistiques de la partie dans la bd
 	 */
-	// TODO tester
+	// TODO DELETE FROM `participer` WHERE nbrDeplacement=0;
+	
 	private static void insererStatistiques() {
 		JOptionPane.showMessageDialog(null,
 				"Insertion des données de la partie dans la base de données! (M.Ravat <3 )");
@@ -399,16 +400,6 @@ public class RiskGame {
 				System.out.println("numeroManche: " + numeroManche);
 
 				System.out.println("Je fais l'update pour le joueur: " + joueur.getNomJoueur());
-//					stmt.executeUpdate("INSERT INTO `participer`(`classement`, `score`, `nbrCartesTirees`, "
-//							+ "`nbrLancerDeDes`, `nbrCartesEchangees`, `nbrAttaquesLancees`, `nbrDeplacement`, `nbrRegimentsElimines`, "
-//							+ "`nbrRegimentsRecuperes`, `nbrDesUn`, `nbrDefensesReussies`, `nbrTerritoiresConquis`,`numeroJoueur`, `numeroManche`) "
-//							+ "VALUES ('"+classement+"','"+score+"','"+nombreCartesTirees+"','"+nombreLancerDeDes+
-//							"','"+nombreCartesEchangees+"','"+nombreAttaques+"',"
-//							+ "'"+nombreDeplacement+"','"+nombreRegimentsElimines+"','"+nombreRegimentsRecuperes+
-//							"','"+nbrDesUn+"','"+
-//							"','"+nbrDefensesReussies+"','"+
-//							"','"+nbrTerritoiresConquis+"','"+
-//							"','"+numeroJoueur+"','"+666+"')");
 
 				stmt.executeUpdate(
 						"INSERT INTO `participer`(`classement`, `score`, `nbrCartesTirees`, `nbrLancerDeDes`, "
@@ -418,6 +409,7 @@ public class RiskGame {
 
 			}
 			System.out.println("Insertion finie");
+			con.close();
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -448,7 +440,6 @@ public class RiskGame {
 					+ tournoiChoisi + " AND competition.nomCompetition = '" + competitionChoisie + "'"
 					+ " AND manche.numeroManche = " + mancheChoisie);
 
-			// processing the data:
 			ArrayList<TypeCouleur> couleurJoueur = new ArrayList<>();
 			couleurJoueur.add(TypeCouleur.BLANC);
 			couleurJoueur.add(TypeCouleur.BLEU);
