@@ -385,16 +385,18 @@ public class Manche {
 					//regarder si on bute tous les marcs du territoire qui defend, si oui, il faut que l'on trigger le changemen
 					//de propriétaire et la récupération de cartes
 						// recuperer carte si je gagne un territoire
+					
 					if(territoireDefendant.getNbrRegiment()==0) {
-						eliminerJoueur(territoireDefendant.getProprietaire());
-						this.mancheFinie = verifierFinPartie();
-						if(mancheFinie) {
-							mettreAJourClassement(this.joueursManche.get(nombreRegimentsAttaqueTues));
-						}
+						Joueur joueurDef = territoireDefendant.getProprietaire();
 						territoireDefendant.setProprietaire(territoireAttaquant.getProprietaire());
 						territoireDefendant.setNbrRegiment(Integer.parseInt(nombreRegimentsPourAttaquer));
 						territoireAttaquant.setNbrRegiment(territoireAttaquant.getNbrRegiment() - Integer.parseInt(nombreRegimentsPourAttaquer) );
 						donnerCarteJoueur();
+						eliminerJoueur(joueurDef);
+						this.mancheFinie = verifierFinPartie();
+						if(mancheFinie) {
+							mettreAJourClassement(this.joueursManche.get(nombreRegimentsAttaqueTues));
+						}
 						
 					}
 				}
@@ -1017,7 +1019,11 @@ public class Manche {
 		if (territoiresJoueurs.size()<1) {
 			this.joueursManche.remove(joueur);
 			mettreAJourClassement(joueur);
+			System.out.println("je suis elimine"+ joueur.getPrenomJoueur());
+			JOptionPane.showMessageDialog(null, "Tu es eliminé: " + joueur.getPrenomJoueur());
+			this.planispherePanel.getJoueurs().remove(joueur);
 		}
+		
 	}
 	
 	// Fonction pour verifier fin partie
