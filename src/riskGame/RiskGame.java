@@ -389,7 +389,8 @@ public class RiskGame {
 					System.out.println("nbrDesUn: " + nbrDesUn);
 					System.out.println("nbrDefensesReussies: " + nbrDefensesReussies);
 					System.out.println("nbrTerritoiresConquis: " + nbrTerritoiresConquis);
-					System.out.println("numeroManche: " + manche.getNumeroManche());
+					int numeroManche = manche.getNumeroManche();
+					System.out.println("numeroManche: " + numeroManche);
 					
 					
 					System.out.println("Je fais l'update pour le joueur: " + joueur.getNomJoueur());

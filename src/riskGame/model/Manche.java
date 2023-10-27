@@ -140,6 +140,7 @@ public class Manche {
 	
 	//premiere phase
 	public void renforcer() {
+		JOptionPane.showMessageDialog(null, this.planispherePanel.getJoueurEnCours().getPrenomJoueur() + ": vous rentrez dans la phase de renfort !\n Cliquez sur un territoire pour ajouter un régiment...");
 		// on fait les echanges possibles de cartes
 		int nbrRegimentsCartes = echangerCarte();
 		//on regarde cb le joueur possede de territoire
