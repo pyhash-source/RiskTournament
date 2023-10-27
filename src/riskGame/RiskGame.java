@@ -389,20 +389,16 @@ public class RiskGame {
 					System.out.println("nbrDesUn: " + nbrDesUn);
 					System.out.println("nbrDefensesReussies: " + nbrDefensesReussies);
 					System.out.println("nbrTerritoiresConquis: " + nbrTerritoiresConquis);
-					System.out.println("numeroManche: " + manche.getNumeroManche());
+					int numeroManche = manche.getNumeroManche();
+					System.out.println("numeroManche: " + numeroManche);
 					
 					
 					System.out.println("Je fais l'update pour le joueur: " + joueur.getNomJoueur());
-					stmt.executeUpdate("INSERT INTO `participer`(`classement`, `score`, `nbrCartesTirees`, "
-							+ "`nbrLancerDeDes`, `nbrCartesEchangees`, `nbrAttaquesLancees`, `nbrDeplacement`, `nbrRegimentsElimines`, "
-							+ "`nbrRegimentsRecuperes`, `nbrDesUn`, `nbrDefensesReussies`, `nbrTerritoiresConquis`,`numeroJoueur`, `numeroManche`) "
-							+ "VALUES ('"+classement+"','"+score+"','"+nombreCartesTirees+"','"+nombreLancerDeDes+
-							"','"+nombreCartesEchangees+"','"+nombreAttaques+"',"
-							+ "'"+nombreDeplacement+"','"+nombreRegimentsElimines+"','"+nombreRegimentsRecuperes+
-							"','"+nbrDesUn+"','"+
-							"','"+nbrDefensesReussies+"','"+
-							"','"+nbrTerritoiresConquis+"','"+
-							"','"+numeroJoueur+"','"+manche.getNumeroManche()+"')");
+					stmt.executeUpdate(
+							"INSERT INTO `participer`(`classement`, `score`, `nbrCartesTirees`, `nbrLancerDeDes`, "
+							+ "`nbrCartesEchangees`, `nbrAttaquesLancees`, `nbrDeplacement`, `nbrRegimentsElimines`, "
+							+ "`nbrRegimentsRecuperes`, `numeroJoueur`, `numeroManche`, `nbrDesUn`, `nbrDefensesReussies`, "
+							+ "`nbrTerritoiresConquis`) VALUES ("+classement+","+score+","+nombreCartesTirees+","+nombreLancerDeDes+","+nombreCartesEchangees+","+nombreAttaques+","+nombreDeplacement+","+nombreRegimentsElimines+","+nombreRegimentsRecuperes+","+numeroJoueur+","+numeroManche+","+nbrDesUn+","+nbrDefensesReussies+","+nbrTerritoiresConquis+")");
 
 				}
 				System.out.println("Insertion finie");
