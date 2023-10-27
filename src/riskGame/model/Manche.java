@@ -92,36 +92,104 @@ public class Manche {
 	//premiere phase de jeu ou on doit placer un a un ses regiments
 	public void placerRegimentsInitiaux() {
 	//normalement c'est 25 regiments par joueur mais c'est trop long pour la démo on garde que 9 
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < NOMBRE_JOUEUR; j++) {
-				//on recupere le joueur qui doit jouer
-				Joueur joueurActuel = this.planispherePanel.getJoueurEnCours();
-
-				//booleen indiquant si le joueur a place son regiment
-				boolean placerRegiment = false;
-				//tant qu'il ne l a pas place
-				while (!placerRegiment) {
-					//on recupere le territoire selectionne et on voit si il a pu le placer
-					placerRegiment = this.placerRegimentTerritoire(joueurActuel,
-							this.planispherePanel.getTerritoireSelectionne(), 1);
-					
-					//pour lui laisser le temps de cliquer et pour ralentir le while
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+//		for (int i = 0; i < 9; i++) {
+//			for (int j = 0; j < NOMBRE_JOUEUR; j++) {
+//				//on recupere le joueur qui doit jouer
+//				Joueur joueurActuel = this.planispherePanel.getJoueurEnCours();
+//
+//				//booleen indiquant si le joueur a place son regiment
+//				boolean placerRegiment = false;
+//				//tant qu'il ne l a pas place
+//				while (!placerRegiment) {
+//					//on recupere le territoire selectionne et on voit si il a pu le placer
+//					placerRegiment = this.placerRegimentTerritoire(joueurActuel,
+//							this.planispherePanel.getTerritoireSelectionne(), 1);
+//					
+//					//pour lui laisser le temps de cliquer et pour ralentir le while
+//					try {
+//						Thread.sleep(10);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//
+//				}
+//				//on met a jour la vue quand il a place
+//				this.planispherePanel.updateUI();
+//				//on met a jour le joueur a qui c'est le tour
+//				this.changerJoueur();
+//
+//			}
+//		}
+		for(int imax=0;imax<5;imax++) {
+			Joueur j = this.planispherePanel.getJoueurEnCours();
+			ArrayList<Joueur> clone = (ArrayList<Joueur>) this.joueursManche.clone();
+				if(j.getCouleurJoueur().equals(TypeCouleur.ROUGE)) {
+					for(int i=0; i<41; i++) {
+						boolean placerRegiment = false;
+						//tant qu'il ne l a pas place
+						while (!placerRegiment) {
+							//on recupere le territoire selectionne et on voit si il a pu le placer
+							placerRegiment = this.placerRegimentTerritoire(j,
+									this.planispherePanel.getTerritoireSelectionne(), 1);
+							
+							//pour lui laisser le temps de cliquer et pour ralentir le while
+							try {
+								Thread.sleep(10);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+		
+						}
+						//on met a jour la vue quand il a place
+						this.planispherePanel.updateUI();
 					}
-
+					changerJoueur();
 				}
-				//on met a jour la vue quand il a place
+				if(j.getCouleurJoueur().equals(TypeCouleur.BLEU)) {
+					for(int i=0; i<1; i++) {
+						boolean placerRegiment = false;
+						//tant qu'il ne l a pas place
+						while (!placerRegiment) {
+							//on recupere le territoire selectionne et on voit si il a pu le placer
+							placerRegiment = this.placerRegimentTerritoire(j,
+									this.planispherePanel.getTerritoireSelectionne(), 1);
+							
+							//pour lui laisser le temps de cliquer et pour ralentir le while
+							try {
+								Thread.sleep(10);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+		
+						}
+						//on met a jour la vue quand il a place
+						this.planispherePanel.updateUI();
+					}
+					changerJoueur();
+				}
+				if(j.getCouleurJoueur().equals(TypeCouleur.JAUNE)) {
+					System.out.println("Je suis jaune");
+					eliminerJoueur(j);
+					changerJoueur();
+					}
+				if(j.getCouleurJoueur().equals(TypeCouleur.VERT)) {
+					eliminerJoueur(j);
+					changerJoueur();
+					}
+				if(j.getCouleurJoueur().equals(TypeCouleur.BLANC)) {
+					eliminerJoueur(j);
+					changerJoueur();
+					}
+				
 				this.planispherePanel.updateUI();
-				//on met a jour le joueur a qui c'est le tour
-				this.changerJoueur();
-
-			}
 		}
-
+		
 	}
+		
+
+		
+
+	
 
 	//boucle de jeu representant le tour complet d'un joueur
 	public void boucleJeu() {
@@ -892,7 +960,7 @@ public class Manche {
 	public int echangerCarte() {
 	    int nbrRegiments = 0;
 	    boolean regimentsTerritoire = false;
-	    //un compteur pour calculer le nb d'�changes
+	    //un compteur pour calculer le nb d' changes
 	    
 	    ArrayList<Carte> infanterie = new ArrayList();
 	    ArrayList<Carte> cavalerie =  new ArrayList() ;
@@ -938,10 +1006,10 @@ public class Manche {
 	    	else {
 	    		System.out.println("Je rentre dans le else et le compteur a pour valeur: " + this.nbEchanges);
 	    		System.out.println("VA: " + 15 + (this.nbEchanges - 5) * 5);
-	    		nbrRegiments += 15 + (this.nbEchanges - 5) * 5; // Gagnez 15 r�giments au 6e �change, puis 5 de plus � chaque �change suppl�mentaire
+	    		nbrRegiments += 15 + (this.nbEchanges - 5) * 5; // Gagnez 15 r giments au 6e  change, puis 5 de plus   chaque  change suppl mentaire
 	    		
 	        }
-	    	// Retirer les cartes �chang�es des listes
+	    	// Retirer les cartes  chang es des listes
 	    	
 	    	if(infanterie.size() >= 3) {
 	    		for (int i = 0; i < 3; i++) {
