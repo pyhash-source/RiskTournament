@@ -1,2 +1,7 @@
 # RiskTournament
-This repository will be used to host the Java files for the Risk game.
+Ce dossier est le rendu final de notre jeu RISK pour le projet de programmation.
+
+# GIT
+Lien du repository git: https://github.com/pyhash-source/RiskTournament 
+
+
