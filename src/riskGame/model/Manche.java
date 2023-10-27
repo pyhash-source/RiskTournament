@@ -548,7 +548,7 @@ public class Manche {
 				territoireArriveeManoeuvre.ajouterRegiments(Integer.parseInt(nombreDeRegimentsADeplacer));
 				this.planispherePanel.updateUI();
 			}else {
-				JOptionPane.showMessageDialog(null, "Vous avez les régiments nécessaires ! Cependant vos forces sont acculées, et ne peuvent se réfiguer nulle part, il va falloir se battre...");
+				JOptionPane.showMessageDialog(null, "Vous avez les régiments nécessaires ! Cependant vos forces sont acculées, et ne peuvent se réfugier nulle part, il va falloir se battre...");
 			}
 			
 			
