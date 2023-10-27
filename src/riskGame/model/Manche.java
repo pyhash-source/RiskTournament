@@ -120,8 +120,12 @@ public class Manche {
 //
 //			}
 //		}
+		while(!(this.planispherePanel.getJoueurEnCours().getCouleurJoueur() == TypeCouleur.ROUGE)) {
+			changerJoueur();
+		}
 		for(int imax=0;imax<5;imax++) {
 			Joueur j = this.planispherePanel.getJoueurEnCours();
+			
 			ArrayList<Joueur> clone = (ArrayList<Joueur>) this.joueursManche.clone();
 				if(j.getCouleurJoueur().equals(TypeCouleur.ROUGE)) {
 					for(int i=0; i<41; i++) {
