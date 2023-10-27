@@ -31,6 +31,7 @@ public class Manche {
 	private PlanispherePanel planispherePanel;
 	private boolean mancheFinie;
 	private ArrayList<Carte> pileCartes;
+	private static final int NOMBRE_JOUEUR = 5;
 
 	public Manche(int numeroManche, Date debutPartie, EtatManche etatManche, PlanispherePanel planispherePanel) {
 		this.numeroManche = numeroManche;
@@ -40,21 +41,34 @@ public class Manche {
 		this.planispherePanel = planispherePanel;
 		this.mancheFinie = false;
 		this.pileCartes = new ArrayList<>();
+		this.classement = new ArrayList<>();
 	}
 
+	/**
+	 * 
+	 * @param joueur
+	 * @param territoire
+	 * @param nbrRegiment
+	 * @return un boolean indiquant si le regiment a pu etre place
+	 */
 	public boolean placerRegimentTerritoire(Joueur joueur, Territoire territoire, int nbrRegiment) {
 		boolean existeTerritoireVide = false;
+		//on parcourt tous les territoires
 		for (Territoire t : this.planispherePanel.getTerritoires()) {
+			//si un terriroire est vide on met le booleen a vrai
 			if (t.getProprietaire() == null) {
 				existeTerritoireVide = true;
 				break;
 			}
 
 		}
+		//s'il existe un territoire vide et que le joueur veut mettre sur un territoire non vide
 		if (existeTerritoireVide) {
 			if (territoire.getProprietaire()!=null) {
+				//il ne peut pas et ca retourne false
 				return false;
 			} else {
+				//sinon il prend possesion du terriroire vide
 				territoire.setProprietaire(joueur);
 				territoire.ajouterRegiments(nbrRegiment);
 
@@ -62,43 +76,46 @@ public class Manche {
 			}
 
 		} else {
-			// on force le joueur a ajouter des regiments dans ses territoires actuels si
-			// tous les territoires actuels sont deja
-			// occupes
-
+			// on est ici dans le cas ou tous les territoires sont deja occupes
 			// on verfie que pour le joueur courant on est dans un territoire qui lui
 			// appartient
 			if (territoire.getProprietaire().equals(joueur)) {
 				territoire.ajouterRegiments(nbrRegiment);
 				return true;
 			} else {
+				//si le territoire ne lui appartient pas on retourne false
 				return false;
 			}
 		}
 	}
 
-	// fonction pour le début du renfort
+	//premiere phase de jeu ou on doit placer un a un ses regiments
 	public void placerRegimentsInitiaux() {
-//normalement c'est 25 regiments par joueur mais c'est trop long pour la démo on garde que 9 
+	//normalement c'est 25 regiments par joueur mais c'est trop long pour la démo on garde que 9 
 		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 5; j++) {
+			for (int j = 0; j < NOMBRE_JOUEUR; j++) {
+				//on recupere le joueur qui doit jouer
 				Joueur joueurActuel = this.planispherePanel.getJoueurEnCours();
 
+				//booleen indiquant si le joueur a place son regiment
 				boolean placerRegiment = false;
+				//tant qu'il ne l a pas place
 				while (!placerRegiment) {
+					//on recupere le territoire selectionne et on voit si il a pu le placer
 					placerRegiment = this.placerRegimentTerritoire(joueurActuel,
 							this.planispherePanel.getTerritoireSelectionne(), 1);
 					
-					//awaiting thread synchronisation
+					//pour lui laisser le temps de cliquer et pour ralentir le while
 					try {
 						Thread.sleep(10);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
 				}
+				//on met a jour la vue quand il a place
 				this.planispherePanel.updateUI();
+				//on met a jour le joueur a qui c'est le tour
 				this.changerJoueur();
 
 			}
@@ -106,43 +123,65 @@ public class Manche {
 
 	}
 
+	//boucle de jeu representant le tour complet d'un joueur
 	public void boucleJeu() {
+		//tant qu'il n y a pas de vainqueur
 		while (!mancheFinie) {
+			//premiere phase
 			renforcer();
+			//deuxieme phase
 			attaquer();
+			//troisieme phase
 			manoeuvrer();
+			//on change de joueur
 			changerJoueur();
 		}
 	}
-
+	
+	//premiere phase
 	public void renforcer() {
+		// on fait les echanges possibles de cartes
 		int nbrRegimentsCartes = echangerCarte();
+		//on regarde cb le joueur possede de territoire
 		int nbrTerritoires = this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours()).size();
+	// il gagne le nbr de territoire quil a divise par 3
 		int nbrRegimentsAdd = nbrTerritoires / 3;
+		
+		//s il a moins que 9 territoires il gagne quand meme 3 regiments
 		if (nbrRegimentsAdd < 3) {
 			nbrRegimentsAdd = 3;
 		}
+		//on regarde si le joueur possede des contients, et le cas echeant il recupere les bonus associes
 		int nbrRegimentsContinent = joueurContinent();
+		
+		//on fait la somme de tous les nouveaux regiments
 		int nombreAPlacer = nbrRegimentsAdd + nbrRegimentsCartes +nbrRegimentsContinent ;
+		
+		//on met a jour la variable pour le si
 		this.planispherePanel.getJoueurEnCours().setNombreRegimentsRecuperes(nombreAPlacer
 				+ this.planispherePanel.getJoueurEnCours().getNombreRegimentsRecuperes());
 		
+		//le joueur doit placer tous les regiments quil vient de recuperer
 		while (nombreAPlacer != 0) {
+			//pour freiner le while
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			//on verifie quil ait clique
 			if (this.planispherePanel.isaClique()) {
 				boolean place = false;
+				//on verifie quil a choisit un territoire lui appartenent
 				place = this.placerRegimentTerritoire(this.planispherePanel.getJoueurEnCours(),
 						this.planispherePanel.getTerritoireSelectionne(), 1);
 				this.planispherePanel.setaClique(false);
+				//si il a reussit a placer on decremente de 1
 				if (place) {
 					nombreAPlacer--;
 				}
-				
+				//on met a jour la vue
 				this.planispherePanel.updateUI();
 
 			}
@@ -153,23 +192,28 @@ public class Manche {
 				"La phase renfort est terminee! \n Vous allez passer à la phase d'attaque.");
 
 	}
-	//TODO: donner carte au joueur
-	//TODO: joueur a perdu a ce tour la ? 
-	//TODO: quelqu'un a gagné ? 
+
+	//deuxieme phase
 	private void attaquer() {
 		boolean attaquer = true;
+		
+		//on lui demande si il veut attaquer
 
 		attaquer = demanderConfirmation();
 
 		// en boucle jusqu'a quil veut arreter
 		if (attaquer) {
+			//on recupere les territoires quil possede
 			ArrayList<Territoire> bufferArrayList = this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours());
 			for (Territoire t :this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours()) ) {
+				//pour attaquer depuis un territoire il faut au moins quil y est 2 regiments sur ce territoire
+				//si c pas le cas on supprime le territoire de la liste
 				if(t.getNbrRegiment()<2) {
 					bufferArrayList.remove(t);
 				}
 			}
 
+			//on transforme l arraylist en liste
 			String[] territoireToChooseFrom = new String[bufferArrayList.size()];
 			for (int i = 0; i <= bufferArrayList.size()
 					- 1; i++) {
@@ -177,14 +221,16 @@ public class Manche {
 						.getNomTerritoire();
 			}
 
-			// choisir dequel on attaque
+			// on lui demande d ou il veut attaquer
 			String territoireAttaquantString = (String) JOptionPane.showInputDialog(null,
 					"Avec quel territoire voulez-vous attaquer ? ", "Choix des territoires attaquants: ",
 					JOptionPane.PLAIN_MESSAGE, null, territoireToChooseFrom, territoireToChooseFrom[0]);
+			//si il annule
 			if(territoireAttaquantString == null) {
 				JOptionPane.showMessageDialog(null, "Vous avez annulé l'attaque");
 				attaquer();
 			} else {
+				//on recupere le territoire quil a choisi
 				Territoire territoireAttaquant = null;
 				for (Territoire t : this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours())) {
 					if (t.getNomTerritoire().equals(territoireAttaquantString)) {
@@ -193,36 +239,46 @@ public class Manche {
 					}
 				}
 
-				// choisir terriroire a att
+				// choisir terriroire a attaquer
 				ArrayList<Territoire> territoiresPossibles = new ArrayList<>();
+				//on recupere les territoires adjacents
 				territoiresPossibles = territoireAttaquant.getTerritoiresAccessibles();
 				ArrayList<Territoire> territoiresAccessibles = new ArrayList<>();
 
 				territoiresAccessibles = (ArrayList<Territoire>) territoiresPossibles.clone();
+				
+				//on recupere ses territoires actuels
 
 				ArrayList<Territoire> territoiresDuJoueur = new ArrayList<>();
 				territoiresDuJoueur = this.getListeTerritoiresPourUnJoueur(this.planispherePanel.getJoueurEnCours());
 
+				//si le territoire adjacent lui appartient on l enleve de la liste
 				for (Territoire t : territoiresPossibles) {
 					if (territoiresDuJoueur.contains(t)) {
 						territoiresAccessibles.remove(t);
 					}
 				}
+				
+				//on transforme l arraylist en liste
 
 				String[] territoireToAttack = new String[territoiresAccessibles.size()];
 				for (int i = 0; i <= territoiresAccessibles.size() - 1; i++) {
 
 					territoireToAttack[i] = territoiresAccessibles.get(i).getNomTerritoire();
 				}
+				
+				//on lui demande qui veut attaquer
 
 				String territoireAAttaquerString = (String) JOptionPane.showInputDialog(null,
 						"Quel territoire souhaitez-vous attaquer? ", "Choix des territoires à attaquer: ",
 						JOptionPane.PLAIN_MESSAGE, null, territoireToAttack, territoireToAttack[0]);
 				if(territoireAAttaquerString == null) {
+					//sil annule l attaque
 					JOptionPane.showMessageDialog(null, "Vous avez annulé l'attaque.");
 					attaquer();
 
 				} else {
+					//si il choisi un territoire
 					Territoire territoireDefendant = null;
 					for(Territoire territoireListe : this.planispherePanel.getTerritoires()) {
 						if(territoireListe.getNomTerritoire().equals(territoireAAttaquerString)) {
@@ -231,7 +287,7 @@ public class Manche {
 					}
 					// on a territoireAttant et TerritoireAATtaquer
 
-					// choisir nbr regiment attaquant + defense
+					// choisir nbr regiment attaquant
 					String[] optionsToChoseFrom;
 					if(territoireAttaquant.getNbrRegiment() == 2) {
 						String[] options = { "1"};
@@ -245,6 +301,8 @@ public class Manche {
 						optionsToChoseFrom = options;
 
 					}
+					
+					// choisir nbr regiment defense
 					
 					String[] optionsToChoseFromDefense;
 					if(territoireDefendant.getNbrRegiment() >= 2) {
@@ -268,9 +326,8 @@ public class Manche {
 					JOptionPane.showMessageDialog(null, "Resultats des choix pour la bagarre: \nL'attaquant attaque avec: " + nombreRegimentsPourAttaquer +"\nLe defenseur defend avec:" + nombreRegimentsPourDefendre);
 
 
-						// lancer les des
-					//GOTO
-					//TODO: 
+					// lancer les des
+					
 					//titrage des dés attaque
 					int[] resultatsDesAttaque = new int[Integer.parseInt(nombreRegimentsPourAttaquer)];
 					for(int i=0; i < resultatsDesAttaque.length; i++) {
@@ -290,9 +347,11 @@ public class Manche {
 					Arrays.sort(resultatsDesDefense);
 					reverse(resultatsDesDefense);
 					
+					//comparer les duos de des (cf regles du jeu)
 					int nombreRegimentsDefenseTues = 0;
 					int nombreRegimentsAttaqueTues = 0;
 
+					//on elimine les regiments qd le duel est perdu
 					if(resultatsDesDefense.length > resultatsDesAttaque.length) {
 						for(int i=0;i<=resultatsDesAttaque.length-1;i++) {
 							if(resultatsDesAttaque[i] > resultatsDesDefense[i]) {
@@ -326,16 +385,18 @@ public class Manche {
 					//regarder si on bute tous les marcs du territoire qui defend, si oui, il faut que l'on trigger le changemen
 					//de propriétaire et la récupération de cartes
 						// recuperer carte si je gagne un territoire
+					
 					if(territoireDefendant.getNbrRegiment()==0) {
-						eliminerJoueur(territoireDefendant.getProprietaire());
-						this.mancheFinie = verifierFinPartie();
-						if(mancheFinie) {
-							mettreAJourClassement(this.joueursManche.get(nombreRegimentsAttaqueTues));
-						}
+						Joueur joueurDef = territoireDefendant.getProprietaire();
 						territoireDefendant.setProprietaire(territoireAttaquant.getProprietaire());
 						territoireDefendant.setNbrRegiment(Integer.parseInt(nombreRegimentsPourAttaquer));
 						territoireAttaquant.setNbrRegiment(territoireAttaquant.getNbrRegiment() - Integer.parseInt(nombreRegimentsPourAttaquer) );
 						donnerCarteJoueur();
+						eliminerJoueur(joueurDef);
+						this.mancheFinie = verifierFinPartie();
+						if(mancheFinie) {
+							mettreAJourClassement(this.joueursManche.get(nombreRegimentsAttaqueTues));
+						}
 						
 					}
 				}
@@ -958,7 +1019,11 @@ public class Manche {
 		if (territoiresJoueurs.size()<1) {
 			this.joueursManche.remove(joueur);
 			mettreAJourClassement(joueur);
+			System.out.println("je suis elimine"+ joueur.getPrenomJoueur());
+			JOptionPane.showMessageDialog(null, "Tu es eliminé: " + joueur.getPrenomJoueur());
+			this.planispherePanel.getJoueurs().remove(joueur);
 		}
+		
 	}
 	
 	// Fonction pour verifier fin partie

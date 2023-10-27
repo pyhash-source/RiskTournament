@@ -352,7 +352,8 @@ public class RiskGame {
 	 */
 	//TODO tester
 	private static void insererStatistiques() {
-
+		JOptionPane.showMessageDialog(null, "Insertion des données de la partie dans la base de données! (M.Ravat <3 )");
+		System.out.println("Je rentre dans le inserer statisiques");
 			try {
 				Statement stmt;
 				Class.forName("com.mysql.jdbc.Driver");
@@ -374,8 +375,26 @@ public class RiskGame {
 					int nbrDefensesReussies = joueur.getNombreDefensesReussies();
 					int nbrTerritoiresConquis = joueur.getNombreTerritoiresConquis();
 					
+					
+					System.out.println("numeroJoueur: " + numeroJoueur);
+					System.out.println("nombreCartesTirees: " + nombreCartesTirees);
+					System.out.println("nombreCartesEchangees: " + nombreCartesEchangees);
+					System.out.println("nombreRegimentsRecuperes: " + nombreRegimentsRecuperes);
+					System.out.println("nombreRegimentsElimines: " + nombreRegimentsElimines);
+					System.out.println("nombreAttaques: " + nombreAttaques);
+					System.out.println("nombreDeplacement: " + nombreDeplacement);
+					System.out.println("nombreLancerDeDes: " + nombreLancerDeDes);
+					System.out.println("classement: " + classement);
+					System.out.println("score: " + score);
+					System.out.println("nbrDesUn: " + nbrDesUn);
+					System.out.println("nbrDefensesReussies: " + nbrDefensesReussies);
+					System.out.println("nbrTerritoiresConquis: " + nbrTerritoiresConquis);
+					System.out.println("numeroManche: " + manche.getNumeroManche());
+					
+					
+					System.out.println("Je fais l'update pour le joueur: " + joueur.getNomJoueur());
 					stmt.executeUpdate("INSERT INTO `participer`(`classement`, `score`, `nbrCartesTirees`, "
-							+ "`nbrLancerDeDes`, `nbrCartesEchangees`, `nbrAttaqueLancees`, `nbrDeplacement`, `nbrRegimentsElimines`, "
+							+ "`nbrLancerDeDes`, `nbrCartesEchangees`, `nbrAttaquesLancees`, `nbrDeplacement`, `nbrRegimentsElimines`, "
 							+ "`nbrRegimentsRecuperes`, `nbrDesUn`, `nbrDefensesReussies`, `nbrTerritoiresConquis`,`numeroJoueur`, `numeroManche`) "
 							+ "VALUES ('"+classement+"','"+score+"','"+nombreCartesTirees+"','"+nombreLancerDeDes+
 							"','"+nombreCartesEchangees+"','"+nombreAttaques+"',"
@@ -386,9 +405,10 @@ public class RiskGame {
 							"','"+numeroJoueur+"','"+manche.getNumeroManche()+"')");
 
 				}
+				System.out.println("Insertion finie");
 
 		}catch (Exception e) {
-			// TODO: handle exception
+			System.out.println(e);
 		}
 	}
 
@@ -481,6 +501,11 @@ public class RiskGame {
 				planisphere.setJoueurEnCours(manche.determinerPremierJoueur());  
 				manche.placerRegimentsInitiaux();
 				manche.boucleJeu();
+				String classement = "";
+				for(Joueur j: manche.getClassement()) {
+					classement += j.getNomJoueur() + " " + (manche.getClassement().indexOf(j) + 1) + "\n";
+				}
+				JOptionPane.showMessageDialog(null, classement);
 				insererStatistiques();
 				mainMenuGUI();
 	}
