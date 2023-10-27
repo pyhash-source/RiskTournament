@@ -467,7 +467,7 @@ public class Manche {
 						eliminerJoueur(joueurDef);
 						this.mancheFinie = verifierFinPartie();
 						if(mancheFinie) {
-							mettreAJourClassement(this.joueursManche.get(nombreRegimentsAttaqueTues));
+							mettreAJourClassement(this.joueursManche.get(0));
 						}
 						
 					}
